@@ -54,6 +54,26 @@ body {
     line-height: 1.65;
 }
 
+/* ── PADRONIZAÇÃO GLOBAL DE SUBTEXTOS E NEGRITOS ── */
+.text-secondary,
+.text-muted,
+.small-muted {
+    color: var(--text-muted) !important; /* Cinza slate elegante para subtextos */
+}
+
+strong,
+b,
+.text-secondary strong,
+.text-secondary b,
+.text-muted strong,
+.text-muted b,
+p strong,
+p b {
+    color: var(--text-dark) !important; /* Cinza chumbo escuro de alto contraste para negritos */
+    font-weight: 700;
+}
+
+
 /* ── NAVBAR FIXA ────────────────────────────────────── */
 #main-nav {
     background: rgba(255, 255, 255, 0.96) !important;
