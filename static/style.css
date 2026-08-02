@@ -286,6 +286,17 @@ h6 {
     margin: 0;
 }
 
+/* ── SEÇÃO INFORMATIVA CINZA (Setores: Recebimento, Estoque, Picking, Expedição) ── */
+.bg-gray-section {
+    background-color: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.02);
+}
+
 /* ── STEP CARDS (situação de aprendizagem) ──────────── */
 .step-card {
     background: var(--bg-card);
@@ -1370,6 +1381,76 @@ html {
         max-width: 100% !important;
         overflow-x: auto;
     }
+
+    /* Adaptação de Seções e Componentes em Todas as Páginas (Celular) */
+    .bg-gray-section {
+        padding: 1.15rem 1rem !important;
+        border-radius: 12px !important;
+        margin-top: 1.25rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .accordion-button {
+        padding: 12px 14px !important;
+        font-size: 0.95rem !important;
+    }
+
+    .accordion-body {
+        padding: 12px 14px !important;
+        font-size: 0.88rem !important;
+    }
+
+    /* Step-Progress em Simulação de Turno (acessibilidade no toque) */
+    .step-progress {
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
+        padding-bottom: 10px !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .step-circle {
+        width: 42px !important;
+        height: 42px !important;
+        font-size: 1.15rem !important;
+    }
+
+    .step-item span.small {
+        font-size: 0.72rem !important;
+    }
+
+    /* Botões em rodapés e barras de navegação (fácil clique em celular) */
+    .sector-nav-bar .d-flex {
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+
+    .sector-nav-bar .btn {
+        width: 100% !important;
+        text-align: center;
+        margin-bottom: 4px;
+    }
+
+    /* Cards e Botões no Quiz */
+    .review-item {
+        padding: 12px !important;
+        font-size: 0.86rem !important;
+    }
+
+    /* Menu de Navegação no Celular (quando hamburguer aberto) */
+    .navbar-collapse {
+        padding-top: 10px;
+    }
+
+    .navbar-nav .nav-item {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .nav-btn {
+        width: 100% !important;
+        text-align: left !important;
+        padding: 10px 14px !important;
+    }
 }
 
 /* 3. Ajuste extra para telas muito compactas (smartphones pequenos - até 480px) */
@@ -1386,5 +1467,26 @@ html {
     .quote-card-custom,
     .sabia-box {
         padding: 0.9rem 0.85rem !important;
+    }
+}
+
+/* 4. Otimização Avançada para Desktop (PC - telas a partir de 992px) */
+@media (min-width: 992px) {
+    .hero-banner-custom {
+        padding: 2.75rem 2.5rem !important;
+    }
+
+    .sector-nav-bar {
+        padding: 1.75rem 2.25rem !important;
+    }
+
+    .bg-gray-section {
+        padding: 2.25rem 2.5rem !important;
+    }
+
+    .card-custom,
+    .quote-card-custom,
+    .sabia-box {
+        padding: 1.75rem 2rem !important;
     }
 }
