@@ -1009,3 +1009,124 @@ html {
     transform: translateX(-3px);
     box-shadow: 0 3px 8px rgba(37, 99, 235, 0.12);
 }
+
+/* ── ESTILOS DA PÁGINA INICIAL (INÍCIO) ── */
+.hero-banner-custom {
+    background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+    border: 1px solid rgba(37, 99, 235, 0.15);
+    border-radius: 16px;
+    padding: 2.5rem 1.75rem;
+    box-shadow: 0 4px 20px -2px rgba(37, 99, 235, 0.05);
+}
+
+.hero-badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: var(--vibrant-blue);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 50px;
+    letter-spacing: 0.2px;
+}
+
+.hero-title-main {
+    color: var(--primary-blue);
+    font-weight: 800;
+    font-size: 1.85rem;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.75rem;
+}
+
+.hero-subtitle-main {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 680px;
+    line-height: 1.6;
+}
+
+.card-custom {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.03);
+}
+
+/* CARDS DO PIPELINE OPERACIONAL DA MERCADORIA */
+.sector-pipeline-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.35rem;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.sector-pipeline-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.08);
+}
+
+.sector-blue:hover {
+    border-color: var(--vibrant-blue);
+    box-shadow: 0 10px 24px -4px rgba(37, 99, 235, 0.15);
+}
+
+.sector-purple:hover {
+    border-color: #8b5cf6;
+    box-shadow: 0 10px 24px -4px rgba(139, 92, 246, 0.15);
+}
+
+.sector-orange:hover {
+    border-color: var(--accent-orange);
+    box-shadow: 0 10px 24px -4px rgba(245, 158, 11, 0.15);
+}
+
+.sector-green:hover {
+    border-color: var(--success-green);
+    box-shadow: 0 10px 24px -4px rgba(16, 185, 129, 0.15);
+}
+
+.pipeline-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-blue { background: #dbeafe; color: #1e40af; }
+.badge-purple { background: #f3e8ff; color: #6b21a8; }
+.badge-orange { background: #ffedd5; color: #9a3412; }
+.badge-green { background: #d1fae5; color: #065f46; }
+
+.pipeline-icon {
+    font-size: 1.75rem;
+}
+
+.pipeline-footer {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+    transition: transform 0.2s ease;
+}
+
+.sector-pipeline-card:hover .pipeline-footer {
+    transform: translateX(4px);
+}
+
+.text-purple {
+    color: #7c3aed !important;
+}
+
+.quote-card-custom {
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--vibrant-blue);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+}
