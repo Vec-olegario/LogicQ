@@ -5,7 +5,7 @@
 =============================================================================
 """
 from datetime import datetime
-from typing import Tuple, Optional
+from typing import Tuple, Optional, Any
 
 
 def hora_atual() -> str:
@@ -65,3 +65,21 @@ def calcular_estatisticas_tempo(
     except (ValueError, TypeError, OverflowError):
         # Proteção robusta caso as datas ISO estejam corrompidas na sessão
         return "--:--", "--"
+
+
+def parse_int_safe(val: Any, default: int = 1) -> int:
+    """
+    Converte um valor de entrada para inteiro de forma segura com tratamento de exceção.
+
+    Args:
+        val (Any): Valor a ser convertido (ex: string vinda de formulário HTTP).
+        default (int): Valor padrão retornado caso a conversão falhe.
+
+    Returns:
+        int: Valor inteiro resultante ou default em caso de erro/input inválido.
+    """
+    try:
+        return int(val)
+    except (ValueError, TypeError):
+        return default
+

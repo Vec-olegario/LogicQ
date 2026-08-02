@@ -24,6 +24,16 @@ from .simuladores import (
     gerar_kpis_picking,
     gerar_kpis_expedicao,
 )
+from .wms_didatico import (
+    obter_ou_criar_turno,
+    registrar_bipagem_recebimento,
+    registrar_enderecamento_estoque,
+    validar_bipagem_picking,
+    registrar_expedicao_item,
+    editar_item_turno,
+    remover_item_turno,
+    gerar_csv_turno,
+)
 
 __all__ = [
     "BANCO_PERGUNTAS",
@@ -40,4 +50,12 @@ __all__ = [
     "gerar_kpis_estoque",
     "gerar_kpis_picking",
     "gerar_kpis_expedicao",
+    "obter_ou_criar_turno",
+    "registrar_bipagem_recebimento",
+    "registrar_enderecamento_estoque",
+    "validar_bipagem_picking",
+    "registrar_expedicao_item",
+    "editar_item_turno",
+    "remover_item_turno",
+    "gerar_csv_turno",
 ]

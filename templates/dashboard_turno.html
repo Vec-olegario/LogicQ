@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+{% block title %} | Dashboard{% endblock %}
+{% block content %}
+
+<!-- ═══════════════════════════════════════════════════════════
+     CABEÇALHO EXECUTIVO DO TURNO OPERACIONAL (WMS DIDÁTICO)
+     ═══════════════════════════════════════════════════════════ -->
+<div class="section-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <div>
+        <h2 class="mb-1 fw-bold text-dark">📊 Dashboard</h2>
+        <p class="text-muted mb-0">
+            Acompanhe em tempo real a rastreabilidade das mercadorias, acurácia das bipagens e exporte a planilha para
+            avaliação.
+        </p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{{ url_for('dashboard_turno_exportar_planilha') }}"
+            class="btn btn-primary fw-bold d-flex align-items-center gap-2 shadow-sm">
+            <span>📥</span> Baixar Planilha
+        </a>
+        <a href="{{ url_for('situacao') }}"
+            class="btn btn-outline-primary fw-bold d-flex align-items-center gap-2 shadow-sm">
+            <span>📦</span> Voltar para Simulação
+        </a>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CARDS DE RESUMO DO TURNO (KPIs)
+     ═══════════════════════════════════════════════════════════ -->
+<div class="row g-3 mb-4">
+    <div class="col-12 col-md-6">
+        <div class="card border-0 shadow-sm p-3 h-100"
+            style="border-left: 5px solid #10b981 !important; background: #ffffff;">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="small fw-bold text-muted text-uppercase">Acertos em Separação</span>
+                <span class="badge" style="background-color: #10b981;">Acurácia</span>
+            </div>
+            <h4 class="fw-bold mb-0 text-dark">{{ turno.acertos_picking }} <span class="text-muted small">bipagens
+                    corretas</span></h4>
+            <small class="text-muted">{{ turno.erros_picking }} erro(s) / troca(s) de código</small>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="card border-0 shadow-sm p-3 h-100"
+            style="border-left: 5px solid var(--accent-orange) !important; background: #ffffff;">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="small fw-bold text-muted text-uppercase">Total de Itens Bipados</span>
+                <span class="badge bg-warning text-dark">Rastreabilidade</span>
+            </div>
+            <h4 class="fw-bold mb-0 text-dark">{{ itens|length }} <span class="text-muted small">SKUs no WMS</span></h4>
+            <small class="text-muted">Distribuídas nas 4 etapas logísticas</small>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     GRÁFICOS INTERATIVOS PLOTLY DO TURNO
+     ═══════════════════════════════════════════════════════════ -->
+<div class="row g-4 mb-4">
+    <div class="col-12 col-lg-4">
+        <div class="card border-0 shadow-sm p-3 h-100" style="border-radius: 12px;">
+            <h5 class="fw-bold text-dark mb-2">📉 Fluxo por Etapa (Funil)</h5>
+            <div id="grafFunilTurno" style="min-height: 280px; width: 100%;"></div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-4">
+        <div class="card border-0 shadow-sm p-3 h-100" style="border-radius: 12px;">
+            <h5 class="fw-bold text-dark mb-2">🎯 Precisão de Separação (Picking)</h5>
+            <div id="grafAcuraciaPicking" style="min-height: 280px; width: 100%;"></div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-4">
+        <div class="card border-0 shadow-sm p-3 h-100" style="border-radius: 12px;">
+            <h5 class="fw-bold text-dark mb-2">🗄️ Endereçamento nas Estantes (Ruas)</h5>
+            <div id="grafOcupacaoEstantes" style="min-height: 280px; width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TABELA OPERACIONAL DE RASTREABILIDADE (COM EDIÇÃO/EXCLUSÃO)
+     ═══════════════════════════════════════════════════════════ -->
+<div class="card border-0 shadow-sm p-4 mb-4" style="border-radius: 16px; background: #ffffff;">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
+        <div>
+            <h4 class="fw-bold text-dark mb-1">📦 Rastreabilidade e Gestão de SKUs no WMS</h4>
+            <p class="text-muted mb-0">
+                Lista de todos os itens cadastrados no galpão. Você pode corrigir quantidades ou remover itens bipados
+                por engano.
+            </p>
+        </div>
+        <div class="p-2.5 rounded-3 border mt-2 mt-md-0 shadow-sm"
+            style="background-color: #f8fafc; border-left: 4px solid var(--vibrant-blue) !important; max-width: 450px;">
+            <p class="mb-0 text-dark small" style="white-space: normal; line-height: 1.4;">
+                💡 <strong>Dica:</strong> Ao final do turno, baixe o relatório operacional em planilha (.CSV) para
+                arquivar seus dados.
+            </p>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Cód. Barras</th>
+                    <th scope="col">SKU / Descrição</th>
+                    <th scope="col" class="text-center">Qtd</th>
+                    <th scope="col" class="text-center">Etapa Atual</th>
+                    <th scope="col">Endereço</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" class="text-center">Hora</th>
+                    <th scope="col" class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if itens %}
+                {% for item in itens %}
+                <tr>
+                    <td>
+                        <code class="fw-bold text-primary px-2 py-1 rounded bg-light border">{{ item.codigo }}</code>
+                    </td>
+                    <td>
+                        <div class="fw-bold text-dark">{{ item.descricao }}</div>
+                        <small class="text-muted">SKU: {{ item.sku }} | Forn: {{ item.fornecedor }}</small>
+                    </td>
+                    <td class="text-center fw-bold">{{ item.qtd }}</td>
+                    <td class="text-center">
+                        {% if item.etapa == 'recebimento' %}
+                        <span class="badge bg-primary px-2 py-1">1. Recebimento</span>
+                        {% elif item.etapa == 'estoque' %}
+                        <span class="badge px-2 py-1" style="background-color: #6366f1;">2. Estoque</span>
+                        {% elif item.etapa == 'picking' %}
+                        <span class="badge px-2 py-1 text-dark" style="background-color: #f59e0b;">3. Picking</span>
+                        {% elif item.etapa == 'expedicao' %}
+                        <span class="badge px-2 py-1" style="background-color: #10b981;">4. Expedição</span>
+                        {% else %}
+                        <span class="badge bg-secondary px-2 py-1">{{ item.etapa|capitalize }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.rua and item.rua != '---' %}
+                        <span class="badge bg-light text-dark border">
+                            Rua {{ item.rua }} / Prat {{ item.prateleira }} / Nív {{ item.nivel }}
+                        </span>
+                        {% else %}
+                        <span class="text-muted small">Aguardando endereçamento</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="small fw-semibold text-dark">{{ item.status }}</span>
+                    </td>
+                    <td class="text-center small text-muted">{{ item.timestamp }}</td>
+                    <td class="text-end">
+                        <div class="d-flex justify-content-end gap-1">
+                            <!-- Botão Editar -->
+                            <button type="button" class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1"
+                                onclick="abrirModalEdicao('{{ item.id }}', '{{ item.codigo }}', '{{ item.descricao|escape }}', '{{ item.qtd }}')">
+                                ✏️ <span class="d-none d-md-inline">Editar</span>
+                            </button>
+                            <!-- Botão Excluir -->
+                            <form action="{{ url_for('dashboard_turno_remover', item_id=item.id) }}" method="POST"
+                                class="d-inline"
+                                onsubmit="return confirm('Deseja realmente remover o item com código {{ item.codigo }}?');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir item">
+                                    🗑️
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="8" class="text-center py-5">
+                        <div class="text-muted">
+                            <span class="fs-2 d-block mb-2">📭</span>
+                            <strong>Nenhum item bipado no turno ainda.</strong>
+                            <p class="small mb-0">Acesse a página de Simulação de Turno, ligue o leitor de código de
+                                barras ou digite o código no Recebimento para começar!</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODAL BOOTSTRAP PARA EDIÇÃO RÁPIDA DE ITEM
+     ═══════════════════════════════════════════════════════════ -->
+<div class="modal fade" id="modalEditarItem" tabindex="-1" aria-labelledby="modalEditarItemLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-0 shadow">
+            <form id="formEditarItem" method="POST" action="">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold" id="modalEditarItemLabel">✏️ Editar Item no WMS</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-bold">CÓDIGO DE BARRAS / ITEM ID</label>
+                        <input type="text" id="editCodigoDisplay" class="form-control bg-light fw-bold" readonly
+                            disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDescricao" class="form-label fw-bold">Descrição da Mercadoria</label>
+                        <input type="text" class="form-control" id="editDescricao" name="descricao" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editQuantidade" class="form-label fw-bold">Quantidade (unidades)</label>
+                        <input type="number" class="form-control" id="editQuantidade" name="quantidade" min="1"
+                            required>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary fw-bold">Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVEGAÇÃO DO RODAPÉ
+     ═══════════════════════════════════════════════════════════ -->
+<div class="sector-nav-bar mt-4">
+    <div>
+        <h5 class="mb-1 text-dark fw-bold">📥 Finalizou a Operação do Turno?</h5>
+        <p class="text-muted mb-0">Baixe o relatório operacional completo em formato .CSV para documentar ou analisar os
+            indicadores de desempenho.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{{ url_for('dashboard_turno_exportar_planilha') }}" class="btn btn-primary fw-bold">
+            📥 Baixar Relatório (.CSV)
+        </a>
+        <a href="{{ url_for('situacao') }}" class="btn btn-outline-primary fw-bold">
+            📦 Continuar Simulação →
+        </a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // ── GERAÇÃO DOS GRÁFICOS PLOTLY ─────────────────────────────────────
+    document.addEventListener("DOMContentLoaded", function () {
+        if (typeof Plotly !== "undefined") {
+            try {
+                const configPlotly = { responsive: true, displayModeBar: false };
+
+                const figFunil = {{ graf_funil | safe
+            }};
+        Plotly.newPlot("grafFunilTurno", figFunil.data, figFunil.layout, configPlotly);
+
+        const figAcuracia = {{ graf_acuracia | safe
+    }};
+    Plotly.newPlot("grafAcuraciaPicking", figAcuracia.data, figAcuracia.layout, configPlotly);
+
+    const figOcupacao = {{ graf_ocupacao | safe }};
+    Plotly.newPlot("grafOcupacaoEstantes", figOcupacao.data, figOcupacao.layout, configPlotly);
+            } catch (err) {
+        console.error("Erro na renderização dos gráficos Plotly:", err);
+    }
+        }
+    });
+
+    // ── FUNÇÃO PARA ABRIR MODAL DE EDIÇÃO DE ITEM ───────────────────────
+    function abrirModalEdicao(itemId, codigo, descricao, quantidade) {
+        document.getElementById("editCodigoDisplay").value = codigo;
+        document.getElementById("editDescricao").value = descricao;
+        document.getElementById("editQuantidade").value = quantidade;
+
+        const form = document.getElementById("formEditarItem");
+        form.action = "/dashboard-turno/editar/" + itemId;
+
+        const modalEl = document.getElementById("modalEditarItem");
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+    }
+</script>
+{% endblock %}

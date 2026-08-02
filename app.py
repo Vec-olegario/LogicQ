@@ -19,8 +19,13 @@ from flask import (
 )
 
 from config import SECRET_KEY, TOPICOS
-from utils import hora_atual, data_atual, calcular_estatisticas_tempo
-from ui import gerar_grafico_ocupacao
+from utils import hora_atual, data_atual, calcular_estatisticas_tempo, parse_int_safe
+from ui import (
+    gerar_grafico_ocupacao,
+    gerar_grafico_funil_turno,
+    gerar_grafico_acuracia_picking,
+    gerar_grafico_ocupacao_estantes,
+)
 from logic import (
     BANCO_PERGUNTAS,
     get_pergunta_by_index,
@@ -34,6 +39,14 @@ from logic import (
     gerar_kpis_estoque,
     gerar_kpis_picking,
     gerar_kpis_expedicao,
+    obter_ou_criar_turno,
+    registrar_bipagem_recebimento,
+    registrar_enderecamento_estoque,
+    validar_bipagem_picking,
+    registrar_expedicao_item,
+    editar_item_turno,
+    remover_item_turno,
+    gerar_csv_turno,
 )
 
 app = Flask(__name__)
@@ -125,103 +138,97 @@ def expedicao() -> str:
 # ─────────────────────────────────────────────
 @app.route("/situacao/reiniciar")
 def situacao_reiniciar() -> Response:
-    """Reinicia o turno operacional limpanho as etapas do progresso na sessão."""
+    """Reinicia o turno operacional limpando as etapas do progresso e o turno ativo."""
     session.pop("situacao_etapas", None)
     session.pop("situacao_dados", None)
-    flash("🔄 Turno operacional reiniciado com sucesso!", "info")
+    session.pop("turno_id", None)
+    flash("🔄 Turno operacional reiniciado com sucesso! Todos os dados de bipagem foram zerados.", "info")
     return redirect(url_for("situacao"))
+
+
+def processar_registro_etapa(etapa: str, form_data: Dict[str, Any], turno_id: str) -> None:
+    """Processa a bipagem/registro WMS da etapa operacional e atualiza o progresso do turno."""
+    if etapa == "recebimento":
+        codigo = form_data.get("codigo", "").strip() or form_data.get("nf", "---")
+        sku = form_data.get("sku", "---")
+        desc = form_data.get("descricao", "Caixa de Entrada Didática")
+        qtd = parse_int_safe(form_data.get("quantidade", 1), default=1)
+        forn = form_data.get("fornecedor", "---")
+        cond = form_data.get("condicao", "Aprovado")
+        registrar_bipagem_recebimento(turno_id, codigo, sku, desc, qtd, forn, cond)
+        flash(f"✅ Recebimento registrado! Código: {codigo} | SKU: {sku} | Qtd: {qtd} un | Inspeção: {cond}", "success")
+
+    elif etapa == "estoque":
+        item_id = form_data.get("item_id", "")
+        rua = form_data.get("rua", "01")
+        prat = form_data.get("prateleira", "A")
+        niv = form_data.get("nivel", "1")
+        sku = form_data.get("sku", "---")
+        registrar_enderecamento_estoque(turno_id, item_id, rua, prat, niv)
+        flash(f"✅ Endereçamento de Estoque registrado! Posição: Rua {rua} → Estante {prat} → Nível {niv}", "success")
+
+    elif etapa == "picking":
+        item_id = form_data.get("item_id", "")
+        codigo_bipado = form_data.get("codigo_bipado", "")
+        pedido = form_data.get("pedido", "PED-8821")
+        if item_id and codigo_bipado:
+            sucesso, msg_feedback = validar_bipagem_picking(turno_id, item_id, codigo_bipado, pedido)
+            flash(msg_feedback, "success" if sucesso else "danger")
+        else:
+            flash("✅ Separação de Picking registrada!", "success")
+
+    elif etapa == "expedicao":
+        item_id = form_data.get("item_id", "")
+        doca = form_data.get("doca_saida", "Doca 01")
+        conferente = form_data.get("conferente", "Conferente LogiQ")
+        if item_id:
+            registrar_expedicao_item(turno_id, item_id, doca, conferente)
+        transp = form_data.get("transportadora", "TransLog Express")
+        placa = form_data.get("placa", "ABC-1234")
+        flash(f"✅ Expedição concluída! Veículo {placa} ({transp}) liberado na {doca}.", "success")
+
+    if etapa in ("recebimento", "estoque", "picking", "expedicao"):
+        etapas: List[str] = session.get("situacao_etapas", [])
+        if etapa not in etapas:
+            etapas.append(etapa)
+        session["situacao_etapas"] = etapas
+
+
+def _garantir_turno_sessao() -> Tuple[str, Dict[str, Any]]:
+    """Garante que haja um turno operacional ativo na sessão do usuário e o retorna."""
+    turno_id = session.get("turno_id")
+    turno_id, turno = obter_ou_criar_turno(turno_id)
+    session["turno_id"] = turno_id
+    return turno_id, turno
 
 
 @app.route("/situacao/registrar/<etapa>", methods=["POST"])
 def situacao_registrar_etapa(etapa: str) -> Response:
     """
     Registra uma etapa operacional via requisição POST direcionada,
-    evitando a perda do formulário e mantendo o progresso das etapas.
+    mantendo compatibilidade com o fluxo de progresso e WMS Didático.
     """
-    etapas: List[str] = session.get("situacao_etapas", [])
-    if etapa in ("recebimento", "estoque", "picking", "expedicao"):
-        if etapa not in etapas:
-            etapas.append(etapa)
-        session["situacao_etapas"] = etapas
+    turno_id, _ = _garantir_turno_sessao()
 
-        dados: Dict[str, Any] = session.get("situacao_dados", {})
-        dados[etapa] = request.form.to_dict()
-        session["situacao_dados"] = dados
-
-        flash(f"✅ Registro da etapa de {etapa.capitalize()} concluído com sucesso!", "success")
-
+    processar_registro_etapa(etapa, request.form.to_dict(), turno_id)
     return redirect(url_for("situacao"))
 
 
 @app.route("/situacao", methods=["GET", "POST"])
 def situacao() -> str:
     """
-    Gerencia a página integradora de Situação do Turno Operacional.
-    Processa submissões dos formulários por setor e calcula se o ciclo foi completo.
+    Gerencia a página integradora de Situação do Turno Operacional com suporte
+    a Bipagem de Código de Barras (WMS Didático / Phygital Lab).
     """
     if "situacao_etapas" not in session:
         session["situacao_etapas"] = []
 
+    turno_id, turno = _garantir_turno_sessao()
+
     if request.method == "POST":
         etapa = request.form.get("etapa", "")
-
-        if etapa == "recebimento":
-            nf = request.form.get("nf", "---")
-            sku = request.form.get("sku", "---")
-            qtd = request.form.get("quantidade", "1")
-            forn = request.form.get("fornecedor", "---")
-            cond = request.form.get("condicao", "---")
-            flash(
-                f"✅ Recebimento registrado! NF: {nf} | SKU: {sku} | Qtd: {qtd} | "
-                f"Fornecedor: {forn} | Condição: {cond}",
-                "rec",
-            )
-
-        elif etapa == "estoque":
-            sku = request.form.get("sku", "---")
-            tipo = request.form.get("tipo_mov", "---")
-            qtd = request.form.get("quantidade", "1")
-            rua = request.form.get("rua", "---")
-            prat = request.form.get("prateleira", "---")
-            niv = request.form.get("nivel", "---")
-            flash(
-                f"✅ Movimentação registrada! SKU: {sku} | {tipo} | Qtd: {qtd} | "
-                f"Posição: {rua} → {prat} → {niv}",
-                "est",
-            )
-
-        elif etapa == "picking":
-            pedido = request.form.get("pedido", "---")
-            sku = request.form.get("sku", "---")
-            qtd = request.form.get("quantidade", "1")
-            orig = request.form.get("origem", "---")
-            metodo = request.form.get("metodo", "---")
-            conf = request.form.get("conferencia", "---")
-            flash(
-                f"✅ Separação confirmada! Pedido: {pedido} | SKU: {sku} | Qtd: {qtd} | "
-                f"Origem: {orig} | Método: {metodo} | Conferência: {conf}",
-                "pick",
-            )
-
-        elif etapa == "expedicao":
-            pedido = request.form.get("pedido", "---")
-            vols = request.form.get("volumes", "1")
-            peso = request.form.get("peso", "---")
-            transp = request.form.get("transportadora", "---")
-            doca = request.form.get("doca", "---")
-            prior = request.form.get("prioridade", "Normal")
-            flash(
-                f"✅ Despacho confirmado! Pedido: {pedido} | Volumes: {vols} | Peso: {peso} kg | "
-                f"Transportadora: {transp} | Doca: {doca} | Prioridade: {prior}",
-                "exp",
-            )
-
-        if etapa in ("recebimento", "estoque", "picking", "expedicao"):
-            etapas: List[str] = session.get("situacao_etapas", [])
-            if etapa not in etapas:
-                etapas.append(etapa)
-            session["situacao_etapas"] = etapas
-
+        if etapa:
+            processar_registro_etapa(etapa, request.form.to_dict(), turno_id)
         return redirect(url_for("situacao"))
 
     etapas_concluidas: List[str] = session.get("situacao_etapas", [])
@@ -236,7 +243,77 @@ def situacao() -> str:
         data=data_atual(),
         etapas_concluidas=etapas_concluidas,
         todas_concluidas=todas_concluidas,
+        turno=turno,
+        itens=turno.get("itens", []),
     )
+
+
+@app.route("/dashboard-turno")
+def dashboard_turno() -> str:
+    """
+    Renderiza o Dashboard Operacional do Turno com tabela de itens bipados,
+    gráficos Plotly interativos e opções de edição/exclusão.
+    """
+    turno_id, turno = _garantir_turno_sessao()
+
+    itens = turno.get("itens", [])
+    graf_funil = gerar_grafico_funil_turno(itens)
+    graf_acuracia = gerar_grafico_acuracia_picking(
+        turno.get("acertos_picking", 0),
+        turno.get("erros_picking", 0),
+    )
+    graf_ocupacao = gerar_grafico_ocupacao_estantes(itens)
+
+    return render_template(
+        "dashboard_turno.html",
+        turno=turno,
+        itens=itens,
+        graf_funil=graf_funil,
+        graf_acuracia=graf_acuracia,
+        graf_ocupacao=graf_ocupacao,
+        hora=hora_atual(),
+        data=data_atual(),
+    )
+
+
+@app.route("/dashboard-turno/editar/<item_id>", methods=["POST"])
+def dashboard_turno_editar(item_id: str) -> Response:
+    """Edita a quantidade e descrição de um item na tabela operacional do turno."""
+    turno_id = session.get("turno_id", "")
+    nova_qtd = parse_int_safe(request.form.get("quantidade", 1), default=1)
+    nova_desc = request.form.get("descricao", "")
+    if editar_item_turno(turno_id, item_id, nova_qtd, nova_desc):
+        flash("✏️ Item atualizado com sucesso no WMS do turno!", "success")
+    else:
+        flash("⚠️ Item não encontrado.", "warning")
+    return redirect(url_for("dashboard_turno"))
+
+
+@app.route("/dashboard-turno/remover/<item_id>", methods=["POST"])
+def dashboard_turno_remover(item_id: str) -> Response:
+    """Remove uma caixinha que foi bipada ou adicionada por erro."""
+    turno_id = session.get("turno_id", "")
+    if remover_item_turno(turno_id, item_id):
+        flash("🗑️ Item removido do turno com sucesso.", "info")
+    else:
+        flash("⚠️ Item não encontrado para remoção.", "warning")
+    return redirect(url_for("dashboard_turno"))
+
+
+@app.route("/dashboard-turno/exportar-planilha")
+def dashboard_turno_exportar_planilha() -> Response:
+    """
+    Gera e baixa a planilha CSV/Excel do turno do aluno formatada em UTF-8 com BOM
+    e separador ponto-e-vírgula.
+    """
+    turno_id = session.get("turno_id", "")
+    conteudo_csv = gerar_csv_turno(turno_id)
+    csv_com_bom = "\ufeff" + conteudo_csv
+    headers = {
+        "Content-Disposition": f"attachment; filename=relatorio_turno_logiq_{turno_id}.csv",
+        "Content-Type": "text/csv; charset=utf-8",
+    }
+    return Response(csv_com_bom, mimetype="text/csv", headers=headers)
 
 
 # ─────────────────────────────────────────────

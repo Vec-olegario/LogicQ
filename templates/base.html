@@ -4,9 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light">
-    <title>LogiQ -> Simulador Logístico{% block title %}{% endblock %}</title>
+    <title>LogiQ | Simulador Logístico{% block title %}{% endblock %}</title>
     <meta name="description" content="Plataforma educativa de operações logísticas em Centro de Distribuição">
+    <!-- Open Graph SEO -->
+    <meta property="og:title" content="LogiQ | Simulador e Centro de Treinamento Logístico">
+    <meta property="og:description" content="Aprenda a operação de um Centro de Distribuição (CD) na prática com simulação WMS e Quiz interativo.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ url_for('static', filename='Logo.png', _external=True) }}">
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='Logo.png') }}">
     <!-- Bootstrap 5 -->
@@ -62,7 +66,13 @@
                             href="/situacao">📋 Situação de Aprendizagem</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-btn {% if request.path == '/quiz' %}active{% endif %}" href="/quiz">📝
+                        <a class="nav-link nav-btn {% if request.path == '/dashboard-turno' %}active{% endif %}"
+                            href="/dashboard-turno"
+                            style="border: 1px solid rgba(37,99,235,0.3); background-color: rgba(37,99,235,0.08); font-weight: 600;">📊
+                            Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-btn {% if request.path == '/quiz' %}active{% endif %}" href="/Quiz">📝
                             Quiz</a>
                     </li>
                 </ul>

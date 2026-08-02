@@ -163,57 +163,74 @@ main {
     min-height: 100vh;
 }
 
-/* ── TIPOGRAFIA ────────────────────────────────────── */
+/* ── TIPOGRAFIA PADRONIZADA ────────────────────────── */
 h1 {
-    color: var(--primary-blue);
+    color: var(--text-dark);
     font-weight: 800;
-    font-size: 1.75rem;
+    font-size: 1.6rem;
+    letter-spacing: -0.4px;
 }
 
 h2 {
     color: var(--primary-blue);
     font-weight: 700;
     font-size: 1.35rem;
+    letter-spacing: -0.3px;
 }
 
 h3 {
     color: var(--vibrant-blue);
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 h4 {
-    color: var(--primary-blue);
-    font-weight: 600;
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 1.08rem;
 }
 
 h5 {
-    color: var(--primary-blue);
+    color: var(--text-dark);
     font-weight: 700;
+    font-size: 0.98rem;
 }
 
 h6 {
-    color: #6b7280;
-    font-weight: 600;
-    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 0.85rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
+}
+
+p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+.small,
+small {
+    font-size: 0.84rem;
+    line-height: 1.45;
 }
 
 /* ── SECTION HEADER ─────────────────────────────────── */
 .section-header {
     background: var(--bg-blue-light);
     border-left: 4px solid var(--vibrant-blue);
-    padding: 1.2rem 1.75rem;
-    border-radius: 0 12px 12px 0;
-    margin-bottom: 1.75rem;
+    padding: 1rem 1.25rem;
+    border-radius: 0 10px 10px 0;
+    margin-bottom: 1.25rem;
     box-shadow: 0 2px 8px rgba(37, 99, 235, 0.04);
 }
 
 .section-header h2 {
     color: var(--primary-blue);
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.3rem;
+    font-weight: 700;
 }
 
 .section-header p {
@@ -314,7 +331,7 @@ h6 {
 }
 
 .step-card h5 {
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin-bottom: 4px;
     color: var(--primary-blue);
 }
@@ -1546,4 +1563,162 @@ html {
     .bg-gray-section {
         background-color: #f8fafc !important;
     }
+}
+
+/* ══════════════════════════════════════════════════════
+   ESTILOS ESPECÍFICOS DO WMS DIDÁTICO & PHYGITAL LAB
+   ══════════════════════════════════════════════════════ */
+.wms-table-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.barcode-tag {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background-color: #eff6ff;
+    color: #1e3a8a;
+    border: 1px dashed #3b82f6;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+/* ══════════════════════════════════════════════════════
+   DESIGN DA SITUAÇÃO DE APRENDIZAGEM & WIZARD OPERACIONAL
+   ══════════════════════════════════════════════════════ */
+.step-progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1rem;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+    gap: 0.5rem;
+}
+
+.step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none !important;
+    color: var(--text-muted);
+    min-width: 80px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.step-item:hover {
+    transform: translateY(-2px);
+}
+
+.step-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.step-item.done .step-circle {
+    background-color: #dcfce7;
+    color: #166534;
+    border-color: #22c55e;
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.2);
+}
+
+.step-item.active .step-circle {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+    border-color: #3b82f6;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.25);
+    animation: pulseCircle 2s infinite;
+}
+
+@keyframes pulseCircle {
+    0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+    70% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+.step-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--text-dark);
+}
+
+.step-sub {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.step-connector {
+    flex: 1;
+    height: 3px;
+    background-color: #e2e8f0;
+    min-width: 20px;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+.step-connector.done {
+    background-color: #22c55e;
+}
+
+/* CARDS ESPECÍFICOS DE CADA ETAPA */
+.step-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 1.25rem 1.4rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.step-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.step-card-recebimento {
+    border-left: 6px solid #2563eb !important;
+}
+
+.step-card-estoque {
+    border-left: 6px solid #6366f1 !important;
+}
+
+.step-card-picking {
+    border-left: 6px solid #f59e0b !important;
+}
+
+.step-card-expedicao {
+    border-left: 6px solid #10b981 !important;
+}
+
+/* CAMPO DE BIPAGEM DESTACADO COM FEEDBACK VISUAL */
+.barcode-input-pulse {
+    border: 2px solid #2563eb !important;
+    background-color: #f8fafc;
+    transition: all 0.3s ease;
+}
+
+.barcode-input-pulse:focus {
+    background-color: #ffffff;
+    border-color: #1d4ed8 !important;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2) !important;
 }

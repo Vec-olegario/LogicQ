@@ -2,346 +2,414 @@
 {% block title %} | Simulação de Turno{% endblock %}
 
 {% block content %}
-<div class="section-header">
-    <h2>📋 Situação de Aprendizagem</h2>
-    <p>Simulação completa de um turno operacional — preencha cada etapa em sequência</p>
+<!-- ═══════════════════════════════════════════════════════════
+     CABEÇALHO DA SITUAÇÃO DE APRENDIZAGEM
+     ═══════════════════════════════════════════════════════════ -->
+<div class="section-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
+    <div>
+        <span class="badge bg-primary px-2.5 py-1 mb-1 fw-semibold shadow-sm">📋 Atividade Prática</span>
+        <h3 class="fw-bold mb-1" style="color: var(--primary-blue);">Situação de Aprendizagem & WMS</h3>
+        <p class="text-muted mb-0">
+            Gerencie e controle as 4 etapas da operação do CD: da conferência de entrada e alocação em estoque até a
+            separação e liberação na expedição.
+        </p>
+    </div>
 </div>
 
-<!-- Introdução + Vídeo -->
-<div class="row g-4 mb-4">
-    <div class="col-12 col-lg-7">
-        <h3>🎯 Contexto da Atividade</h3>
-        <p>
-            Nesta <strong>situação de aprendizagem</strong> você irá vivenciar um turno completo de
-            operação em um Centro de Distribuição (CD), passando pelos 4 principais setores:
-        </p>
-        <blockquote class="bq">
-            <strong>Cenário:</strong> Você é o supervisor de operações do turno da manhã.
-            Um caminhão chegou com mercadorias do fornecedor <strong>Distribuidora ABC Ltda</strong>.
-            Após o recebimento, os itens precisam ser armazenados, depois separados para
-            atender pedidos e, por fim, despachados ao cliente.
-        </blockquote>
-        <p class="mb-0">
-            <strong>Siga as etapas abaixo em ordem</strong>, preenchendo cada formulário de registro
-            conforme avança pela operação.
-        </p>
-
-    </div>
-    <div class="col-12 col-lg-5">
-        <div class="video-wrapper ratio ratio-16x9 my-2">
+<!-- ═══════════════════════════════════════════════════════════
+     CONTEXTO DA ATIVIDADE + VÍDEO DIDÁTICO
+     ═══════════════════════════════════════════════════════════ -->
+<div class="row justify-content-center g-3 mb-4">
+    <div class="col-12 col-md-10 col-lg-8">
+        <!-- Vídeo Centralizado -->
+        <div class="video-wrapper ratio ratio-16x9 rounded-3 overflow-hidden shadow-sm mb-3">
             <iframe src="https://www.youtube.com/embed/NMqsdKAaaaw" title="Fluxo do CD" allowfullscreen></iframe>
+        </div>
+
+        <!-- Dica Prática Embaixo do Vídeo -->
+        <div class="p-2.5 rounded-3" style="background-color: #fffbeb; border-left: 4px solid #f59e0b;">
+            <p class="mb-0 text-dark small">
+                💡 <strong>Dica Prática:</strong> Utilize o leitor de código de barras para ler os códigos dos
+                produtos diretamente nos campos de bipagem.
+            </p>
         </div>
     </div>
 </div>
 
-<!-- BARRA DE PROGRESSO DAS ETAPAS -->
+<!-- ═══════════════════════════════════════════════════════════
+     BARRA DE PROGRESSO EM 4 ETAPAS (WIZARD DE ETAPAS)
+     ═══════════════════════════════════════════════════════════ -->
 <div class="d-flex justify-content-between align-items-center mb-2">
-    <h4 class="mb-0 fw-bold">📌 Sua jornada pelo turno — 4 etapas</h4>
-    <a href="/situacao/reiniciar" class="btn btn-sm btn-outline-secondary text-muted"
-        style="font-size: 0.82rem; padding: 4px 12px;">
-        🗑️ Limpar progresso
-    </a>
-</div>
-<hr class="mt-2 mb-4">
+    <h5 class="fw-bold mb-0">📍 Progresso do Turno</h5>
 
-<div class="step-progress mb-4">
-    <a href="#etapa1" class="step-item {% if 'recebimento' in etapas_concluidas %}done{% endif %}" id="step1">
+    <div class="d-flex align-items-center gap-1.5">
+        <a href="/situacao/reiniciar" class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1 px-2 py-1"
+            onclick="return confirm('Deseja realmente zerar o progresso e os itens bipados do turno?');"
+            title="Reiniciar Turno">
+            <span>🗑️</span> <span class="small">Reiniciar</span>
+        </a>
+    </div>
+</div>
+<div class="step-progress mb-3">
+
+    <a href="#etapa1" class="step-item {% if 'recebimento' in etapas_concluidas %}done{% else %}active{% endif %}"
+        id="step1">
         <div class="step-circle">📦</div>
         <div class="step-label">Etapa 1</div>
         <div class="step-sub">Recebimento</div>
     </a>
     <div class="step-connector {% if 'recebimento' in etapas_concluidas %}done{% endif %}"></div>
-    <a href="#etapa2" class="step-item {% if 'estoque' in etapas_concluidas %}done{% endif %}" id="step2">
+
+    <a href="#etapa2"
+        class="step-item {% if 'estoque' in etapas_concluidas %}done{% elif 'recebimento' in etapas_concluidas %}active{% endif %}"
+        id="step2">
         <div class="step-circle">🗄️</div>
         <div class="step-label">Etapa 2</div>
         <div class="step-sub">Estoque</div>
     </a>
     <div class="step-connector {% if 'estoque' in etapas_concluidas %}done{% endif %}"></div>
-    <a href="#etapa3" class="step-item {% if 'picking' in etapas_concluidas %}done{% endif %}" id="step3">
+
+    <a href="#etapa3"
+        class="step-item {% if 'picking' in etapas_concluidas %}done{% elif 'estoque' in etapas_concluidas %}active{% endif %}"
+        id="step3">
         <div class="step-circle">🛒</div>
         <div class="step-label">Etapa 3</div>
         <div class="step-sub">Picking</div>
     </a>
-    <div class="step-connector {% if 'expedicao' in etapas_concluidas %}done{% endif %}"></div>
-    <a href="#etapa4" class="step-item {% if 'expedicao' in etapas_concluidas %}done{% endif %}" id="step4">
+    <div class="step-connector {% if 'picking' in etapas_concluidas %}done{% endif %}"></div>
+
+    <a href="#etapa4"
+        class="step-item {% if 'expedicao' in etapas_concluidas %}done{% elif 'picking' in etapas_concluidas %}active{% endif %}"
+        id="step4">
         <div class="step-circle">🚛</div>
         <div class="step-label">Etapa 4</div>
         <div class="step-sub">Expedição</div>
     </a>
 </div>
 
-<!-- ETAPA 1: RECEBIMENTO -->
-<div class="step-card mb-4" id="etapa1">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5>1️⃣ Etapa 1: Recebimento de Mercadoria</h5>
+<!-- ═══════════════════════════════════════════════════════════
+     ETAPA 1: RECEBIMENTO & BIPAGEM DE ENTRADA
+     ═══════════════════════════════════════════════════════════ -->
+<div class="step-card step-card-recebimento mb-3" id="etapa1">
+    <div class="d-flex justify-content-between align-items-center mb-2.5">
+        <div class="d-flex align-items-center gap-2">
+            <span class="fs-5">1️⃣</span>
+            <h5 class="fw-bold mb-0">Etapa: Recebimento & Bipagem de Entrada</h5>
+        </div>
         {% if 'recebimento' in etapas_concluidas %}
-        <span class="badge bg-success">Concluído</span>
+        <span class="badge bg-success px-2.5 py-1 fw-semibold">✓ Concluído</span>
         {% else %}
-        <span class="badge bg-warning text-dark">Pendente</span>
+        <span class="badge bg-primary px-2.5 py-1 fw-semibold">⚡ Em Andamento</span>
         {% endif %}
     </div>
-    <p class="text-muted small mb-3">
-        O caminhão da <strong>Distribuidora ABC Ltda</strong> (Nota Fiscal nº 10542) chegou com 50 caixas de detergente
-        industrial.
-        Sua tarefa é fazer a conferência física e dar entrada no sistema.
+    <p class="text-muted mb-2.5">
+        O caminhão da <strong>Distribuidora ABC Ltda</strong> (Nota Fiscal nº 10542) descarregou as mercadorias no
+        galpão.
+        Aponte o leitor de código de barras para a etiqueta do produto e bipe para registrar entrada no WMS!
     </p>
 
     <form method="POST" action="/situacao/registrar/recebimento">
         <div class="row g-3">
             <div class="col-12 col-md-6">
-                <label class="form-label fw-bold">Número da Nota Fiscal</label>
-                <input type="text" class="form-control" name="nf" placeholder="Ex: NF-10542" required
-                    value="{{ session.get('situacao_dados', {}).get('recebimento', {}).get('nf', '') }}">
+                <label class="form-label fw-bold text-primary d-flex align-items-center gap-1 mb-1">
+                    <span>🏷️</span> Código de Barras do SKU / Mercadoria (Bipe ou digite)
+                </label>
+                <input type="text" class="form-control fw-bold barcode-input-pulse shadow-sm" name="codigo"
+                    placeholder="Ex: 78910001 ou SKU-101 (Foco automático)" autofocus required>
             </div>
             <div class="col-12 col-md-6">
-                <label class="form-label fw-bold">Fornecedor</label>
-                <input type="text" class="form-control" name="fornecedor" placeholder="Ex: Distribuidora ABC" required
-                    value="{{ session.get('situacao_dados', {}).get('recebimento', {}).get('fornecedor', '') }}">
+                <label class="form-label fw-bold text-dark mb-1">Descrição / Nome da Mercadoria</label>
+                <input type="text" class="form-control" name="descricao" placeholder="Ex: Caixa Parafusos 50mm"
+                    required>
             </div>
-            <div class="col-12 col-md-4">
-                <label class="form-label fw-bold">Qtd. Esperada (NF)</label>
-                <input type="number" class="form-control" name="qtd_esperada" value="50" readonly>
+            <div class="col-12 col-md-3">
+                <label class="form-label fw-bold text-dark mb-1">Número da NF</label>
+                <input type="text" class="form-control" name="nf" placeholder="Ex: NF-10542" required>
             </div>
-            <div class="col-12 col-md-4">
-                <label class="form-label fw-bold">Qtd. Contada (Física)</label>
-                <input type="number" class="form-control" name="qtd_contada" placeholder="Ex: 50" required
-                    value="{{ session.get('situacao_dados', {}).get('recebimento', {}).get('qtd_contada', '') }}">
+            <div class="col-12 col-md-3">
+                <label class="form-label fw-bold text-dark mb-1">Código SKU</label>
+                <input type="text" class="form-control" name="sku" placeholder="Ex: CX-PARAF-A" required>
             </div>
-            <div class="col-12 col-md-4">
-                <label class="form-label fw-bold">Status da Carga</label>
-                <select class="form-select" name="status_carga" required>
-                    <option value="">Selecione...</option>
-                    <option value="conforme" {% if session.get('situacao_dados', {}).get('recebimento',
-                        {}).get('status_carga')=='conforme' %}selected{% endif %}>Conforme (Sem Avarias)</option>
-                    <option value="avaria" {% if session.get('situacao_dados', {}).get('recebimento',
-                        {}).get('status_carga')=='avaria' %}selected{% endif %}>Avaria Identificada</option>
-                    <option value="divergente" {% if session.get('situacao_dados', {}).get('recebimento',
-                        {}).get('status_carga')=='divergente' %}selected{% endif %}>Divergência de Qtd.</option>
+            <div class="col-12 col-md-3">
+                <label class="form-label fw-bold text-dark mb-1">Qtd. Contada (Unid.)</label>
+                <input type="number" class="form-control" name="quantidade" placeholder="Ex: 10" min="1" required>
+            </div>
+            <div class="col-12 col-md-3">
+                <label class="form-label fw-bold text-dark mb-1">Inspeção da Caixa</label>
+                <select class="form-select" name="condicao" required>
+                    <option value="Aprovado - Lacrado" selected>Conforme (Sem Avarias)</option>
+                    <option value="Avaria Identificada">Avaria Identificada</option>
+                    <option value="Divergência de Qtd.">Divergência de Quantidade</option>
                 </select>
             </div>
-            <div class="col-12 text-end">
-                <button type="submit" class="btn btn-primary px-4">
-                    💾 Registrar Recebimento
+            <div class="col-12 text-end mt-2">
+                <button type="submit" class="btn btn-primary fw-bold px-4 py-2 w-100 w-md-auto shadow-sm">
+                    <span aria-hidden="true">📦</span> Registrar Bipagem de Entrada
                 </button>
             </div>
         </div>
     </form>
 </div>
 
-<!-- ETAPA 2: ESTOQUE -->
-<div class="step-card mb-4" id="etapa2">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5>2️⃣ Etapa 2: Endereçamento no Estoque</h5>
+<!-- ═══════════════════════════════════════════════════════════
+     ETAPA 2: ESTOQUE & ENDEREÇAMENTO WMS
+     ═══════════════════════════════════════════════════════════ -->
+<div class="step-card step-card-estoque mb-3" id="etapa2">
+    <div class="d-flex justify-content-between align-items-center mb-2.5">
+        <div class="d-flex align-items-center gap-2">
+            <span class="fs-5">2️⃣</span>
+            <h5 class="fw-bold mb-0">Etapa: Endereçamento no Porta-Pallets</h5>
+        </div>
         {% if 'estoque' in etapas_concluidas %}
-        <span class="badge bg-success">Concluído</span>
+        <span class="badge bg-success px-2.5 py-1 fw-semibold">✓ Concluído</span>
+        {% elif 'recebimento' in etapas_concluidas %}
+        <span class="badge bg-primary px-2.5 py-1 fw-semibold">⚡ Em Andamento</span>
         {% else %}
-        <span class="badge bg-warning text-dark">Pendente</span>
+        <span class="badge bg-warning text-dark px-2.5 py-1 fw-semibold">⏳ Pendente</span>
         {% endif %}
     </div>
-    <p class="text-muted small mb-3">
-        As 50 caixas de detergente precisam ser guardadas no porta-pallets. Defina o endereço de armazenagem no WMS.
+    <p class="text-muted mb-2.5">
+        Os SKUs bipados no recebimento precisam ser alocados nas estantes. Selecione a mercadoria e cadastre o
+        endereço
+        fixo (Rua, Prateleira e Nível) no WMS.
     </p>
 
     <form method="POST" action="/situacao/registrar/estoque">
         <div class="row g-3">
-            <div class="col-12 col-md-3">
-                <label class="form-label fw-bold">Rua</label>
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-primary mb-1"><span aria-hidden="true">📦</span> SKU Bipado no Recebimento</label>
+                <select class="form-select fw-bold border-primary shadow-sm" name="item_id">
+                    <option value="">Selecione o SKU para alocar no estoque...</option>
+                    {% if itens %}
+                    {% for it in itens %}
+                    <option value="{{ it.id }}">{{ it.codigo }} — {{ it.descricao }} ({{ it.qtd }} unid)</option>
+                    {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-dark mb-1">Rua / Corredor de Armazenagem</label>
                 <select class="form-select" name="rua" required>
-                    <option value="">Selecione...</option>
-                    <option value="Rua A" {% if session.get('situacao_dados', {}).get('estoque', {}).get('rua')=='Rua A'
-                        %}selected{% endif %}>Rua A (Giro Alto - ABC)</option>
-                    <option value="Rua B" {% if session.get('situacao_dados', {}).get('estoque', {}).get('rua')=='Rua B'
-                        %}selected{% endif %}>Rua B (Giro Médio)</option>
-                    <option value="Rua C" {% if session.get('situacao_dados', {}).get('estoque', {}).get('rua')=='Rua C'
-                        %}selected{% endif %}>Rua C (Giro Baixo)</option>
+                    <option value="01" selected>Rua 01 (Giro Alto — Curva A)</option>
+                    <option value="02">Rua 02 (Giro Médio — Curva B)</option>
+                    <option value="03">Rua 03 (Giro Baixo — Curva C)</option>
+                    <option value="04">Rua 04 (Giro Baixo — Curva C)</option>
                 </select>
             </div>
-            <div class="col-12 col-md-3">
-                <label class="form-label fw-bold">Módulo (Prateleira)</label>
-                <input type="text" class="form-control" name="modulo" placeholder="Ex: Mod-04" required
-                    value="{{ session.get('situacao_dados', {}).get('estoque', {}).get('modulo', '') }}">
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold text-dark mb-1">Módulo (Prateleira)</label>
+                <select class="form-select" name="prateleira" required>
+                    <option value="A" selected>Estante Módulo A</option>
+                    <option value="B">Estante Módulo B</option>
+                    <option value="C">Estante Módulo C</option>
+                </select>
             </div>
-            <div class="col-12 col-md-3">
-                <label class="form-label fw-bold">Nível (Altura)</label>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold text-dark mb-1">Nível (Altura no Porta-Pallets)</label>
                 <select class="form-select" name="nivel" required>
-                    <option value="">Selecione...</option>
-                    <option value="Nível 1 (Piso)" {% if session.get('situacao_dados', {}).get('estoque',
-                        {}).get('nivel')=='Nível 1 (Piso)' %}selected{% endif %}>Nível 1 (Piso — Picking)</option>
-                    <option value="Nível 2 (Meio)" {% if session.get('situacao_dados', {}).get('estoque',
-                        {}).get('nivel')=='Nível 2 (Meio)' %}selected{% endif %}>Nível 2 (Meio — Pulmão)</option>
-                    <option value="Nível 3 (Alto)" {% if session.get('situacao_dados', {}).get('estoque',
-                        {}).get('nivel')=='Nível 3 (Alto)' %}selected{% endif %}>Nível 3 (Alto — Pulmão)</option>
+                    <option value="1" selected>Nível 1 (Piso — Picking Direto)</option>
+                    <option value="2">Nível 2 (Meio — Pulmão Reservado)</option>
+                    <option value="3">Nível 3 (Alto — Pulmão Reservado)</option>
                 </select>
             </div>
-            <div class="col-12 col-md-3">
-                <label class="form-label fw-bold">Qtd. Armazenada</label>
-                <input type="number" class="form-control" name="qtd_armazenada" placeholder="Ex: 50" required
-                    value="{{ session.get('situacao_dados', {}).get('estoque', {}).get('qtd_armazenada', '') }}">
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold text-dark mb-1">Qtd. Armazenada</label>
+                <input type="number" class="form-control" name="quantidade" placeholder="Ex: 10" min="1" required>
             </div>
-            <div class="col-12 text-end">
-                <button type="submit" class="btn btn-primary px-4">
-                    💾 Registrar Armazenagem
+            <div class="col-12 text-end mt-2">
+                <button type="submit" class="btn btn-primary fw-bold px-4 py-2 w-100 w-md-auto shadow-sm">
+                    <span aria-hidden="true">🗄️</span> Registrar Endereçamento
                 </button>
             </div>
         </div>
     </form>
 </div>
 
-<!-- ETAPA 3: PICKING -->
-<div class="step-card mb-4" id="etapa3">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5>3️⃣ Etapa 3: Separação de Pedido (Picking)</h5>
+<!-- ═══════════════════════════════════════════════════════════
+     ETAPA 3: PICKING & ACURÁCIA DE BIPAGEM
+     ═══════════════════════════════════════════════════════════ -->
+<div class="step-card step-card-picking mb-3" id="etapa3">
+    <div class="d-flex justify-content-between align-items-center mb-2.5">
+        <div class="d-flex align-items-center gap-2">
+            <span class="fs-5">3️⃣</span>
+            <h5 class="fw-bold mb-0">Etapa: Separação de Pedido (Picking)</h5>
+        </div>
         {% if 'picking' in etapas_concluidas %}
-        <span class="badge bg-success">Concluído</span>
+        <span class="badge bg-success px-2.5 py-1 fw-semibold">✓ Concluído</span>
+        {% elif 'estoque' in etapas_concluidas %}
+        <span class="badge bg-primary px-2.5 py-1 fw-semibold">⚡ Em Andamento</span>
         {% else %}
-        <span class="badge bg-warning text-dark">Pendente</span>
+        <span class="badge bg-warning text-dark px-2.5 py-1 fw-semibold">⏳ Pendente</span>
         {% endif %}
     </div>
-    <p class="text-muted small mb-3">
-        Chegou um pedido do cliente <strong>Mercado SuperMais (Pedido nº 8821)</strong> solicitando 12 caixas de
-        detergente.
-        Faça a coleta dos itens no endereço cadastrado.
+    <p class="text-muted mb-2.5">
+        O cliente <strong>Mercado SuperMais (Pedido nº PED-8821)</strong> enviou um pedido. Selecione o item
+        solicitado,
+        vá até a estante, retire a mercadoria e <strong>bipe o código para validar a acurácia (precisão)!</strong>
     </p>
 
     <form method="POST" action="/situacao/registrar/picking">
         <div class="row g-3">
-            <div class="col-12 col-md-4">
-                <label class="form-label fw-bold">Número do Pedido</label>
-                <input type="text" class="form-control" name="num_pedido" value="PED-8821" readonly>
-            </div>
-            <div class="col-12 col-md-4">
-                <label class="form-label fw-bold">Cliente</label>
-                <input type="text" class="form-control" name="cliente" value="Mercado SuperMais" readonly>
-            </div>
-            <div class="col-12 col-md-4">
-                <label class="form-label fw-bold">Qtd. Solicitada</label>
-                <input type="number" class="form-control" name="qtd_solicitada" value="12" readonly>
-            </div>
             <div class="col-12 col-md-6">
-                <label class="form-label fw-bold">Qtd. Coletada (Separada)</label>
-                <input type="number" class="form-control" name="qtd_coletada" placeholder="Ex: 12" required
-                    value="{{ session.get('situacao_dados', {}).get('picking', {}).get('qtd_coletada', '') }}">
-            </div>
-            <div class="col-12 col-md-6">
-                <label class="form-label fw-bold">Método de Separação</label>
-                <select class="form-select" name="metodo" required>
-                    <option value="">Selecione...</option>
-                    <option value="Coletor RF (Código de Barras)" {% if session.get('situacao_dados', {}).get('picking',
-                        {}).get('metodo')=='Coletor RF (Código de Barras)' %}selected{% endif %}>Coletor RF (Código de
-                        Barras)</option>
-                    <option value="Paper Picking (Lista em Papel)" {% if session.get('situacao_dados',
-                        {}).get('picking', {}).get('metodo')=='Paper Picking (Lista em Papel)' %}selected{% endif %}>
-                        Paper Picking (Lista em Papel)</option>
-                    <option value="Voice Picking (Comando por Voz)" {% if session.get('situacao_dados',
-                        {}).get('picking', {}).get('metodo')=='Voice Picking (Comando por Voz)' %}selected{% endif %}>
-                        Voice Picking (Comando por Voz)</option>
+                <label class="form-label fw-bold text-primary mb-1"><span aria-hidden="true">📋</span> Item Solicitado no Pedido PED-8821</label>
+                <select class="form-select border-primary shadow-sm" name="item_id" required>
+                    <option value="">Selecione a mercadoria do pedido...</option>
+                    {% if itens %}
+                    {% for it in itens %}
+                    <option value="{{ it.id }}">{{ it.codigo }} — {{ it.descricao }} (Endereço: R{{ it.rua }}/P{{
+                        it.prateleira }}/N{{ it.nivel }})</option>
+                    {% endfor %}
+                    {% endif %}
                 </select>
             </div>
-            <div class="col-12 text-end">
-                <button type="submit" class="btn btn-primary px-4">
-                    💾 Registrar Separação
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-bold mb-1" style="color: #d97706 !important;"><span aria-hidden="true">🏷️</span> Bipar Código do SKU no Picking</label>
+                <input type="text" class="form-control fw-bold shadow-sm" name="codigo_bipado"
+                    placeholder="Bipe o código na estante para confirmar a acurácia..."
+                    style="border: 2px solid #f59e0b; background-color: #fffbeb;">
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold text-dark mb-1">Número do Pedido</label>
+                <input type="text" class="form-control" name="pedido" placeholder="Ex: PED-8821" required>
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold text-dark mb-1">Cliente Destino</label>
+                <input type="text" class="form-control" name="cliente" placeholder="Ex: Mercado SuperMais" required>
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold text-dark mb-1">Qtd. Solicitada</label>
+                <input type="number" class="form-control" name="quantidade" placeholder="Ex: 10" min="1" required>
+            </div>
+            <div class="col-12 text-end mt-2">
+                <button type="submit" class="btn btn-primary fw-bold px-4 py-2 w-100 w-md-auto shadow-sm">
+                    <span aria-hidden="true">🎯</span> Validar Bipagem de Picking
                 </button>
             </div>
         </div>
     </form>
 </div>
 
-<!-- ETAPA 4: EXPEDIÇÃO -->
-<div class="step-card mb-4" id="etapa4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5>4️⃣ Etapa 4: Expedição e Despacho</h5>
+<!-- ═══════════════════════════════════════════════════════════
+     ETAPA 4: EXPEDIÇÃO & DESPACHO NA DOCA
+     ═══════════════════════════════════════════════════════════ -->
+<div class="step-card step-card-expedicao mb-3" id="etapa4">
+    <div class="d-flex justify-content-between align-items-center mb-2.5">
+        <div class="d-flex align-items-center gap-2">
+            <span class="fs-5">4️⃣</span>
+            <h5 class="fw-bold mb-0">Etapa: Expedição & Liberar Veículo</h5>
+        </div>
         {% if 'expedicao' in etapas_concluidas %}
-        <span class="badge bg-success">Concluído</span>
+        <span class="badge bg-success px-2.5 py-1 fw-semibold">✓ Concluído</span>
+        {% elif 'picking' in etapas_concluidas %}
+        <span class="badge bg-primary px-2.5 py-1 fw-semibold">⚡ Em Andamento</span>
         {% else %}
-        <span class="badge bg-warning text-dark">Pendente</span>
+        <span class="badge bg-warning text-dark px-2.5 py-1 fw-semibold">⏳ Pendente</span>
         {% endif %}
     </div>
-    <p class="text-muted small mb-3">
-        O pedido nº 8821 foi separado e está na doca de saída. Faça a conferência final, emita a etiqueta de despacho e
-        libere o veículo.
+    <p class="text-muted mb-2.5">
+        As mercadorias separadas estão na doca de saída. Faça o checkout final dos volumes, emita a etiqueta de
+        despacho
+        e
+        libere a carreta da transportadora.
     </p>
 
     <form method="POST" action="/situacao/registrar/expedicao">
         <div class="row g-3">
-            <div class="col-12 col-md-4">
-                <label class="form-label fw-bold">Transportadora</label>
-                <input type="text" class="form-control" name="transportadora" placeholder="Ex: TransLog Express"
-                    required
-                    value="{{ session.get('situacao_dados', {}).get('expedicao', {}).get('transportadora', '') }}">
+            <div class="col-12 col-md-12">
+                <label class="form-label fw-bold text-success mb-1"><span aria-hidden="true">📦</span> Selecionar SKU / Volume para Despachar na Expedição</label>
+                <select class="form-select border-success shadow-sm" name="item_id">
+                    <option value="">Selecione uma mercadoria para concluir o despacho...</option>
+                    {% if itens %}
+                    {% for it in itens %}
+                    <option value="{{ it.id }}">{{ it.codigo }} — {{ it.descricao }} (Status atual: {{ it.status }})
+                    </option>
+                    {% endfor %}
+                    {% endif %}
+                </select>
             </div>
             <div class="col-12 col-md-4">
-                <label class="form-label fw-bold">Placa do Veículo</label>
-                <input type="text" class="form-control" name="placa" placeholder="Ex: ABC-1234" required
-                    value="{{ session.get('situacao_dados', {}).get('expedicao', {}).get('placa', '') }}">
+                <label class="form-label fw-bold text-dark mb-1">Transportadora</label>
+                <input type="text" class="form-control" name="transportadora" placeholder="Ex: TransLog Express" required>
             </div>
             <div class="col-12 col-md-4">
-                <label class="form-label fw-bold">Doca de Saída</label>
+                <label class="form-label fw-bold text-dark mb-1">Placa do Veículo</label>
+                <input type="text" class="form-control" name="placa" placeholder="Ex: ABC-1234" required>
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold text-dark mb-1">Doca de Saída</label>
                 <select class="form-select" name="doca_saida" required>
-                    <option value="">Selecione...</option>
-                    <option value="Doca 01 (Expedição)" {% if session.get('situacao_dados', {}).get('expedicao',
-                        {}).get('doca_saida')=='Doca 01 (Expedição)' %}selected{% endif %}>Doca 01</option>
-                    <option value="Doca 02 (Expedição)" {% if session.get('situacao_dados', {}).get('expedicao',
-                        {}).get('doca_saida')=='Doca 02 (Expedição)' %}selected{% endif %}>Doca 02</option>
-                    <option value="Doca 03 (Expedição)" {% if session.get('situacao_dados', {}).get('expedicao',
-                        {}).get('doca_saida')=='Doca 03 (Expedição)' %}selected{% endif %}>Doca 03</option>
+                    <option value="Doca 01 (Expedição)" selected>Doca 01</option>
+                    <option value="Doca 02 (Expedição)">Doca 02</option>
+                    <option value="Doca 03 (Expedição)">Doca 03</option>
+                    <option value="Doca 04 (Expedição)">Doca 04</option>
                 </select>
             </div>
             <div class="col-12 col-md-6">
-                <label class="form-label fw-bold">Conferência Final (Checkout)</label>
+                <label class="form-label fw-bold text-dark mb-1">Conferência Final (Checkout)</label>
                 <select class="form-select" name="conferencia_final" required>
-                    <option value="">Selecione...</option>
-                    <option value="100% OK (Volume e Peso Exatos)" {% if session.get('situacao_dados',
-                        {}).get('expedicao', {}).get('conferencia_final')=='100% OK (Volume e Peso Exatos)' %}selected{%
-                        endif %}>100% OK (Volume e Peso Exatos)</option>
-                    <option value="Divergência Encontrada" {% if session.get('situacao_dados', {}).get('expedicao',
-                        {}).get('conferencia_final')=='Divergência Encontrada' %}selected{% endif %}>Divergência
-                        Encontrada</option>
+                    <option value="100% OK (Volume e Peso Exatos)" selected>100% OK (Volume e Peso Exatos)</option>
+                    <option value="Divergência Encontrada">Divergência Encontrada</option>
                 </select>
             </div>
             <div class="col-12 col-md-6">
-                <label class="form-label fw-bold">Status do Envio</label>
+                <label class="form-label fw-bold text-dark mb-1">Status do Envio (OTIF)</label>
                 <select class="form-select" name="status_envio" required>
-                    <option value="">Selecione...</option>
-                    <option value="Despachado no Prazo (OTIF OK)" {% if session.get('situacao_dados',
-                        {}).get('expedicao', {}).get('status_envio')=='Despachado no Prazo (OTIF OK)' %}selected{% endif
-                        %}>Despachado no Prazo (OTIF OK)</option>
-                    <option value="Atrasado" {% if session.get('situacao_dados', {}).get('expedicao',
-                        {}).get('status_envio')=='Atrasado' %}selected{% endif %}>Despachado com Atraso</option>
+                    <option value="Despachado no Prazo (OTIF OK)" selected>Despachado no Prazo (OTIF OK)</option>
+                    <option value="Atrasado">Despachado com Atraso</option>
                 </select>
             </div>
-            <div class="col-12 text-end">
-                <button type="submit" class="btn btn-success px-4">
-                    🏁 Finalizar Expedição do Turno
+            <div class="col-12 text-end mt-2">
+                <button type="submit" class="btn btn-success fw-bold px-4 py-2 w-100 w-md-auto shadow-sm">
+                    <span aria-hidden="true">🏁</span> Finalizar Expedição do Turno
                 </button>
             </div>
         </div>
     </form>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════
+     CARD DE CONCLUSÃO OU SECTOR NAV BAR
+     ═══════════════════════════════════════════════════════════ -->
 {% if todas_concluidas %}
-<div class="alert alert-success mt-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
-    <div>
-        🏁 <strong>Parabéns!</strong> Você concluiu todas as etapas do turno operacional.
-    </div>
-    <div class="d-flex gap-2">
-        <a href="/situacao/reiniciar" class="btn btn-sm btn-outline-secondary">Refazer Turno</a>
-        <a href="/quiz" class="btn btn-sm btn-success">Fazer o Quiz →</a>
+<div class="card border-0 shadow-sm p-3.5 mt-3"
+    style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #ffffff; border-radius: 14px;">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+        <div>
+            <span class="badge bg-white text-success fw-bold px-2.5 py-1 mb-1">🎉 Turno Concluído com
+                Sucesso!</span>
+            <h5 class="fw-bold text-white mb-1">Parabéns pelo trabalho na operação do galpão!</h5>
+            <p class="mb-0 text-white-50">
+                Você percorreu os 4 setores logísticos do CD. Acesse o Painel do Turno para analisar os gráficos ou
+                baixe a planilha em Excel para arquivar e avaliar seus indicadores de desempenho.
+            </p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ url_for('dashboard_turno') }}" class="btn btn-light fw-bold text-primary shadow-sm">📊 Ver
+                Painel do Turno</a>
+            <a href="{{ url_for('dashboard_turno_exportar_planilha') }}" class="btn btn-primary fw-bold shadow-sm">📥
+                Baixar Planilha (.CSV)</a>
+            <a href="/situacao/reiniciar" class="btn btn-outline-light btn-sm">Refazer Turno</a>
+        </div>
     </div>
 </div>
 {% else %}
-<div class="sector-nav-bar mt-4">
+<div class="sector-nav-bar mt-3">
     <div>
-        <h5 class="mb-1 text-dark fw-bold">🎯 Pronto para o Desafio Teórico?</h5>
-        <p class="text-muted small mb-0">Você pode praticar no Quiz a qualquer momento.</p>
+        <h5 class="mb-1 fw-bold">🎯 Quer Testar Seus Conhecimentos Teóricos?</h5>
+        <p class="text-muted mb-0">Você pode exercitar no Quiz Logístico ou navegar pelos setores a qualquer
+            momento.</p>
     </div>
     <div class="d-flex flex-wrap gap-2">
         <a href="/" class="btn btn-nav-prev">
             ← Início
         </a>
-        <a href="/quiz" class="btn btn-primary">
+        <a href="/quiz" class="btn btn-primary fw-bold">
             🧠 Fazer o Quiz →
         </a>
     </div>
 </div>
 {% endif %}
+
+
+
 {% endblock %}
