@@ -1516,13 +1516,16 @@ html {
     }
 
     .hero-banner-custom {
-        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%) !important;
-        color: #ffffff !important;
+        background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%) !important;
+        border: 1px solid rgba(37, 99, 235, 0.15) !important;
     }
 
-    .hero-title-main,
+    .hero-title-main {
+        color: #1e3a8a !important;
+    }
+
     .hero-subtitle-main {
-        color: #ffffff !important;
+        color: #475569 !important;
     }
 
     .card,
