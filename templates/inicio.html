@@ -3,134 +3,112 @@
 {% block content %}
 
 <!-- ══════════════════════════════════════════════════════
-     HERO BANNER PRINCIPAL (Elegante & Clean)
+     CABEÇALHO DA PÁGINA (Clean & Humano)
      ══════════════════════════════════════════════════════ -->
-<div class="hero-banner-custom mb-4 text-center">
-    <div class="hero-badge mb-2">✨ Centro de Treinamento & Simulação Logística</div>
-    <h1 class="hero-title-main">LogiQ — O Seu Galpão Logístico Didático</h1>
-    <p class="hero-subtitle-main mx-auto">
-        Aprenda o funcionamento completo de um Centro de Distribuição (CD) de forma prática e intuitiva:
-        acompanhe a jornada da mercadoria do <strong>Recebimento à Expedição</strong> com indicadores em tempo real.
+<div class="mb-4">
+    <h1 class="fw-bold text-dark mb-2">Central de Treinamento Logístico</h1>
+    <p class="text-secondary lead fs-6 mb-0">
+        Simulação prática e didática das operações de um Centro de Distribuição (CD). Acompanhe a rotina dos setores e seus indicadores de desempenho.
     </p>
 </div>
 
 <!-- ══════════════════════════════════════════════════════
-     SOBRE O PROJETO
-     ══════════════════════════════════════════════════════ -->
-<div class="card-custom mb-5">
-    <div class="d-flex align-items-center gap-2 mb-2">
-        <span class="fs-4">🎓</span>
-        <h3 class="h5 mb-0 fw-bold text-dark">Sobre o Projeto</h3>
-    </div>
-    <p class="text-secondary mb-0">
-        O <strong>LogiQ</strong> é uma plataforma didática interativa desenvolvida para desmistificar a operação de armazéns.
-        Com uma linguagem direta e objetiva, explicamos o dia a dia logístico de forma visual e conectada a simuladores de produtividade,
-        relatórios operacionais e testes práticos de conhecimento.
-    </p>
-</div>
-
-<!-- ══════════════════════════════════════════════════════
-     CADEIA DE VALOR LOGÍSTICA (PIPELINE OPERACIONAL 4 PASSOS)
+     SETORES OPERACIONAIS (CARDS LIMPOS SEM BADGES DE PASSO OU EMOJIS DE IA)
      ══════════════════════════════════════════════════════ -->
 <div class="mb-5">
-    <div class="text-center mb-4">
-        <h2 class="h4 fw-bold text-dark mb-1">🔄 Fluxo Operacional da Mercadoria</h2>
-        <p class="text-muted small">Veja como um produto transita pelas 4 etapas fundamentais dentro do galpão:</p>
+    <div class="mb-3">
+        <h2 class="h5 fw-bold text-dark mb-1">Setores Operacionais</h2>
+        <p class="text-muted small mb-0">Escolha um setor para ver as rotinas, formulários e indicadores:</p>
     </div>
 
     <div class="row g-4">
-        <!-- Passo 1: Recebimento -->
+        <!-- Recebimento -->
         <div class="col-12 col-md-6 col-xl-3">
             <a href="/recebimento" class="sector-pipeline-card sector-blue h-100 d-flex flex-column text-decoration-none">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="pipeline-badge badge-blue">Passo 01</span>
-                    <span class="pipeline-icon">📦</span>
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <h3 class="h5 fw-bold text-dark mb-0">Recebimento</h3>
+                    <span class="fs-4">📦</span>
                 </div>
-                <h4 class="h5 fw-bold text-dark mb-2">Recebimento</h4>
                 <p class="text-secondary small flex-grow-1 mb-3">
-                    A mercadoria chega ao galpão. É feito o agendamento de doca, descarregamento e conferência física e fiscal da NF-e.
+                    Entrada de cargas, agendamento de docas, triagem de materiais e conferência física e fiscal da NF-e.
                 </p>
                 <div class="pipeline-footer text-primary fw-semibold small">
-                    Explorar Recebimento →
+                    Acessar setor →
                 </div>
             </a>
         </div>
 
-        <!-- Passo 2: Estoque -->
+        <!-- Estoque -->
         <div class="col-12 col-md-6 col-xl-3">
             <a href="/estoque" class="sector-pipeline-card sector-purple h-100 d-flex flex-column text-decoration-none">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="pipeline-badge badge-purple">Passo 02</span>
-                    <span class="pipeline-icon">🗄️</span>
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <h3 class="h5 fw-bold text-dark mb-0">Estoque</h3>
+                    <span class="fs-4">🗄️</span>
                 </div>
-                <h4 class="h5 fw-bold text-dark mb-2">Estoque</h4>
                 <p class="text-secondary small flex-grow-1 mb-3">
-                    Armazenamento estratégico dos produtos. Controle de ocupação por rua (A-H), endereçamento WMS e giro FIFO/LIFO.
+                    Guarda de produtos, ocupação por rua (A a H), endereçamento WMS e estratégias FIFO/LIFO.
                 </p>
                 <div class="pipeline-footer text-purple fw-semibold small">
-                    Explorar Estoque →
+                    Acessar setor →
                 </div>
             </a>
         </div>
 
-        <!-- Passo 3: Picking -->
+        <!-- Picking -->
         <div class="col-12 col-md-6 col-xl-3">
             <a href="/picking" class="sector-pipeline-card sector-orange h-100 d-flex flex-column text-decoration-none">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="pipeline-badge badge-orange">Passo 03</span>
-                    <span class="pipeline-icon">🛒</span>
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <h3 class="h5 fw-bold text-dark mb-0">Picking</h3>
+                    <span class="fs-4">🛒</span>
                 </div>
-                <h4 class="h5 fw-bold text-dark mb-2">Separação (Picking)</h4>
                 <p class="text-secondary small flex-grow-1 mb-3">
-                    Coleta dos itens das prateleiras conforme os pedidos dos clientes. Foco em acurácia, produtividade e métodos de separação.
+                    Separação de itens por pedido, controle de acurácia, métodos de coleta e produtividade dos operadores.
                 </p>
                 <div class="pipeline-footer text-warning fw-semibold small">
-                    Explorar Picking →
+                    Acessar setor →
                 </div>
             </a>
         </div>
 
-        <!-- Passo 4: Expedição -->
+        <!-- Expedição -->
         <div class="col-12 col-md-6 col-xl-3">
             <a href="/expedicao" class="sector-pipeline-card sector-green h-100 d-flex flex-column text-decoration-none">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="pipeline-badge badge-green">Passo 04</span>
-                    <span class="pipeline-icon">🚛</span>
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <h3 class="h5 fw-bold text-dark mb-0">Expedição</h3>
+                    <span class="fs-4">🚛</span>
                 </div>
-                <h4 class="h5 fw-bold text-dark mb-2">Expedição</h4>
                 <p class="text-secondary small flex-grow-1 mb-3">
-                    Conferência final, embalagem, romaneio de carga e carregamento no caminhão correto para entrega pontual ao cliente (OTIF).
+                    Conferência final, embalagem, romaneio de carga, monitoramento de docas e despacho aos veículos.
                 </p>
                 <div class="pipeline-footer text-success fw-semibold small">
-                    Explorar Expedição →
+                    Acessar setor →
                 </div>
             </a>
-        </div>
-    </div>
-
-    <!-- Frase Conceitual em Destaque -->
-    <div class="quote-card-custom mt-4">
-        <div class="d-flex align-items-start gap-3">
-            <span class="fs-2 text-primary">💡</span>
-            <p class="fst-italic text-dark mb-0 align-self-center">
-                "Um galpão bem organizado faz as entregas chegarem mais rápido, com menor índice de erros e menor custo operacional — garantindo a satisfação do cliente final."
-            </p>
         </div>
     </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════
-     VÍDEO DIDÁTICO CENTRALIZADO (Moldura Premium Responsiva)
+     RESUMO SOBRE A OPERAÇÃO
+     ══════════════════════════════════════════════════════ -->
+<div class="card-custom mb-5">
+    <h3 class="h6 fw-bold text-dark mb-2">Como funciona o sistema</h3>
+    <p class="text-secondary small mb-0">
+        Cada página do sistema simula um aspecto real do galpão. Você pode navegar pelos setores no menu superior, simular o registro de rotinas no painel de <strong>Situação do Turno</strong> ou testar seus conhecimentos no <strong>Quiz Logístico</strong>.
+    </p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     VÍDEO DE APOIO
      ══════════════════════════════════════════════════════ -->
 <div class="row justify-content-center mb-5">
     <div class="col-12 col-lg-9">
-        <div class="card-custom text-center p-4">
+        <div class="card-custom p-4">
             <div class="mb-3">
-                <span class="badge bg-primary-subtle text-primary fw-bold px-3 py-2 rounded-pill mb-2">🎥 Mídia Educativa</span>
-                <h3 class="h5 fw-bold text-dark mb-1">Entenda a Logística de Armazém em 5 Minutos</h3>
-                <p class="text-muted small mb-0">Assista ao vídeo explicativo sobre o fluxo operacional de Centros de Distribuição:</p>
+                <h3 class="h6 fw-bold text-dark mb-1">Visão Geral de Armazenagem</h3>
+                <p class="text-muted small mb-0">Vídeo introdutório sobre o fluxo de mercadorias em galpões logísticos:</p>
             </div>
-            <div class="ratio ratio-16x9 rounded-4 overflow-hidden shadow-sm border">
+            <div class="ratio ratio-16x9 rounded-3 overflow-hidden border">
                 <iframe src="https://www.youtube.com/embed/NMqsdKAaaaw" title="Logística de Armazém" allowfullscreen></iframe>
             </div>
         </div>
@@ -138,19 +116,19 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════════
-     CHAMADA FINAL CLEAN
+     BARRA DE NAVEGAÇÃO RÁPIDA
      ══════════════════════════════════════════════════════ -->
-<div class="sector-nav-bar card-custom d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 p-4">
+<div class="sector-nav-bar card-custom d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 p-4">
     <div>
-        <h4 class="h5 fw-bold text-dark mb-1">Pronto para colocar em prática?</h4>
-        <p class="text-muted small mb-0">Simule um turno de operação registrando cada etapa ou teste seus conhecimentos no Quiz Interativo.</p>
+        <h4 class="h6 fw-bold text-dark mb-1">Navegação Rápida</h4>
+        <p class="text-muted small mb-0">Escolha uma das atividades abaixo para continuar:</p>
     </div>
     <div class="d-flex flex-wrap gap-2">
-        <a href="/situacao" class="btn btn-outline-primary fw-semibold px-3 py-2 rounded-3">
-            📋 Simular Turno (4 Etapas)
+        <a href="/situacao" class="btn btn-outline-primary btn-sm fw-semibold px-3 py-2">
+            Simulação de Turno
         </a>
-        <a href="/quiz" class="btn btn-primary fw-semibold px-3 py-2 rounded-3">
-            📝 Ir para o Quiz →
+        <a href="/quiz" class="btn btn-primary btn-sm fw-semibold px-3 py-2">
+            Quiz Interativo →
         </a>
     </div>
 </div>
