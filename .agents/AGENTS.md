@@ -25,3 +25,10 @@
   - Guia de execução local via linha de comando (compatível com Linux, Windows e macOS);
   - **Guia do Desenvolvedor** detalhando onde e como customizar questões do Quiz, parâmetros, simulações e estilos.
 - **Limpeza do Repositório**: Excluir pastas de rascunhos/briefings de IA antes da publicação e remover do arquivo `requirements.txt` qualquer dependência que não esteja em uso real na aplicação.
+
+## 5. Linguagem Didática, Acessível e Tom de Voz
+- **Público-Alvo**: Alunos no início de cursos de Assistente de Logística, Técnico em Logística e trabalhadores operacionais sem qualificação avançada prévia.
+- **Linguagem Simples e Direta**: Todo texto no site (páginas dos setores, formulários, quiz e feedback) deve ser fácil de entender por quem nunca trabalhou em um galpão.
+- **Explicação de Jargões**: Evitar termos em inglês ou siglas técnicas (WMS, FIFO, OTIF, Picking) sem antes explicar o seu significado de forma simples em português.
+- **Tom Amigável e Incentivador**: Manter explicações práticas com exemplos do cotidiano de um armazém.
+
