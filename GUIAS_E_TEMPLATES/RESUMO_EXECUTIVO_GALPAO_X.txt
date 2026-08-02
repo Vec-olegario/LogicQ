@@ -1,0 +1,61 @@
+=====================================================================
+  RESUMO EXECUTIVO — LOGIQ (CENTRO DE TREINAMENTO LOGÍSTICO)
+  Versão 2.0 Modular · Agosto 2026
+=====================================================================
+
+📌 O QUE É
+───────────────────────────────────────────────────
+Plataforma web educativa, interativa e modular sobre
+operações logísticas em Centros de Distribuição (CD).
+Construída em Python com Flask e arquitetura limpa,
+a aplicação simula os 4 principais setores operacionais
+com visual moderno (Glassmorphism / Dark Cards), painéis
+de KPIs dinâmicos, gráfico de ocupação e Quiz Interativo.
+
+Público-alvo: estudantes de logística, profissionais em
+treinamento e programadores interessados em supply chain.
+
+
+📊 STATUS ATUAL
+───────────────────────────────────────────────────
+• Versão: v2.0 — Modular Clean Architecture
+• Arquitetura: Módulos independentes (config, logic, ui, utils, app)
+• Idioma: 100% Português Brasileiro
+• Estado: Pronto para produção e uso em treinamentos
+
+
+🖥️ STACK TECNOLÓGICO
+───────────────────────────────────────────────────
+• Backend:      Python 3.9+ / Flask >= 3.0.0
+• Gráficos:     Plotly.js >= 5.18.0 (JSON serializado)
+• Frontend:     HTML5, Vanilla CSS (Variáveis de Tema) e JS Puro
+• Estilização:  Cards modernos, Navbar intuitiva, Badges operacionais
+• Fontes:       Inter, sans-serif
+
+
+📄 PÁGINAS E MÓDULOS DO PROJETO
+───────────────────────────────────────────────────
+
+ #  │ Rota / Página                   │ Descrição
+────┼─────────────────────────────────┼────────────────────────────────────────
+ 1  │ / (Início)                      │ Apresentação do galpão e fluxos logísticos
+ 2  │ /recebimento                    │ Doca de entrada, conferência NF-e e KPIs
+ 3  │ /estoque                        │ Gráfico de ocupação por rua (A-H) e WMS
+ 4  │ /picking                        │ Tabela de ranking de separadores e métodos
+ 5  │ /expedicao                      │ Grid visual com status das 6 docas de saída
+ 6  │ /situacao                       │ Painel de Check-in operacional e progresso
+ 7  │ /quiz                           │ Quiz didático com 32 questões por setor
+
+
+🚀 COMO EXECUTAR
+───────────────────────────────────────────────────
+  pip install -r requirements.txt
+  python app.py
+
+Acesse no navegador:
+  http://localhost:5000
+
+
+=====================================================================
+  Projeto LogiQ — Centro de Treinamento e Simulação Logística
+=====================================================================

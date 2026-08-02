@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-header">
+    <h2>Setor de Expedição</h2>
+    <p>Aqui o pedido é embalado, conferido e colocado no caminhão para o cliente</p>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-12 col-md-6">
+        <div class="video-wrapper ratio ratio-16x9 my-2">
+            <iframe src="https://www.youtube.com/embed/pHlY09s1cAs" title="Processo de Expedição"
+                allowfullscreen></iframe>
+        </div>
+
+    </div>
+    <div class="col-12 col-md-5 d-flex flex-column justify-content-center">
+        <h3>O que é Expedição?</h3>
+        <p>
+            É a etapa final. O pedido já separado é embalado, verificado e colocado no caminhão.
+            O objetivo é garantir que o cliente certo receba o produto certo no prazo combinado.
+        </p>
+        <p><strong>O que o galpão mede aqui:</strong></p>
+        <ul>
+            <li><strong>Entrega no Prazo e Completa (OTIF):</strong> Quantos pedidos chegam certos e na hora</li>
+            <li><strong>Tempo até o caminhão sair:</strong> Do pedido pronto até o veículo partir</li>
+            <li><strong>Taxa de Erro:</strong> Quantos pedidos tiveram algum problema</li>
+            <li><strong>Custo por Pedido:</strong> Quanto custa, no total, enviar cada pedido</li>
+        </ul>
+    </div>
+</div>
+
+<div class="bg-gray-section">
+    <div class="row g-4 mb-0">
+        <div class="col-12">
+            <h3>📋 5 Etapas da Expedição</h3>
+            <div class="accordion mt-2" id="accordionExpedicao">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#ex1">
+                            1️⃣ Conferência Final
+                        </button>
+                    </h2>
+                    <div id="ex1" class="accordion-collapse collapse" data-bs-parent="#accordionExpedicao">
+                        <div class="accordion-body">
+                            Antes de tudo, o pedido é conferido mais uma vez — contando volumes, itens e quantidades —
+                            para
+                            garantir que está tudo certo.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#ex2">
+                            2️⃣ Embalagem e Unitização
+                        </button>
+                    </h2>
+                    <div id="ex2" class="accordion-collapse collapse" data-bs-parent="#accordionExpedicao">
+                        <div class="accordion-body">
+                            Os produtos são embalados e organizados em paletes para proteger durante o transporte e
+                            facilitar o carregamento no caminhão.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#ex3">
+                            3️⃣ Documentação
+                        </button>
+                    </h2>
+                    <div id="ex3" class="accordion-collapse collapse" data-bs-parent="#accordionExpedicao">
+                        <div class="accordion-body">
+                            São emitidos os documentos legais obrigatórios para a carga sair: nota fiscal, conhecimento
+                            de
+                            transporte e a lista dos volumes embarcados.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#ex4">
+                            4️⃣ Roteirização e Carregamento
+                        </button>
+                    </h2>
+                    <div id="ex4" class="accordion-collapse collapse" data-bs-parent="#accordionExpedicao">
+                        <div class="accordion-body">
+                            É definida a melhor rota para o caminhão entregar tudo com menos percurso, e os produtos são
+                            carregados na ordem certa de entrega.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#ex5">
+                            5️⃣ Rastreamento e Prova de Entrega
+                        </button>
+                    </h2>
+                    <div id="ex5" class="accordion-collapse collapse" data-bs-parent="#accordionExpedicao">
+                        <div class="accordion-body">
+                            A entrega é acompanhada em tempo real. Quando o cliente recebe, assina a comprovação de
+                            entrega,
+                            fechando o ciclo do pedido.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="my-5">
+
+<!-- 📊 INDICADORES DIDÁTICOS DE EXPEDIÇÃO -->
+<div class="mb-5">
+    <h3 class="mb-3">📊 Indicadores Chave de Expedição (KPIs)</h3>
+    <div class="row g-4">
+        <div class="col-12 col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4"
+                style="border-left: 5px solid var(--success-green) !important; background: #ffffff;">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="fs-4 me-2">🎯</span>
+                    <h5 class="mb-0 fw-bold">OTIF (On-Time In-Full)</h5>
+                </div>
+                <p class="text-muted small mb-2"><strong>O que mede:</strong> O percentual de pedidos entregues no prazo
+                    combinado (On-Time) e exatamente como o cliente pediu (In-Full).</p>
+                <div class="p-2 rounded bg-light text-dark fw-bold small mb-2">
+                    📐 Fórmula: % Entregas no Prazo × % Entregas Completas
+                </div>
+                <p class="small mb-0"><strong>Por que é importante?</strong> É o indicador supremo da satisfação do
+                    cliente na logística. Metas globais ficam acima de 95%.</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4"
+                style="border-left: 5px solid var(--vibrant-blue) !important; background: #ffffff;">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="fs-4 me-2">⏱️</span>
+                    <h5 class="mb-0 fw-bold">Order Cycle Time (Tempo de Ciclo)</h5>
+                </div>
+                <p class="text-muted small mb-2"><strong>O que mede:</strong> O tempo total desde que o pedido é
+                    aprovado até o momento em que é embarcado no caminhão.</p>
+                <div class="p-2 rounded bg-light text-dark fw-bold small mb-2">
+                    📐 Fórmula: Horário de Embarque na Doca - Horário de Aprovação do Pedido
+                </div>
+                <p class="small mb-0"><strong>Por que é importante?</strong> Mede a velocidade e agilidade interna do
+                    galpão de ponta a ponta.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 🧠 DESAFIO PRÁTICO DO SETOR -->
+<div class="card border-0 shadow-sm p-4 mb-4"
+    style="background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%); border-radius: 14px;">
+    <div class="d-flex align-items-center mb-3">
+        <span class="fs-3 me-2">🧠</span>
+        <h4 class="mb-0 fw-bold text-primary">Desafio Prático de Expedição</h4>
+    </div>
+    <p class="fw-semibold mb-3">
+        <strong>Cenário:</strong> Um caminhão de transporte dedicado está na doca pronto para partir e cumprir o horário
+        limite da janela de entrega. Porém, durante a conferência final na doca, falta encontrar <strong>1 volume de um
+            pedido de 20 caixas</strong>. O motorista avisa que precisa rodar a chave e sair em 3 minutos.
+    </p>
+    <p class="fw-bold mb-2">Qual deve ser a decisão do responsável pela Expedição?</p>
+
+    <div class="accordion" id="accordionDesafioExp">
+        <div class="accordion-item border mb-2 rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#desafioExpOpt1">
+                    A) Reter o caminhão na doca por tempo indeterminado até achar a caixa perdida em todo o galpão.
+                </button>
+            </h2>
+            <div id="desafioExpOpt1" class="accordion-collapse collapse" data-bs-parent="#accordionDesafioExp">
+                <div class="accordion-body text-danger bg-danger-subtle">
+                    ❌ <strong>Incorreto!</strong> Reter o caminhão faz a transportadora perder a janela da viagem,
+                    gerando multa por atraso de estadia de veículo e comprometendo a entrega de dezenas de outros
+                    clientes no mesmo veículo.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item border mb-2 rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#desafioExpOpt2">
+                    B) Despachar o caminhão no horário com a carga disponível, registrar o pendente e enviar o volume
+                    faltante via frete expresso/urgente no mesmo dia.
+                </button>
+            </h2>
+            <div id="desafioExpOpt2" class="accordion-collapse collapse" data-bs-parent="#accordionDesafioExp">
+                <div class="accordion-body text-success bg-success-subtle">
+                    ✅ <strong>Resposta Correta!</strong> Garante que todos os demais clientes recebam no prazo (mantendo
+                    o OTIF geral alto), enquanto trata o item faltante como emergência via frete expresso dedicado.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item border rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#desafioExpOpt3">
+                    C) Marcar no manifesto de carga que o pedido foi enviado completo e esperar o cliente reclamar
+                    quando chegar.
+                </button>
+            </h2>
+            <div id="desafioExpOpt3" class="accordion-collapse collapse" data-bs-parent="#accordionDesafioExp">
+                <div class="accordion-body text-danger bg-danger-subtle">
+                    ❌ <strong>Incorreto!</strong> Adulterar o manifesto de carga é infração grave e quebra a confiança
+                    comercial do cliente ao receber uma entrega incompleta sem notificação prévia.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sabia-box mb-3">
+    💡 <strong>Você sabia?</strong> O indicador <strong>OTIF</strong> (sigla em inglês para “no prazo e completo”) é
+    o mais importante da expedição. Um galpão de alto nível mantém o OTIF acima de 95% — ou seja, quase todo pedido
+    chega certo e no prazo.
+</div>
+
+<!-- ══════════════════════════════
+     NAVEGAÇÃO E CTAS ESTRATÉGICOS DO SETOR
+     ══════════════════════════════ -->
+<div class="sector-nav-bar">
+    <div>
+        <h5 class="mb-1 text-dark fw-bold">🏆 Você completou os 4 setores!</h5>
+        <p class="text-muted small mb-0">Agora teste seus conhecimentos no Quiz de Expedição ou simule o turno
+            operacional.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="/picking" class="btn btn-nav-prev">
+            ← Picking
+        </a>
+        <a href="/situacao" class="btn btn-outline-primary">
+            📋 Simular Turno
+        </a>
+        <a href="/quiz/iniciar?modo=topico&topico=Expedi%C3%A7%C3%A3o" class="btn btn-primary">
+            🏆 Quiz de Expedição →
+        </a>
+    </div>
+</div>
+
+{% endblock %}

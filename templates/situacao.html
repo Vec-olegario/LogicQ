@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-header">
+    <h2>📋 Situação de Aprendizagem</h2>
+    <p>Simulação completa de um turno operacional — preencha cada etapa em sequência</p>
+</div>
+
+<!-- Introdução + Vídeo -->
+<div class="row g-4 mb-4">
+    <div class="col-12 col-lg-7">
+        <h3>🎯 Contexto da Atividade</h3>
+        <p>
+            Nesta <strong>situação de aprendizagem</strong> você irá vivenciar um turno completo de
+            operação em um Centro de Distribuição (CD), passando pelos 4 principais setores:
+        </p>
+        <blockquote class="bq">
+            <strong>Cenário:</strong> Você é o supervisor de operações do turno da manhã.
+            Um caminhão chegou com mercadorias do fornecedor <strong>Distribuidora ABC Ltda</strong>.
+            Após o recebimento, os itens precisam ser armazenados, depois separados para
+            atender pedidos e, por fim, despachados ao cliente.
+        </blockquote>
+        <p class="mb-0">
+            <strong>Siga as etapas abaixo em ordem</strong>, preenchendo cada formulário de registro
+            conforme avança pela operação.
+        </p>
+
+    </div>
+    <div class="col-12 col-lg-5">
+        <div class="video-wrapper ratio ratio-16x9 my-2">
+            <iframe src="https://www.youtube.com/embed/NMqsdKAaaaw" title="Fluxo do CD" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<!-- BARRA DE PROGRESSO DAS ETAPAS -->
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h4 class="mb-0 fw-bold">📌 Sua jornada pelo turno — 4 etapas</h4>
+    <a href="/situacao/reiniciar" class="btn btn-sm btn-outline-secondary text-muted"
+        style="font-size: 0.82rem; padding: 4px 12px;">
+        🗑️ Limpar progresso
+    </a>
+</div>
+<hr class="mt-2 mb-4">
+
+<div class="step-progress mb-4">
+    <a href="#etapa1" class="step-item {% if 'recebimento' in etapas_concluidas %}done{% endif %}" id="step1">
+        <div class="step-circle">📦</div>
+        <div class="step-label">Etapa 1</div>
+        <div class="step-sub">Recebimento</div>
+    </a>
+    <div class="step-connector {% if 'recebimento' in etapas_concluidas %}done{% endif %}"></div>
+    <a href="#etapa2" class="step-item {% if 'estoque' in etapas_concluidas %}done{% endif %}" id="step2">
+        <div class="step-circle">🗄️</div>
+        <div class="step-label">Etapa 2</div>
+        <div class="step-sub">Estoque</div>
+    </a>
+    <div class="step-connector {% if 'estoque' in etapas_concluidas %}done{% endif %}"></div>
+    <a href="#etapa3" class="step-item {% if 'picking' in etapas_concluidas %}done{% endif %}" id="step3">
+        <div class="step-circle">🛒</div>
+        <div class="step-label">Etapa 3</div>
+        <div class="step-sub">Picking</div>
+    </a>
+    <div class="step-connector {% if 'expedicao' in etapas_concluidas %}done{% endif %}"></div>
+    <a href="#etapa4" class="step-item {% if 'expedicao' in etapas_concluidas %}done{% endif %}" id="step4">
+        <div class="step-circle">🚛</div>
+        <div class="step-label">Etapa 4</div>
+        <div class="step-sub">Expedição</div>
+    </a>
+</div>
+
+<!-- ETAPA 1: RECEBIMENTO -->
+<div class="step-card mb-4" id="etapa1">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5>1️⃣ Etapa 1: Recebimento de Mercadoria</h5>
+        {% if 'recebimento' in etapas_concluidas %}
+        <span class="badge bg-success">Concluído</span>
+        {% else %}
+        <span class="badge bg-warning text-dark">Pendente</span>
+        {% endif %}
+    </div>
+    <p class="text-muted small mb-3">
+        O caminhão da <strong>Distribuidora ABC Ltda</strong> (Nota Fiscal nº 10542) chegou com 50 caixas de detergente
+        industrial.
+        Sua tarefa é fazer a conferência física e dar entrada no sistema.
+    </p>
+
+    <form method="POST" action="/situacao/registrar/recebimento">
+        <div class="row g-3">
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">Número da Nota Fiscal</label>
+                <input type="text" class="form-control" name="nf" placeholder="Ex: NF-10542" required
+                    value="{{ session.get('situacao_dados', {}).get('recebimento', {}).get('nf', '') }}">
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">Fornecedor</label>
+                <input type="text" class="form-control" name="fornecedor" placeholder="Ex: Distribuidora ABC" required
+                    value="{{ session.get('situacao_dados', {}).get('recebimento', {}).get('fornecedor', '') }}">
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold">Qtd. Esperada (NF)</label>
+                <input type="number" class="form-control" name="qtd_esperada" value="50" readonly>
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold">Qtd. Contada (Física)</label>
+                <input type="number" class="form-control" name="qtd_contada" placeholder="Ex: 50" required
+                    value="{{ session.get('situacao_dados', {}).get('recebimento', {}).get('qtd_contada', '') }}">
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold">Status da Carga</label>
+                <select class="form-select" name="status_carga" required>
+                    <option value="">Selecione...</option>
+                    <option value="conforme" {% if session.get('situacao_dados', {}).get('recebimento',
+                        {}).get('status_carga')=='conforme' %}selected{% endif %}>Conforme (Sem Avarias)</option>
+                    <option value="avaria" {% if session.get('situacao_dados', {}).get('recebimento',
+                        {}).get('status_carga')=='avaria' %}selected{% endif %}>Avaria Identificada</option>
+                    <option value="divergente" {% if session.get('situacao_dados', {}).get('recebimento',
+                        {}).get('status_carga')=='divergente' %}selected{% endif %}>Divergência de Qtd.</option>
+                </select>
+            </div>
+            <div class="col-12 text-end">
+                <button type="submit" class="btn btn-primary px-4">
+                    💾 Registrar Recebimento
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- ETAPA 2: ESTOQUE -->
+<div class="step-card mb-4" id="etapa2">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5>2️⃣ Etapa 2: Endereçamento no Estoque</h5>
+        {% if 'estoque' in etapas_concluidas %}
+        <span class="badge bg-success">Concluído</span>
+        {% else %}
+        <span class="badge bg-warning text-dark">Pendente</span>
+        {% endif %}
+    </div>
+    <p class="text-muted small mb-3">
+        As 50 caixas de detergente precisam ser guardadas no porta-pallets. Defina o endereço de armazenagem no WMS.
+    </p>
+
+    <form method="POST" action="/situacao/registrar/estoque">
+        <div class="row g-3">
+            <div class="col-12 col-md-3">
+                <label class="form-label fw-bold">Rua</label>
+                <select class="form-select" name="rua" required>
+                    <option value="">Selecione...</option>
+                    <option value="Rua A" {% if session.get('situacao_dados', {}).get('estoque', {}).get('rua')=='Rua A'
+                        %}selected{% endif %}>Rua A (Giro Alto - ABC)</option>
+                    <option value="Rua B" {% if session.get('situacao_dados', {}).get('estoque', {}).get('rua')=='Rua B'
+                        %}selected{% endif %}>Rua B (Giro Médio)</option>
+                    <option value="Rua C" {% if session.get('situacao_dados', {}).get('estoque', {}).get('rua')=='Rua C'
+                        %}selected{% endif %}>Rua C (Giro Baixo)</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-3">
+                <label class="form-label fw-bold">Módulo (Prateleira)</label>
+                <input type="text" class="form-control" name="modulo" placeholder="Ex: Mod-04" required
+                    value="{{ session.get('situacao_dados', {}).get('estoque', {}).get('modulo', '') }}">
+            </div>
+            <div class="col-12 col-md-3">
+                <label class="form-label fw-bold">Nível (Altura)</label>
+                <select class="form-select" name="nivel" required>
+                    <option value="">Selecione...</option>
+                    <option value="Nível 1 (Piso)" {% if session.get('situacao_dados', {}).get('estoque',
+                        {}).get('nivel')=='Nível 1 (Piso)' %}selected{% endif %}>Nível 1 (Piso — Picking)</option>
+                    <option value="Nível 2 (Meio)" {% if session.get('situacao_dados', {}).get('estoque',
+                        {}).get('nivel')=='Nível 2 (Meio)' %}selected{% endif %}>Nível 2 (Meio — Pulmão)</option>
+                    <option value="Nível 3 (Alto)" {% if session.get('situacao_dados', {}).get('estoque',
+                        {}).get('nivel')=='Nível 3 (Alto)' %}selected{% endif %}>Nível 3 (Alto — Pulmão)</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-3">
+                <label class="form-label fw-bold">Qtd. Armazenada</label>
+                <input type="number" class="form-control" name="qtd_armazenada" placeholder="Ex: 50" required
+                    value="{{ session.get('situacao_dados', {}).get('estoque', {}).get('qtd_armazenada', '') }}">
+            </div>
+            <div class="col-12 text-end">
+                <button type="submit" class="btn btn-primary px-4">
+                    💾 Registrar Armazenagem
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- ETAPA 3: PICKING -->
+<div class="step-card mb-4" id="etapa3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5>3️⃣ Etapa 3: Separação de Pedido (Picking)</h5>
+        {% if 'picking' in etapas_concluidas %}
+        <span class="badge bg-success">Concluído</span>
+        {% else %}
+        <span class="badge bg-warning text-dark">Pendente</span>
+        {% endif %}
+    </div>
+    <p class="text-muted small mb-3">
+        Chegou um pedido do cliente <strong>Mercado SuperMais (Pedido nº 8821)</strong> solicitando 12 caixas de
+        detergente.
+        Faça a coleta dos itens no endereço cadastrado.
+    </p>
+
+    <form method="POST" action="/situacao/registrar/picking">
+        <div class="row g-3">
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold">Número do Pedido</label>
+                <input type="text" class="form-control" name="num_pedido" value="PED-8821" readonly>
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold">Cliente</label>
+                <input type="text" class="form-control" name="cliente" value="Mercado SuperMais" readonly>
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold">Qtd. Solicitada</label>
+                <input type="number" class="form-control" name="qtd_solicitada" value="12" readonly>
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">Qtd. Coletada (Separada)</label>
+                <input type="number" class="form-control" name="qtd_coletada" placeholder="Ex: 12" required
+                    value="{{ session.get('situacao_dados', {}).get('picking', {}).get('qtd_coletada', '') }}">
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">Método de Separação</label>
+                <select class="form-select" name="metodo" required>
+                    <option value="">Selecione...</option>
+                    <option value="Coletor RF (Código de Barras)" {% if session.get('situacao_dados', {}).get('picking',
+                        {}).get('metodo')=='Coletor RF (Código de Barras)' %}selected{% endif %}>Coletor RF (Código de
+                        Barras)</option>
+                    <option value="Paper Picking (Lista em Papel)" {% if session.get('situacao_dados',
+                        {}).get('picking', {}).get('metodo')=='Paper Picking (Lista em Papel)' %}selected{% endif %}>
+                        Paper Picking (Lista em Papel)</option>
+                    <option value="Voice Picking (Comando por Voz)" {% if session.get('situacao_dados',
+                        {}).get('picking', {}).get('metodo')=='Voice Picking (Comando por Voz)' %}selected{% endif %}>
+                        Voice Picking (Comando por Voz)</option>
+                </select>
+            </div>
+            <div class="col-12 text-end">
+                <button type="submit" class="btn btn-primary px-4">
+                    💾 Registrar Separação
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- ETAPA 4: EXPEDIÇÃO -->
+<div class="step-card mb-4" id="etapa4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5>4️⃣ Etapa 4: Expedição e Despacho</h5>
+        {% if 'expedicao' in etapas_concluidas %}
+        <span class="badge bg-success">Concluído</span>
+        {% else %}
+        <span class="badge bg-warning text-dark">Pendente</span>
+        {% endif %}
+    </div>
+    <p class="text-muted small mb-3">
+        O pedido nº 8821 foi separado e está na doca de saída. Faça a conferência final, emita a etiqueta de despacho e
+        libere o veículo.
+    </p>
+
+    <form method="POST" action="/situacao/registrar/expedicao">
+        <div class="row g-3">
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold">Transportadora</label>
+                <input type="text" class="form-control" name="transportadora" placeholder="Ex: TransLog Express"
+                    required
+                    value="{{ session.get('situacao_dados', {}).get('expedicao', {}).get('transportadora', '') }}">
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold">Placa do Veículo</label>
+                <input type="text" class="form-control" name="placa" placeholder="Ex: ABC-1234" required
+                    value="{{ session.get('situacao_dados', {}).get('expedicao', {}).get('placa', '') }}">
+            </div>
+            <div class="col-12 col-md-4">
+                <label class="form-label fw-bold">Doca de Saída</label>
+                <select class="form-select" name="doca_saida" required>
+                    <option value="">Selecione...</option>
+                    <option value="Doca 01 (Expedição)" {% if session.get('situacao_dados', {}).get('expedicao',
+                        {}).get('doca_saida')=='Doca 01 (Expedição)' %}selected{% endif %}>Doca 01</option>
+                    <option value="Doca 02 (Expedição)" {% if session.get('situacao_dados', {}).get('expedicao',
+                        {}).get('doca_saida')=='Doca 02 (Expedição)' %}selected{% endif %}>Doca 02</option>
+                    <option value="Doca 03 (Expedição)" {% if session.get('situacao_dados', {}).get('expedicao',
+                        {}).get('doca_saida')=='Doca 03 (Expedição)' %}selected{% endif %}>Doca 03</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">Conferência Final (Checkout)</label>
+                <select class="form-select" name="conferencia_final" required>
+                    <option value="">Selecione...</option>
+                    <option value="100% OK (Volume e Peso Exatos)" {% if session.get('situacao_dados',
+                        {}).get('expedicao', {}).get('conferencia_final')=='100% OK (Volume e Peso Exatos)' %}selected{%
+                        endif %}>100% OK (Volume e Peso Exatos)</option>
+                    <option value="Divergência Encontrada" {% if session.get('situacao_dados', {}).get('expedicao',
+                        {}).get('conferencia_final')=='Divergência Encontrada' %}selected{% endif %}>Divergência
+                        Encontrada</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="form-label fw-bold">Status do Envio</label>
+                <select class="form-select" name="status_envio" required>
+                    <option value="">Selecione...</option>
+                    <option value="Despachado no Prazo (OTIF OK)" {% if session.get('situacao_dados',
+                        {}).get('expedicao', {}).get('status_envio')=='Despachado no Prazo (OTIF OK)' %}selected{% endif
+                        %}>Despachado no Prazo (OTIF OK)</option>
+                    <option value="Atrasado" {% if session.get('situacao_dados', {}).get('expedicao',
+                        {}).get('status_envio')=='Atrasado' %}selected{% endif %}>Despachado com Atraso</option>
+                </select>
+            </div>
+            <div class="col-12 text-end">
+                <button type="submit" class="btn btn-success px-4">
+                    🏁 Finalizar Expedição do Turno
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% if todas_concluidas %}
+<div class="alert alert-success mt-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+    <div>
+        🏁 <strong>Parabéns!</strong> Você concluiu todas as etapas do turno operacional.
+    </div>
+    <div class="d-flex gap-2">
+        <a href="/situacao/reiniciar" class="btn btn-sm btn-outline-secondary">Refazer Turno</a>
+        <a href="/quiz" class="btn btn-sm btn-success">Fazer o Quiz →</a>
+    </div>
+</div>
+{% else %}
+<div class="sector-nav-bar mt-4">
+    <div>
+        <h5 class="mb-1 text-dark fw-bold">🎯 Pronto para o Desafio Teórico?</h5>
+        <p class="text-muted small mb-0">Você pode praticar no Quiz a qualquer momento.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="/" class="btn btn-nav-prev">
+            ← Início
+        </a>
+        <a href="/quiz" class="btn btn-primary">
+            🧠 Fazer o Quiz →
+        </a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

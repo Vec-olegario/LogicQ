@@ -1,0 +1,1011 @@
+/* ══════════════════════════════════════════════════════
+   GALPÃO LOGÍSTICO DIDÁTICO — style.css
+   ══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    /* Cores de Destaque - Modernas, Sérias e com Bom Humor */
+    --primary-blue: #1e3a8a;
+    /* Azul escuro (sério, confiança, corporativo) */
+    --vibrant-blue: #2563eb;
+    /* Azul vibrante (modernidade, tecnologia) */
+    --accent-orange: #f59e0b;
+    /* Laranja âmbar (energia, dinamismo, bom humor, calor) */
+    --accent-orange-hover: #d97706;
+
+    /* Cores de Status */
+    --success-green: #10b981;
+    /* Verde menta (sucesso, amigável) */
+    --danger-red: #ef4444;
+    /* Vermelho (alertas, erros) */
+
+    /* Neutros Suaves */
+    --bg-body: #f8fafc;
+    /* Cinza azulado muito leve (moderno, sofisticado) */
+    --bg-card: #ffffff;
+    /* Branco puro para os cards */
+    --text-dark: #0f172a;
+    /* Cinza chumbo escuro (suave e sério para leitura) */
+    --text-muted: #475569;
+    /* Cinza médio para descrições */
+    --border-color: #e2e8f0;
+    /* Divisórias muito suaves */
+
+    /* Fundos de Destaque Suaves */
+    --bg-blue-light: #eff6ff;
+    /* Azul claro para cabeçalhos e destaques secundários */
+    --bg-orange-light: #fff7ed;
+    /* Laranja claro para dicas e blocos informativos */
+}
+
+/* ── Reset & Base ──────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-body);
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    line-height: 1.65;
+}
+
+/* ── NAVBAR FIXA ────────────────────────────────────── */
+#main-nav {
+    background: rgba(255, 255, 255, 0.96) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+    z-index: 1050;
+    padding: 6px 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    color: var(--primary-blue) !important;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar-brand:hover {
+    color: var(--vibrant-blue) !important;
+}
+
+.navbar-logo {
+    height: 48px;
+    width: auto;
+    max-width: 220px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 5px rgba(30, 58, 138, 0.12));
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+}
+
+.navbar-brand:hover .navbar-logo {
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 8px rgba(30, 58, 138, 0.22));
+}
+
+.nav-btn {
+    background: transparent !important;
+    color: var(--text-muted) !important;
+    border: 1px solid transparent !important;
+    border-radius: 10px !important;
+    padding: 8px 14px !important;
+    font-size: 0.94rem !important;
+    font-weight: 600 !important;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+    line-height: 1.5;
+}
+
+.nav-btn:hover {
+    background: #f1f5f9 !important;
+    color: var(--vibrant-blue) !important;
+    transform: translateY(-1px);
+}
+
+.nav-btn.active {
+    background: var(--bg-blue-light) !important;
+    color: var(--vibrant-blue) !important;
+    border-color: rgba(37, 99, 235, 0.2) !important;
+    font-weight: 700 !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.06);
+}
+
+/* toggler */
+.navbar-toggler {
+    border: none !important;
+    padding: 4px 8px;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+/* ── MAIN CONTENT (abaixo da navbar fixa) ─────────── */
+main {
+    padding-top: 80px;
+    padding-bottom: 50px;
+    min-height: 100vh;
+}
+
+/* ── TIPOGRAFIA ────────────────────────────────────── */
+h1 {
+    color: var(--primary-blue);
+    font-weight: 800;
+    font-size: 1.75rem;
+}
+
+h2 {
+    color: var(--primary-blue);
+    font-weight: 700;
+    font-size: 1.35rem;
+}
+
+h3 {
+    color: var(--vibrant-blue);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+h4 {
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+h5 {
+    color: var(--primary-blue);
+    font-weight: 700;
+}
+
+h6 {
+    color: #6b7280;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ── SECTION HEADER ─────────────────────────────────── */
+.section-header {
+    background: var(--bg-blue-light);
+    border-left: 4px solid var(--vibrant-blue);
+    padding: 1.2rem 1.75rem;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 1.75rem;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.04);
+}
+
+.section-header h2 {
+    color: var(--primary-blue);
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.section-header p {
+    color: var(--text-muted);
+    margin: 4px 0 0 0;
+    font-size: 0.88rem;
+}
+
+/* ── KPI CARDS ──────────────────────────────────────── */
+.kpi-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--vibrant-blue);
+    border-radius: 12px;
+    padding: 1.2rem;
+    height: 100%;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.06);
+}
+
+.kpi-card h6 {
+    margin-bottom: 6px;
+}
+
+.kpi-value {
+    color: var(--primary-blue);
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 2px 0;
+    line-height: 1;
+}
+
+.kpi-delta-up {
+    color: var(--success-green);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.kpi-delta-down {
+    color: var(--danger-red);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.kpi-delta-neu {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+/* ── SECTOR CARDS (cards dos setores no início) ─────── */
+.sector-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--vibrant-blue);
+    border-radius: 12px;
+    padding: 1.2rem;
+    height: 100%;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02);
+}
+
+.sector-card h5 {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    color: var(--primary-blue);
+}
+
+.sector-card p {
+    color: var(--text-muted);
+    font-size: 0.86rem;
+    margin: 0;
+}
+
+/* ── STEP CARDS (situação de aprendizagem) ──────────── */
+.step-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-top: 4px solid var(--vibrant-blue);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02);
+}
+
+.step-card h5 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+    color: var(--primary-blue);
+}
+
+.step-card p {
+    color: var(--text-muted);
+    font-size: 0.86rem;
+    margin: 0;
+}
+
+/* ── FLOW CARDS (etapas do fluxo) ──────────────────── */
+.flow-card {
+    background: var(--bg-blue-light);
+    border-left: 4px solid var(--vibrant-blue);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+}
+
+.flow-card .flow-emoji {
+    font-size: 1.5rem;
+}
+
+.flow-card .flow-label {
+    color: var(--vibrant-blue);
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.flow-card .flow-sub {
+    color: var(--text-dark);
+    font-size: 0.77rem;
+}
+
+/* ── DOCA CARDS ─────────────────────────────────────── */
+.doca-card {
+    border-radius: 10px;
+    padding: 14px 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.82rem;
+    border: 1px solid var(--border-color);
+}
+
+.doca-title {
+    font-size: 1.3rem;
+}
+
+.doca-num {
+    font-weight: 700;
+    font-size: 0.88rem;
+}
+
+.doca-status {
+    font-size: 0.75rem;
+    margin-top: 4px;
+}
+
+/* ── BOTÕES ─────────────────────────────────────────── */
+.btn-primary {
+    background: var(--vibrant-blue) !important;
+    border-color: var(--vibrant-blue) !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: #1d4ed8 !important;
+    border-color: #1d4ed8 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
+}
+
+.btn-outline-primary {
+    border-color: var(--vibrant-blue) !important;
+    color: var(--vibrant-blue) !important;
+    font-weight: 600;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-primary:hover {
+    background: var(--vibrant-blue) !important;
+    border-color: var(--vibrant-blue) !important;
+    color: #ffffff !important;
+}
+
+/* ── BOTÕES GRANDES PERSONALIZADOS ─────────────────── */
+.btn-lg-custom {
+    padding: 14px 32px !important;
+    font-size: 1.1rem !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.btn-lg-custom:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.15), 0 4px 6px -2px rgba(37, 99, 235, 0.1) !important;
+}
+
+
+/* ── FORMULÁRIOS ─────────────────────────────────────── */
+.form-control,
+.form-select {
+    border-color: var(--border-color);
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--vibrant-blue);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 0.87rem;
+}
+
+/* ── TABELAS ─────────────────────────────────────────── */
+.table {
+    font-size: 0.9rem;
+}
+
+.table thead th {
+    background: var(--bg-blue-light);
+    color: var(--primary-blue);
+    font-weight: 700;
+    border-color: var(--border-color);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.table tbody td {
+    color: var(--text-dark);
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background: var(--bg-blue-light);
+}
+
+/* ── ACCORDION ──────────────────────────────────────── */
+.accordion-item {
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+    margin-bottom: 6px;
+    background: var(--bg-card);
+}
+
+.accordion-button {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    background: #f8fafc;
+}
+
+.accordion-button:not(.collapsed) {
+    background: var(--bg-blue-light);
+    color: var(--primary-blue);
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+/* ── FLASH / ALERT ──────────────────────────────────── */
+.alert-success {
+    background: #ecfdf5;
+    border-color: var(--success-green);
+    border-left: 4px solid var(--success-green);
+    color: #065f46;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.alert-info-custom {
+    background: var(--bg-blue-light);
+    border: 1px solid rgba(37, 99, 235, 0.15);
+    border-left: 4px solid var(--vibrant-blue);
+    border-radius: 10px;
+    color: var(--primary-blue);
+    padding: 12px 16px;
+    font-size: 0.88rem;
+    font-weight: 500;
+}
+
+/* ── QUIZ ──────────────────────────────────────────── */
+.quiz-option-btn {
+    display: block;
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.quiz-option-btn:hover {
+    background: var(--bg-blue-light);
+    border-color: var(--vibrant-blue);
+    color: var(--primary-blue);
+}
+
+.quiz-opt-correct {
+    background: #ecfdf5 !important;
+    border-color: var(--success-green) !important;
+    color: #065f46 !important;
+    font-weight: 600 !important;
+}
+
+.quiz-opt-wrong {
+    background: #fef2f2 !important;
+    border-color: var(--danger-red) !important;
+    color: #7f1d1d !important;
+    font-weight: 600 !important;
+}
+
+.quiz-opt-neutral {
+    background: #f3f4f6 !important;
+    border-color: var(--border-color) !important;
+    color: #9ca3af !important;
+}
+
+.quiz-progress-bar {
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.quiz-progress-fill {
+    height: 100%;
+    background: var(--vibrant-blue);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+.result-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-top: 4px solid var(--vibrant-blue);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02);
+}
+
+.result-score {
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.topic-bar {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 4px 0 12px 0;
+}
+
+.topic-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s ease;
+}
+
+/* ── CARDS BOOTSTRAP CUSTOMIZADOS ─────────────────── */
+.card {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--bg-card);
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02);
+}
+
+.card-header {
+    background: var(--bg-blue-light);
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 700;
+    color: var(--primary-blue);
+}
+
+/* ── VÍDEO EMBED ─────────────────────────────────── */
+.video-wrapper {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+}
+
+/* ── BLOCKQUOTE ──────────────────────────────────── */
+blockquote.bq {
+    border-left: 3px solid var(--accent-orange);
+    padding: 8px 16px;
+    margin: 12px 0;
+    background: var(--bg-blue-light);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--text-dark);
+    font-size: 0.88rem;
+}
+
+/* ── SEÇÃO CINZA ENTRE <HR> ───────────────────────── */
+.bg-gray-section {
+    background-color: #f1f5f9;
+    /* Cinza claro suave */
+    border-radius: 14px;
+    padding: 1.5rem 1.5rem;
+    margin: 1.5rem 0;
+    border: 1px solid var(--border-color);
+}
+
+/* ── HR ──────────────────────────────────────────── */
+hr {
+    border-color: var(--border-color);
+    opacity: 1;
+    margin: 1.5rem 0;
+}
+
+/* ── RESPONSIVE TWEAKS ───────────────────────────── */
+@media (max-width: 991px) {
+    #navbarContent {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .nav-btn {
+        display: inline-block;
+        margin: 2px 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .kpi-value {
+        font-size: 1.4rem;
+    }
+
+    .result-score {
+        font-size: 2.5rem;
+    }
+}
+
+/* ── HERO BANNER (Página Inicial) ────────────────── */
+.hero-section {
+    background: none;
+    border: none;
+    padding: 1.5rem 1rem 1rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.hero-welcome {
+    display: inline-block;
+    background: var(--bg-blue-light);
+    color: var(--vibrant-blue);
+    padding: 6px 16px;
+    border-radius: 99px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 0.85rem;
+    border: 1px solid rgba(37, 99, 235, 0.12);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.04);
+}
+
+.hero-icon {
+    font-size: 2.8rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+}
+
+.hero-title {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--primary-blue);
+    letter-spacing: -0.5px;
+    margin-bottom: 0.4rem;
+}
+
+.hero-subtitle {
+    font-size: 1.0rem;
+    color: var(--text-dark);
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 1.6rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+}
+
+/* ── SECTOR NAV CARDS (Página Inicial) ──────────── */
+.sector-nav-card {
+    display: block;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-top: 4px solid var(--vibrant-blue);
+    border-radius: 14px;
+    padding: 1.8rem 1rem 1.5rem;
+    text-align: center;
+    height: 100%;
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02);
+}
+
+.sector-nav-card:hover {
+    background: var(--bg-blue-light);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(37, 99, 235, 0.08);
+    color: var(--vibrant-blue);
+    text-decoration: none;
+    border-color: rgba(37, 99, 235, 0.25);
+}
+
+.sector-nav-card .snc-icon {
+    font-size: 2.4rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    line-height: 1;
+}
+
+.sector-nav-card h5 {
+    color: var(--primary-blue);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.sector-nav-card p {
+    color: var(--text-muted);
+    font-size: 0.83rem;
+    margin: 0;
+    line-height: 1.55;
+}
+
+.sector-nav-card .snc-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--vibrant-blue);
+}
+
+/* ── O QUE É LOGÍSTICA section ──────────────────── */
+.logistica-box {
+    background: var(--bg-blue-light);
+    border: 1px solid rgba(37, 99, 235, 0.15);
+    border-left: 5px solid var(--vibrant-blue);
+    border-radius: 0 14px 14px 0;
+    padding: 1.8rem 2rem;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02);
+}
+
+.logistica-box h3 {
+    color: var(--primary-blue);
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+}
+
+.logistica-box p {
+    color: var(--text-dark);
+    margin-bottom: 0.75rem;
+}
+
+.logistica-box ul {
+    color: var(--text-dark);
+    padding-left: 1.2rem;
+    margin-bottom: 0.75rem;
+}
+
+.logistica-box ul li {
+    margin-bottom: 4px;
+}
+
+/* ── STEPPER DE PROGRESSO (Situação de Aprendizagem) ─ */
+.step-progress {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.step-card {
+    scroll-margin-top: 90px;
+}
+
+.step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 85px;
+    opacity: 1;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.step-item.done {
+    opacity: 1;
+}
+
+.step-circle {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #f8fafc;
+    border: 2px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: #334155;
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.step-item.done .step-circle {
+    background: #f0fdf4;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.step-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #475569;
+    margin-top: 6px;
+}
+
+.step-item.done .step-label {
+    color: #047857;
+    font-weight: 700;
+}
+
+.step-sub {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.step-item.done .step-sub {
+    color: #059669;
+    font-weight: 600;
+}
+
+.step-connector {
+    flex: 1;
+    height: 3px;
+    background: #cbd5e1;
+    margin-top: 24px;
+    min-width: 20px;
+    max-width: 60px;
+    border-radius: 2px;
+    transition: background 0.3s;
+}
+
+.step-connector.done {
+    background: #10b981;
+}
+
+/* ── VOCÊ SABIA? ────────────────────────────────────── */
+.sabia-box {
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-left: 5px solid #f59e0b;
+    border-radius: 0 12px 12px 0;
+    padding: 1rem 1.25rem;
+    color: #78350f;
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+
+/* ── TOOLTIP DE KPI ─────────────────────────────────── */
+.kpi-tooltip {
+    display: inline-block;
+    color: #9ca3af;
+    font-size: 0.78rem;
+    cursor: help;
+    margin-left: 3px;
+    position: relative;
+    vertical-align: middle;
+}
+
+.kpi-tooltip:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e293b;
+    color: #f1f5f9;
+    font-size: 0.75rem;
+    font-weight: 400;
+    padding: 6px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+    max-width: 260px;
+    white-space: normal;
+    width: max-content;
+    max-width: 220px;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* ── REVISÃO DO QUIZ ────────────────────────────────── */
+.review-item {
+    font-size: 0.9rem;
+    transition: box-shadow 0.2s;
+}
+
+.review-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ── WELCOME BANNER (Página Inicial) ─────────────── */
+.welcome-banner {
+    background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+    border: 1px solid rgba(37, 99, 235, 0.15);
+    border-left: 5px solid var(--vibrant-blue);
+    border-radius: 12px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.05), 0 8px 10px -6px rgba(37, 99, 235, 0.05);
+}
+
+.welcome-banner h3 {
+    color: var(--primary-blue);
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.welcome-banner p {
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* ── CONTAINER DE NAVEGAÇÃO DOS SETORES (RODAPÉ CLEAN) ── */
+.sector-nav-bar {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--vibrant-blue);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+}
+
+/* Botão Clean de Voltar (Seta + Nome) */
+.btn-nav-prev {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #ffffff;
+    color: var(--vibrant-blue) !important;
+    border: 1px solid rgba(37, 99, 235, 0.35);
+    font-weight: 600;
+    font-size: 0.92rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 4px rgba(37, 99, 235, 0.06);
+}
+
+.btn-nav-prev:hover {
+    background-color: var(--bg-blue-light);
+    color: var(--primary-blue) !important;
+    border-color: var(--vibrant-blue);
+    transform: translateX(-3px);
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.12);
+}

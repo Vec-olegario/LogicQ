@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<!-- ══════════════════════════════
+     HERO BANNER
+     ══════════════════════════════ -->
+<div class="hero-section">
+    <span class="hero-welcome">👋 Six Seven 👋</span>
+    <h1 class="hero-title">Central de Aprendizagem</h1>
+</div>
+
+<!-- ══════════════════════════════
+     BANNER DE INTRODUÇÃO
+     ══════════════════════════════ -->
+<div class="welcome-banner">
+    <h3>🎓 Sobre o Projeto</h3>
+    <p>
+        O <strong>Galpão Logístico Didático</strong> é uma plataforma interativa de simulação desenvolvida para
+        demonstrar o fluxo operacional de um Centro de Distribuição (CD). Com o objetivo de tornar o aprendizado
+        acessível a todos, o site adota uma <strong>linguagem simplificada, direta e livre de termos
+            complicados</strong> para explicar o dia a dia de um armazém (Recebimento, Estoque, Separação e Expedição)
+        conectado a indicadores de produtividade reais.
+    </p>
+
+</div>
+
+
+<!-- ══════════════════════════════
+     4 SETORES — CARDS EXPLICATIVOS
+     ══════════════════════════════ -->
+<div class="logistica-box mb-5">
+    <h3>O que é Logística de Armazém?</h3>
+    <p>
+        É tudo que acontece dentro de um <strong>galpão de armazenamento</strong> — desde a hora em que o produto chega
+        até a hora em que ele vai embora para o cliente.
+
+    <p><strong>Esse caminho funciona em 4 setores:</strong></p>
+    <div class="row g-4 mb-5">
+
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="/recebimento" class="sector-nav-card">
+                <span class="snc-icon">📦</span>
+                <h5>Recebimento</h5>
+                <p>
+                    Onde a mercadoria chega. Tudo é contado, verificado e registrado antes de entrar no galpão.
+                </p>
+                <span class="snc-link">Explorar setor →</span>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="/estoque" class="sector-nav-card">
+                <span class="snc-icon">🗄️</span>
+                <h5>Estoque</h5>
+                <p>
+                    Onde os produtos ficam guardados. Cada item tem um lugar certo para ser encontrado facilmente.
+                </p>
+                <span class="snc-link">Explorar setor →</span>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="/picking" class="sector-nav-card">
+                <span class="snc-icon">🛒</span>
+                <h5>Separação (Picking)</h5>
+                <p>
+                    Quando chega um pedido, os itens são coletados das prateleiras e preparados para envio.
+                </p>
+                <span class="snc-link">Explorar setor →</span>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="/expedicao" class="sector-nav-card">
+                <span class="snc-icon">🚛</span>
+                <h5>Expedição</h5>
+                <p>
+                    As caixas são conferidas, embaladas e colocadas no caminhão certo para a entrega no cliente.
+                </p>
+                <span class="snc-link">Explorar setor →</span>
+            </a>
+        </div>
+    </div>
+
+    <blockquote class="bq mb-0">
+        "Um galpão bem organizado faz as entregas chegarem mais rápido, com menos erro e menor custo — o que
+        faz o cliente ficar satisfeito."
+    </blockquote>
+
+</div>
+
+
+<!-- ══════════════════════════════
+     VÍDEO INTRODUTÓRIO (grande, centralizado)
+     ══════════════════════════════ -->
+<div class="row justify-content-center mb-5">
+    <div class="col-1 col-lg-8">
+        <div class="video-wrapper ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/NMqsdKAaaaw" allowfullscreen> </iframe>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- ══════════════════════════════
+     CHAMADA FINAL CLEAN
+     ══════════════════════════════ -->
+<div class="sector-nav-bar">
+    <div>
+        <h5 class="mb-1 text-dark fw-bold">Pronto para praticar?</h5>
+        <p class="text-muted small mb-0">Simule um turno de operação em 4 etapas ou teste seus conhecimentos no Quiz
+            Interativo.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="/situacao" class="btn btn-outline-primary">
+            📋 Simular Turno (4 Etapas)
+        </a>
+        <a href="/quiz" class="btn btn-primary">
+            📝 Ir para o Quiz →
+        </a>
+    </div>
+</div>
+
+{% endblock %}

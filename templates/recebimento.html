@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-header">
+    <h2> Setor de Recebimento</h2>
+    <p>Aqui é onde as mercadorias chegam e são verificadas antes de entrar no galpão</p>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-12 col-md-6">
+        <div class="video-wrapper ratio ratio-16x9 my-2">
+            <iframe src="https://www.youtube.com/embed/Vu8M7PtM5I8" title="Processo de Recebimento"
+                allowfullscreen></iframe>
+        </div>
+    </div>
+
+
+    <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+        <h3>O que é Recebimento?</h3>
+        <p>
+            É a primeira etapa do galpão. Toda mercadoria que chega
+            é verificada, contada e registrada antes de ir para as prateleiras.
+        </p>
+        <p><strong>O que é feito aqui:</strong></p>
+        <ul>
+            <li>Agendar a chegada dos caminhões</li>
+            <li>Verificar os documentos da carga (nota fiscal)</li>
+            <li>Descarregar os produtos do veículo</li>
+            <li>Contar e checar se está tudo certo</li>
+            <li>Registrar os produtos no sistema do galpão</li>
+        </ul>
+    </div>
+</div>
+<div class="bg-gray-section">
+    <div class="row g-4 mb-4">
+        <div class="col-12 col-md-6">
+            <h3>Por que é importante?</h3>
+            <p>Se um erro for pego aqui, ele não vai atrapalhar o resto do galpão. É muito mais fácil resolver logo
+                na
+                chegada.</p>
+            <p><strong>O que um bom recebimento evita:</strong></p>
+            <ul>
+                <li>Devolver mercadoria errada depois</li>
+                <li>Ter produtos que não batem com o sistema</li>
+                <li>Atraso para preparar e enviar pedidos</li>
+                <li>Reclamação do cliente por produto errado</li>
+            </ul>
+        </div>
+        <div class="col-12 col-md-6">
+            <h3>📋 5 Etapas do Processo</h3>
+            <div class="accordion mt-2" id="accordionRecebimento">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#r1">
+                            1️⃣ Agendamento do Recebimento
+                        </button>
+                    </h2>
+                    <div id="r1" class="accordion-collapse collapse" data-bs-parent="#accordionRecebimento">
+                        <div class="accordion-body">
+                            Cada caminhão tem um horário marcado para chegar. Isso evita fila nas docas e garante
+                            que a
+                            equipe esteja pronta.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#r2">
+                            2️⃣ Conferência de Documentos
+                        </button>
+                    </h2>
+                    <div id="r2" class="accordion-collapse collapse" data-bs-parent="#accordionRecebimento">
+                        <div class="accordion-body">
+                            A nota fiscal da mercadoria é comparada com o que foi pedido. Se houver diferença, ela é
+                            anotada
+                            antes de descarregar.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#r3">
+                            3️⃣ Descarga do Veículo
+                        </button>
+                    </h2>
+                    <div id="r3" class="accordion-collapse collapse" data-bs-parent="#accordionRecebimento">
+                        <div class="accordion-body">
+                            Os produtos são retirados do caminhão com equipamentos como empilhadeiras e carrinhos,
+                            sempre
+                            seguindo as normas de segurança.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#r4">
+                            4️⃣ Conferência Física
+                        </button>
+                    </h2>
+                    <div id="r4" class="accordion-collapse collapse" data-bs-parent="#accordionRecebimento">
+                        <div class="accordion-body">
+                            Tudo é contado e inspecionado. Podem ser usados códigos de barras ou etiquetas RFID para
+                            agilizar e evitar erros.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#r5">
+                            5️⃣ Endereçamento e Entrada no WMS
+                        </button>
+                    </h2>
+                    <div id="r5" class="accordion-collapse collapse" data-bs-parent="#accordionRecebimento">
+                        <div class="accordion-body">
+                            Cada produto é salvo no sistema do galpão com o seu endereço (onde vai ficar). A partir
+                            daí,
+                            ele
+                            faz parte do estoque oficial.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sabia-box mb-0">
+        💡 <strong>Você sabia?</strong> No recebimento “cego”, o sistema esconde a quantidade esperada da carga.
+        O conferente tem que contar tudo do zero — só assim é possível garantir que não há fraude ou erro no pedido.
+    </div>
+</div>
+
+<hr class="my-5">
+
+<!-- 📊 INDICADORES DIDÁTICOS DO RECEBIMENTO -->
+<div class="mb-5">
+    <h3 class="mb-3">📊 Indicadores Chave de Recebimento (KPIs)</h3>
+    <div class="row g-4">
+        <div class="col-12 col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4"
+                style="border-left: 5px solid var(--vibrant-blue) !important; background: #ffffff;">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="fs-4 me-2">⏱️</span>
+                    <h5 class="mb-0 fw-bold">Dwell Time (Tempo de Doca)</h5>
+                </div>
+                <p class="text-muted small mb-2"><strong>O que mede:</strong> O tempo total que o caminhão fica parado
+                    na doca descarregando.</p>
+                <div class="p-2 rounded bg-light text-dark fw-bold small mb-2">
+                    📐 Fórmula: Tempo de Saída da Doca - Tempo de Chegada
+                </div>
+                <p class="small mb-0"><strong>Por que é importante?</strong> Quanto menor o tempo, mais caminhões o
+                    galpão consegue atender por dia sem gerar filas no pátio.</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4"
+                style="border-left: 5px solid var(--success-green) !important; background: #ffffff;">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="fs-4 me-2">🎯</span>
+                    <h5 class="mb-0 fw-bold">Acuracidade de Concepção</h5>
+                </div>
+                <p class="text-muted small mb-2"><strong>O que mede:</strong> A porcentagem de produtos recebidos sem
+                    nenhuma divergência com a Nota Fiscal.</p>
+                <div class="p-2 rounded bg-light text-dark fw-bold small mb-2">
+                    📐 Fórmula: (Notas sem Erro / Total de Notas) × 100
+                </div>
+                <p class="small mb-0"><strong>Por que é importante?</strong> Evita pagar por produtos não entregues e
+                    garante que o estoque do sistema corresponda à realidade.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 🧠 DESAFIO PRÁTICO DO SETOR -->
+<div class="card border-0 shadow-sm p-4 mb-4"
+    style="background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%); border-radius: 14px;">
+    <div class="d-flex align-items-center mb-3">
+        <span class="fs-3 me-2">🧠</span>
+        <h4 class="mb-0 fw-bold text-primary">Desafio Prático de Recebimento</h4>
+    </div>
+    <p class="fw-semibold mb-3">
+        <strong>Cenário:</strong> Um caminhão de um fornecedor chega ao galpão para descarregar 100 caixas. Durante a
+        conferência física, a equipe descobre que chegaram <strong>110 caixas</strong> (10 caixas a mais do que constava
+        na Nota Fiscal). O motorista afirma que foi um brinde do fornecedor e pede para você assinar o comprovante.
+    </p>
+    <p class="fw-bold mb-2">O que a equipe de Recebimento deve fazer?</p>
+
+    <div class="accordion" id="accordionDesafioRec">
+        <div class="accordion-item border mb-2 rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#desafioRecOpt1">
+                    A) Aceitar as 10 caixas extras como brinde e liberar o motorista imediatamente.
+                </button>
+            </h2>
+            <div id="desafioRecOpt1" class="accordion-collapse collapse" data-bs-parent="#accordionDesafioRec">
+                <div class="accordion-body text-danger bg-danger-subtle">
+                    ❌ <strong>Incorreto!</strong> No galpão logístico não existe entrada sem nota fiscal correspondente.
+                    Aceitar itens fora da NF causa sobra física, inconsistência fiscal e problemas no inventário.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item border mb-2 rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#desafioRecOpt2">
+                    B) Registrar a divergência no sistema, recusar as 10 caixas excedentes ou solicitar a emissão de uma
+                    NF complementar.
+                </button>
+            </h2>
+            <div id="desafioRecOpt2" class="accordion-collapse collapse" data-bs-parent="#accordionDesafioRec">
+                <div class="accordion-body text-success bg-success-subtle">
+                    ✅ <strong>Resposta Correta!</strong> Toda mercadoria que entra no galpão precisa ter amparo fiscal.
+                    A sobra deve ser registrada no WMS e notificada ao departamento de compras para tratativa formal.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item border rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#desafioRecOpt3">
+                    C) Guardar as 10 caixas adicionais na prateleira sem registrar no sistema.
+                </button>
+            </h2>
+            <div id="desafioRecOpt3" class="accordion-collapse collapse" data-bs-parent="#accordionDesafioRec">
+                <div class="accordion-body text-danger bg-danger-subtle">
+                    ❌ <strong>Incorreto!</strong> Itens guardados sem cadastro no WMS tornam-se "estoque fantasma". Eles
+                    ocupam espaço precioso e não podem ser vendidos porque o sistema não sabe que existem.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════
+     NAVEGAÇÃO E CTAS ESTRATÉGICOS DO SETOR
+     ══════════════════════════════ -->
+<div class="sector-nav-bar">
+    <div>
+        <h5 class="mb-1 text-dark fw-bold">🚀 Próximo Passo na Operação</h5>
+        <p class="text-muted small mb-0">Avance para o setor de Estoque ou teste seus conhecimentos de Recebimento no
+            Quiz.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="/quiz/iniciar?modo=topico&topico=Recebimento" class="btn btn-outline-primary">
+            🧠 Quiz de Recebimento
+        </a>
+        <a href="/estoque" class="btn btn-primary">
+            🏢 Ir para o Estoque →
+        </a>
+    </div>
+</div>
+
+{% endblock %}

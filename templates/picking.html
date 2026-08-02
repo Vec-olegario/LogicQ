@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="section-header">
+    <h2>Setor de Separação (Picking)</h2>
+    <p>Aqui os produtos são buscados nas prateleiras e montados em pedidos para o cliente</p>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-12 col-md-6">
+        <div class="video-wrapper ratio ratio-16x9 my-2">
+            <iframe src="https://www.youtube.com/embed/KGSuf5xKpOc" title="Processos de Picking"
+                allowfullscreen></iframe>
+        </div>
+    </div>
+    <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+        <h3>O que é Separação (Picking)?</h3>
+        <p>
+            É buscar os produtos certos nas prateleiras e juntá-los para montar o pedido do cliente.
+            É a parte mais trabalhosa do galpão e a que mais gasta dinheiro, podendo ser até <strong>55% do custo
+                total</strong>.
+        </p>
+        <p><strong>Por que isso importa?</strong></p>
+        <ul>
+            <li>Mais da metade do custo do galpão vem da separação</li>
+            <li>Errar um pedido custa muito caro — entre 3 e 10 vezes o valor do produto</li>
+            <li>Usar máquinas pode reduzir o custo em até 70%</li>
+            <li>A produtividade é medida em <strong>pedidos separados por hora</strong></li>
+        </ul>
+    </div>
+</div>
+
+<div class="bg-gray-section">
+    <div class="row g-4 mb-0">
+        <div class="col-12">
+            <h3>4 Métodos de Picking</h3>
+            <div class="accordion mt-2" id="accordionPicking">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#p1">
+                            🔵 Picking Discreto (Pedido a Pedido)
+                        </button>
+                    </h2>
+                    <div id="p1" class="accordion-collapse collapse" data-bs-parent="#accordionPicking">
+                        <div class="accordion-body">
+                            Um funcionário faz um pedido de cada vez, do começo ao fim. É o mais simples, mas exige
+                            muito deslocamento. Bom para pedidos grandes e complicados.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#p2">
+                            🟢 Picking por Lote (Batch Picking)
+                        </button>
+                    </h2>
+                    <div id="p2" class="accordion-collapse collapse" data-bs-parent="#accordionPicking">
+                        <div class="accordion-body">
+                            Um funcionário separa vários pedidos ao mesmo tempo. Caminha menos e produz mais. Depois é
+                            feita uma triagem para separar o que é de cada pedido.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#p3">
+                            🟡 Picking por Zona (Zone Picking)
+                        </button>
+                    </h2>
+                    <div id="p3" class="accordion-collapse collapse" data-bs-parent="#accordionPicking">
+                        <div class="accordion-body">
+                            O galpão é dividido em áreas. Cada funcionário trabalha só na sua área. É muito eficiente em
+                            galpões grandes.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#p4">
+                            🔴 Wave Picking (Picking por Onda)
+                        </button>
+                    </h2>
+                    <div id="p4" class="accordion-collapse collapse" data-bs-parent="#accordionPicking">
+                        <div class="accordion-body">
+                            Os pedidos são liberados em grupos em horários programados, como "ondas". Reduz correria e
+                            organiza melhor o fluxo. Requer um bom sistema de controle.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="my-5">
+
+<!-- 📊 INDICADORES DIDÁTICOS DE PICKING -->
+<div class="mb-5">
+    <h3 class="mb-3">📊 Indicadores Chave de Separação (KPIs)</h3>
+    <div class="row g-4">
+        <div class="col-12 col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4"
+                style="border-left: 5px solid var(--vibrant-blue) !important; background: #ffffff;">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="fs-4 me-2">⚡</span>
+                    <h5 class="mb-0 fw-bold">Pick Rate (Produtividade de Separação)</h5>
+                </div>
+                <p class="text-muted small mb-2"><strong>O que mede:</strong> A quantidade de itens, caixas ou linhas de
+                    pedido coletadas por um operador por hora.</p>
+                <div class="p-2 rounded bg-light text-dark fw-bold small mb-2">
+                    📐 Fórmula: Total de Itens Separados / Horas Trabalhadas
+                </div>
+                <p class="small mb-0"><strong>Por que é importante?</strong> Determina a capacidade diária de
+                    processamento de pedidos e o dimensionamento da equipe.</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4"
+                style="border-left: 5px solid var(--danger-red) !important; background: #ffffff;">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="fs-4 me-2">❌</span>
+                    <h5 class="mb-0 fw-bold">Picking Accuracy (Taxa de Erro de Separação)</h5>
+                </div>
+                <p class="text-muted small mb-2"><strong>O que mede:</strong> O percentual de pedidos coletados com item
+                    incorreto, quantidade trocada ou avariado.</p>
+                <div class="p-2 rounded bg-light text-dark fw-bold small mb-2">
+                    📐 Fórmula: (Pedidos com Erro de Separação / Total de Pedidos) × 100
+                </div>
+                <p class="small mb-0"><strong>Por que é importante?</strong> Erros no picking geram devoluções caras,
+                    reenvios com frete duplicado e perda de clientes.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 🧠 DESAFIO PRÁTICO DO SETOR -->
+<div class="card border-0 shadow-sm p-4 mb-4"
+    style="background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%); border-radius: 14px;">
+    <div class="d-flex align-items-center mb-3">
+        <span class="fs-3 me-2">🧠</span>
+        <h4 class="mb-0 fw-bold text-primary">Desafio Prático de Picking</h4>
+    </div>
+    <p class="fw-semibold mb-3">
+        <strong>Cenário:</strong> Um operador de separação está realizando uma rota de picking e chega ao endereço
+        marcado. Ao pegar o produto, ele percebe que a <strong>caixa está avariada</strong> e o item amassado. A
+        embalagem é a última disponível na prateleira de picking.
+    </p>
+    <p class="fw-bold mb-2">Qual deve ser o procedimento correto do operador?</p>
+
+    <div class="accordion" id="accordionDesafioPick">
+        <div class="accordion-item border mb-2 rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#desafioPickOpt1">
+                    A) Colocar a caixa avariada no carrinho assim mesmo para não atrasar a meta de itens por hora.
+                </button>
+            </h2>
+            <div id="desafioPickOpt1" class="accordion-collapse collapse" data-bs-parent="#accordionDesafioPick">
+                <div class="accordion-body text-danger bg-danger-subtle">
+                    ❌ <strong>Incorreto!</strong> Enviar um item avariado transfere o problema para o cliente final,
+                    gerando reclamação, devolução e prejuízo financeiro para a empresa.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item border mb-2 rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#desafioPickOpt2">
+                    B) Bipar o item como avariado no coletor WMS e solicitar reposição imediata da área de
+                    pulmão/estoque principal.
+                </button>
+            </h2>
+            <div id="desafioPickOpt2" class="accordion-collapse collapse" data-bs-parent="#accordionDesafioPick">
+                <div class="accordion-body text-success bg-success-subtle">
+                    ✅ <strong>Resposta Correta!</strong> Notificar a avaria no coletor bloqueia o item estragado, aciona
+                    a equipe de reabastecimento (pulmão) e garante que o cliente receba um produto perfeito.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item border rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#desafioPickOpt3">
+                    C) Marcar o pedido como finalizado e deixar o item para trás sem avisar o sistema.
+                </button>
+            </h2>
+            <div id="desafioPickOpt3" class="accordion-collapse collapse" data-bs-parent="#accordionDesafioPick">
+                <div class="accordion-body text-danger bg-danger-subtle">
+                    ❌ <strong>Incorreto!</strong> O cliente receberá um pedido incompleto (falta de item) sem que a
+                    expedição ou o SAC saibam o motivo da divergência.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sabia-box mb-3">
+    💡 <strong>Você sabia?</strong> Errar a separação de um pedido pode custar até 10 vezes o valor do produto.
+    Além de repor o item, o galpão ainda arca com o custo de reenvio, suporte e a insatisfação do cliente.
+</div>
+
+<!-- ══════════════════════════════
+     NAVEGAÇÃO E CTAS ESTRATÉGICOS DO SETOR
+     ══════════════════════════════ -->
+<div class="sector-nav-bar">
+    <div>
+        <h5 class="mb-1 text-dark fw-bold">🚀 Próximo Passo na Operação</h5>
+        <p class="text-muted small mb-0">Avance para a Expedição, volte ao Estoque ou teste seus conhecimentos de
+            Separação.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="/estoque" class="btn btn-nav-prev">
+            ← Estoque
+        </a>
+        <a href="/quiz/iniciar?modo=topico&topico=Picking" class="btn btn-outline-primary">
+            🧠 Quiz de Picking
+        </a>
+        <a href="/expedicao" class="btn btn-primary">
+            🚛 Ir para Expedição →
+        </a>
+    </div>
+</div>
+
+{% endblock %}

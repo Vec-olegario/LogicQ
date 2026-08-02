@@ -1,0 +1,530 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- ═══════════════════════════════════════════
+     TELA 1: SETUP (ESCOLHA DO MODO)
+     ═══════════════════════════════════════════ -->
+{% if quiz.state == "SETUP" %}
+<style>
+    /* Estilos locais específicos da tela inicial do Quiz */
+    .quiz-hero-card {
+        background: linear-gradient(135deg, var(--primary-blue) 0%, var(--vibrant-blue) 100%);
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.25);
+    }
+
+    .decor-circle-1 {
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        top: -60px;
+        right: -30px;
+    }
+
+    .decor-circle-2 {
+        position: absolute;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+        bottom: -120px;
+        left: -80px;
+    }
+
+    .hero-pill-badge {
+        background: rgba(255, 255, 255, 0.18) !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        backdrop-filter: blur(4px);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .bg-blue-light {
+        background-color: #eff6ff !important;
+        color: #1d4ed8 !important;
+    }
+
+    .bg-orange-light {
+        background-color: #fff7ed !important;
+        color: #c2410c !important;
+    }
+
+    .bg-purple-light {
+        background-color: #f5f3ff !important;
+        color: #6d28d9 !important;
+    }
+
+    .bg-green-light {
+        background-color: #f0fdf4 !important;
+        color: #047857 !important;
+    }
+
+    .modo-card {
+        border: 2px solid var(--border-color);
+        border-radius: 14px;
+        padding: 24px 20px;
+        cursor: pointer;
+        background: #ffffff;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .modo-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--vibrant-blue);
+        box-shadow: 0 12px 24px -8px rgba(37, 99, 235, 0.15);
+    }
+
+    .modo-card.selected {
+        border-color: var(--vibrant-blue);
+        background: #eff6ff;
+        box-shadow: 0 6px 18px -4px rgba(37, 99, 235, 0.2);
+    }
+
+    .modo-card.selected::after {
+        content: "✓";
+        position: absolute;
+        top: 12px;
+        right: 15px;
+        background: var(--vibrant-blue);
+        color: #ffffff;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        font-weight: bold;
+    }
+
+    .setor-card {
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        padding: 20px 15px;
+        cursor: pointer;
+        background: #ffffff;
+        transition: all 0.25s ease;
+        text-align: center;
+        height: 100%;
+    }
+
+    .setor-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 16px -4px rgba(15, 23, 42, 0.08);
+    }
+
+    .setor-card.selected {
+        font-weight: bold;
+    }
+
+    .setor-card.selected.recebimento {
+        border-color: var(--vibrant-blue);
+        background: #eff6ff;
+    }
+
+    .setor-card.selected.estoque {
+        border-color: var(--accent-orange);
+        background: #fff7ed;
+    }
+
+    .setor-card.selected.picking {
+        border-color: #8b5cf6;
+        background: #f5f3ff;
+    }
+
+    .setor-card.selected.expedicao {
+        border-color: var(--success-green);
+        background: #f0fdf4;
+    }
+
+    .modo-icon {
+        font-size: 2.2rem;
+        margin-bottom: 12px;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-12 col-xl-10">
+
+        <!-- Hero Card do Quiz -->
+        <div class="quiz-hero-card text-white p-4 p-md-5 mb-4">
+            <div class="decor-circle-1"></div>
+            <div class="decor-circle-2"></div>
+            <div class="position-relative z-1">
+                <h1 class="display-6 text-white mb-2" style="font-weight: 800;">Quiz Logístico Interativo</h2>
+                    <p class="fs-5 mb-4" style="color: rgba(255,255,255,0.92); max-width: 700px;">Teste seus
+                        conhecimentos
+                        teóricos e práticos em nosso Centro de Distribuição com questões didáticas baseadas na operação
+                        real.</p>
+            </div>
+        </div>
+
+        <form method="POST" action="/quiz/iniciar" id="formIniciarQuiz">
+            <!-- Inputs ocultos para enviar os valores corretos -->
+            <input type="hidden" name="modo" id="inputModo" value="padrao">
+            <input type="hidden" name="topico" id="inputTopico" value="Recebimento">
+
+            <!-- SELEÇÃO VISUAL DO MODO -->
+            <h4 class="mb-3 fw-bold text-dark">Selecione o Modo de Teste</h4>
+            <div class="row g-3 mb-5">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="modo-card" onclick="selectModo('rapido', this)">
+                        <div>
+                            <div class="modo-icon">⚡</div>
+                            <h5 class="fw-bold mb-2">Quiz Rápido</h5>
+                            <p class="text-muted small mb-0">5 perguntas aleatórias do banco para um teste ágil.</p>
+                        </div>
+                        <span class="badge bg-light text-dark align-self-start mt-3">⚡ 5 Questões</span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="modo-card selected" onclick="selectModo('padrao', this)">
+                        <div>
+                            <div class="modo-icon">🎯</div>
+                            <h5 class="fw-bold mb-2">Quiz Padrão</h5>
+                            <p class="text-muted small mb-0">15 perguntas aleatórias misturando os 4 setores.</p>
+                        </div>
+                        <span class="badge bg-primary align-self-start mt-3">🎯 15 Questões</span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="modo-card" onclick="selectModo('completo', this)">
+                        <div>
+                            <div class="modo-icon">🏆</div>
+                            <h5 class="fw-bold mb-2">Quiz Completo</h5>
+                            <p class="text-muted small mb-0">Todas as 32 perguntas do banco para avaliação profunda.</p>
+                        </div>
+                        <span class="badge bg-light text-dark align-self-start mt-3">🏆 32 Questões</span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="modo-card" onclick="selectModo('topico', this)">
+                        <div>
+                            <div class="modo-icon">📚</div>
+                            <h5 class="fw-bold mb-2">Por Setor</h5>
+                            <p class="text-muted small mb-0">Foco exclusivo no setor logístico de sua preferência.</p>
+                        </div>
+                        <span class="badge bg-light text-dark align-self-start mt-3">📚 8 Questões</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SELEÇÃO VISUAL DO SETOR (Oculta por padrão, aparece se clicar no modo 'topico') -->
+            <div id="divTopicoVisual" style="display: none;" class="mb-5">
+                <h4 class="mb-3 fw-bold text-dark">📌 2. Escolha o Setor para Avaliação</h4>
+                <div class="row g-3">
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="setor-card selected recebimento" onclick="selectTopico('Recebimento', this)">
+                            <div class="fs-2 mb-2">📦</div>
+                            <h6 class="fw-bold mb-1">Recebimento</h6>
+                            <small class="text-muted d-block">Doca e Conferência</small>
+                            <span class="badge bg-blue-light mt-2">8 Questões</span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="setor-card estoque" onclick="selectTopico('Estoque', this)">
+                            <div class="fs-2 mb-2">🏢</div>
+                            <h6 class="fw-bold mb-1">Estoque</h6>
+                            <small class="text-muted d-block">Armazenagem e Giro</small>
+                            <span class="badge bg-orange-light mt-2">8 Questões</span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="setor-card picking" onclick="selectTopico('Picking', this)">
+                            <div class="fs-2 mb-2">🛒</div>
+                            <h6 class="fw-bold mb-1">Picking</h6>
+                            <small class="text-muted d-block">Separação de Pedidos</small>
+                            <span class="badge bg-purple-light mt-2">8 Questões</span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="setor-card expedicao" onclick="selectTopico('Expedição', this)">
+                            <div class="fs-2 mb-2">🚛</div>
+                            <h6 class="fw-bold mb-1">Expedição</h6>
+                            <small class="text-muted d-block">Despacho e Roteiros</small>
+                            <span class="badge bg-green-light mt-2">8 Questões</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão de Ação -->
+            <div class="d-grid mt-5 mb-4">
+                <button type="submit" class="btn btn-outline-primary py-3 fs-4 fw-bold rounded-3 shadow-sm">
+                    🚀 INICIAR QUIZ AGORA →
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function selectModo(modo, element) {
+        // Atualiza input hidden
+        document.getElementById('inputModo').value = modo;
+
+        // Remove class 'selected' de todos
+        document.querySelectorAll('.modo-card').forEach(c => {
+            c.classList.remove('selected');
+            const badge = c.querySelector('.badge');
+            if (badge) {
+                badge.classList.remove('bg-primary');
+                badge.classList.add('bg-light', 'text-dark');
+            }
+        });
+
+        // Adiciona classe e cor ao selecionado
+        element.classList.add('selected');
+        const badge = element.querySelector('.badge');
+        if (badge) {
+            badge.classList.remove('bg-light', 'text-dark');
+            badge.classList.add('bg-primary');
+        }
+
+        // Exibe ou oculta escolha do setor
+        const divTopico = document.getElementById('divTopicoVisual');
+        if (modo === 'topico') {
+            divTopico.style.display = 'block';
+            setTimeout(() => {
+                divTopico.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        } else {
+            divTopico.style.display = 'none';
+        }
+    }
+
+    function selectTopico(topico, element) {
+        // Atualiza input hidden
+        document.getElementById('inputTopico').value = topico;
+
+        // Remove 'selected' e classes de destaque de todos
+        document.querySelectorAll('.setor-card').forEach(c => {
+            c.classList.remove('selected', 'recebimento', 'estoque', 'picking', 'expedicao');
+        });
+
+        // Adiciona classes no clicado
+        element.classList.add('selected');
+        const slug = topico.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        element.classList.add(slug);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const initModo = "{{ selected_modo | default('padrao') }}";
+        const initTopico = "{{ selected_topico | default('Recebimento') }}";
+
+        if (initModo === 'topico') {
+            const cardTopicoModo = document.querySelector('.modo-card[onclick*="topico"]');
+            if (cardTopicoModo) selectModo('topico', cardTopicoModo);
+
+            const cardSetor = document.querySelector('.setor-card[onclick*="' + initTopico + '"]');
+            if (cardSetor) selectTopico(initTopico, cardSetor);
+        }
+    });
+</script>
+{% endif %}
+
+{% if quiz.state == "PLAYING" %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+
+        <!-- Barra de topo com botão de voltar ao menu do Quiz -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a href="/quiz/reiniciar" class="btn btn-nav-prev">
+                ← Menu do Quiz
+            </a>
+            <span class="badge bg-light text-dark border">
+                🎯 Modo: {{ quiz.modo | default('Interativo') | capitalize }}
+            </span>
+        </div>
+
+        <!-- Cabeçalho do progresso -->
+        <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="badge bg-primary px-3 py-2">
+                Pergunta {{ idx + 1 }} de {{ total }}
+            </span>
+            <span class="text-muted small fw-bold">
+                Setor: {{ pergunta.topico }} &nbsp;•&nbsp; Dificuldade: {{ pergunta.dificuldade }}
+            </span>
+            <span class="fw-bold" style="color: #1e40af;">
+                Pontos: {{ quiz.pontuacao | default(0) }}
+            </span>
+        </div>
+
+        <!-- Barra de Progresso -->
+        <div class="quiz-progress-bar">
+            <div class="quiz-progress-fill" style="width: {{ ((idx + 1) / total * 100) | round }}%;"></div>
+        </div>
+
+        <!-- Card da Pergunta -->
+        <div class="card p-4 my-3">
+            <h4 class="mb-4">{{ pergunta.pergunta }}</h4>
+
+            {% if not respondido %}
+            <!-- Botões para responder -->
+            <form method="POST" action="/quiz/responder">
+                {% for op in pergunta.opcoes %}
+                <button type="submit" name="resposta" value="{{ loop.index0 }}" class="quiz-option-btn">
+                    <strong>{{ ['A', 'B', 'C', 'D'][loop.index0] }}.</strong> {{ op }}
+                </button>
+                {% endfor %}
+            </form>
+            {% else %}
+            <!-- Exibição após resposta confirmada -->
+            {% for op in pergunta.opcoes %}
+            {% set i = loop.index0 %}
+            {% set style_class = "" %}
+            {% if i == pergunta.correta %}
+            {% set style_class = "quiz-opt-correct" %}
+            {% elif i == resposta_info.escolhida and not resposta_info.correta %}
+            {% set style_class = "quiz-opt-wrong" %}
+            {% else %}
+            {% set style_class = "quiz-opt-neutral" %}
+            {% endif %}
+
+            <div class="quiz-option-btn {{ style_class }}">
+                <strong>{{ ['A', 'B', 'C', 'D'][i] }}.</strong> {{ op }}
+                {% if i == pergunta.correta %}
+                <span class="float-end">✅ Resposta Correta</span>
+                {% elif i == resposta_info.escolhida and not resposta_info.correta %}
+                <span class="float-end">❌ Sua Resposta</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <!-- Explicação do professor -->
+            <div class="alert alert-info-custom mt-3">
+                <strong>💡 Explicação Logística:</strong><br>
+                {{ pergunta.explicacao }}
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+                <a href="/quiz/reiniciar" class="btn btn-sm btn-outline-secondary">
+                    ← Menu do Quiz
+                </a>
+                <a href="/quiz/avancar" class="btn btn-primary px-4 py-2">
+                    {% if idx < total - 1 %} Próxima Pergunta ➔ {% else %} 🏁 Ver Resultado Final {% endif %} </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     TELA 3: RESULTADO FINAL
+     ═══════════════════════════════════════════ -->
+{% elif quiz.state == "RESULT" %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+        <div class="result-card my-3">
+            <h3 class="mb-2">🏆 Resultado Final do Quiz</h3>
+            <p class="text-muted">Confira abaixo o seu desempenho na avaliação</p>
+
+            <div class="result-score my-3"
+                style="color: {% if percentual >= 70 %}#10b981{% elif percentual >= 50 %}#f59e0b{% else %}#ef4444{% endif %};">
+                {{ percentual }}%
+            </div>
+
+            <p class="fs-5 fw-bold">
+                Você acertou <strong>{{ pontos }}</strong> de <strong>{{ total }}</strong> questões!
+            </p>
+
+            <!-- Resumo de tempo -->
+            <div class="d-flex justify-content-center gap-4 my-3 text-muted">
+                <div>⏱️ Tempo Total: <strong>{{ tempo_str }}</strong></div>
+                <div>⚡ Média por questão: <strong>{{ media_str }}</strong></div>
+            </div>
+
+            <hr>
+
+            <!-- Desempenho por Tópico -->
+            <h5 class="mb-3 text-start">📊 Desempenho por Setor</h5>
+            <div class="table-responsive">
+                <table class="table align-middle text-start">
+                    <thead>
+                        <tr>
+                            <th>Setor</th>
+                            <th>Acertos / Total</th>
+                            <th>Aproveitamento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sec, data in analise.items() %}
+                        {% set p_sec = ((data.acertos / data.total) * 100) | round | int if data.total else 0 %}
+                        <tr>
+                            <td><strong>{{ sec }}</strong></td>
+                            <td>{{ data.acertos }} / {{ data.total }}</td>
+                            <td style="width: 40%;">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="topic-bar flex-grow-1 mb-0">
+                                        <div class="topic-bar-fill"
+                                            style="width: {{ p_sec }}%; background: {% if p_sec >= 70 %}#10b981{% elif p_sec >= 50 %}#f59e0b{% else %}#ef4444{% endif %};">
+                                        </div>
+                                    </div>
+                                    <span class="small fw-bold">{{ p_sec }}%</span>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <hr>
+
+            <!-- REVISÃO DETALHADA POR QUESTÃO -->
+            <h5 class="mb-3 text-start">🔍 Revisão das Questões</h5>
+            {% for i, p_idx in quiz.perguntas_ids | enumerate %}
+            {% set p = perguntas[p_idx] %}
+            {% set resp = quiz.respostas.get(i | string) %}
+            {% set acertou = resp and resp.correta %}
+            <div class="review-item mb-3 p-3 rounded-3 border
+                    {% if acertou %}border-success bg-success bg-opacity-10
+                    {% else %}border-danger bg-danger bg-opacity-10{% endif %}">
+                <div class="d-flex align-items-start gap-2 mb-2">
+                    <span class="fs-5">{% if acertou %}✅{% else %}❌{% endif %}</span>
+                    <strong>Q{{ loop.index }} — {{ p.topico }}</strong>
+                    <span class="badge bg-secondary ms-auto">{{ p.dificuldade }}</span>
+                </div>
+                <p class="mb-2 fw-semibold">{{ p.pergunta }}</p>
+                {% if not acertou and resp %}
+                <p class="mb-1 text-danger small">
+                    ❌ Sua resposta: <strong>{{ p.opcoes[resp.escolhida] }}</strong>
+                </p>
+                {% endif %}
+                <p class="mb-2 text-success small">
+                    ✅ Resposta certa: <strong>{{ p.opcoes[p.correta] }}</strong>
+                </p>
+                <div class="alert-info-custom py-2 px-3 mt-1" style="font-size: 0.85rem;">
+                    💡 {{ p.explicacao }}
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="d-flex justify-content-center flex-wrap gap-2 mt-4">
+                <a href="/quiz/reiniciar" class="btn btn-primary px-4 py-2">
+                    🔄 Menu Principal do Quiz
+                </a>
+                <a href="/" class="btn btn-nav-prev">
+                    ← Início
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

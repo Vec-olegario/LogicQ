@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+{% block title %}Início{% endblock %}
+{% block content %}
+<div class="section-header">
+    <h2>Setor de Estoque</h2>
+    <p>Aqui os produtos ficam guardados e organizados até serem pedidos</p>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-12 col-md-6">
+        <div class="video-wrapper ratio ratio-16x9 my-2">
+            <iframe src="https://www.youtube.com/embed/RFg_JhcIB7g" title="Gestão de Estoque" allowfullscreen></iframe>
+        </div>
+    </div>
+    <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
+        <h3>O que é Gestão de Estoque?</h3>
+        <p>
+            É saber <strong>onde está, quanto tem e como está se movendo</strong> cada produto
+            dentro do galpão. Assim nada some, fica errado ou falta na hora errada.
+        </p>
+        <p><strong>Como isso funciona na prática:</strong></p>
+        <ul>
+            <li>Cada produto tem um endereço fixo (rua, prateleira, nível) — como um CEP no galpão</li>
+            <li>Os produtos mais vendidos ficam no lugar mais fácil de pegar</li>
+            <li>Contagem periódica para verificar se o sistema bate com o que está na prateleira</li>
+            <li>Produto mais antigo sai primeiro para evitar vencimento</li>
+        </ul>
+    </div>
+</div>
+
+<div class="bg-gray-section">
+    <div class="row g-4 mb-0">
+        <div class="col-12 col-md-6">
+            <h3>Números que o galpão acompanha</h3>
+            <ul>
+                <li><strong>Precisão do Estoque:</strong> Quantos produtos no sistema batem com o que está nas
+                    prateleiras
+                </li>
+                <li><strong>Giro de Estoque:</strong> Com que velocidade os produtos são vendidos e repostos</li>
+                <li><strong>Dias de Estoque:</strong> Por quantos dias os produtos atuais são suficientes</li>
+                <li><strong>Nível de Atendimento:</strong> Se consegue atender todos os pedidos sem faltar produto
+                </li>
+            </ul>
+        </div>
+        <div class="col-12 col-md-6">
+            <h3>🏗️ 4 Tipos de Armazenagem</h3>
+            <div class="accordion mt-2" id="accordionEstoque">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#e1">
+                            📦 Porta-Pallets (Racks Convencionais)
+                        </button>
+                    </h2>
+                    <div id="e1" class="accordion-collapse collapse" data-bs-parent="#accordionEstoque">
+                        <div class="accordion-body">
+                            Prateleiras metálicas onde cada palete tem seu próprio lugar. Fácil de acessar qualquer
+                            produto.
+                            É o modelo mais comum em galpões com muitos tipos de produto.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#e2">
+                            🔄 Drive-in / Drive-through
+                        </button>
+                    </h2>
+                    <div id="e2" class="accordion-collapse collapse" data-bs-parent="#accordionEstoque">
+                        <div class="accordion-body">
+                            A empilhadeira entra dentro da própria estrutura. Cabe muito produto em pouco espaço. O
+                            último
+                            que entra é o primeiro a sair (Drive-in) ou o primeiro que entrou sai primeiro
+                            (Drive-through).
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#e3">
+                            📚 Estanterias (Prateleiras)
+                        </button>
+                    </h2>
+                    <div id="e3" class="accordion-collapse collapse" data-bs-parent="#accordionEstoque">
+                        <div class="accordion-body">
+                            Prateleiras menores para produtos pequenos, onde a separação é feita à mão. Muito usada
+                            em
+                            lojas
+                            online (e-commerce).
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#e4">
+                            ⬛ Blocado (Empilhamento no Chão)
+                        </button>
+                    </h2>
+                    <div id="e4" class="accordion-collapse collapse" data-bs-parent="#accordionEstoque">
+                        <div class="accordion-body">
+                            Produtos empilhados diretamente no chão, sem prateleiras. Mais barato, mas só funciona
+                            bem
+                            quando todos os produtos são iguais e chegam em grande quantidade.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="my-5">
+
+<!-- 📊 INDICADORES DIDÁTICOS DE ESTOQUE -->
+<div class="mb-5">
+    <h3 class="mb-3">📊 Indicadores Chave de Gestão de Estoque (KPIs)</h3>
+    <div class="row g-4">
+        <div class="col-12 col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4"
+                style="border-left: 5px solid var(--vibrant-blue) !important; background: #ffffff;">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="fs-4 me-2">🎯</span>
+                    <h5 class="mb-0 fw-bold">Acuracidade de Inventário (IRA)</h5>
+                </div>
+                <p class="text-muted small mb-2"><strong>O que mede:</strong> A exatidão entre o saldo físico na
+                    prateleira e o saldo registrado no WMS.</p>
+                <div class="p-2 rounded bg-light text-dark fw-bold small mb-2">
+                    📐 Fórmula: (Itens sem Divergência / Total Contado) × 100
+                </div>
+                <p class="small mb-0"><strong>Por que é importante?</strong> Evita vender produtos inexistentes e
+                    garante que os inventários rotativos sejam confiáveis.</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4"
+                style="border-left: 5px solid var(--accent-orange) !important; background: #ffffff;">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="fs-4 me-2">🔄</span>
+                    <h5 class="mb-0 fw-bold">Giro de Estoque (Turnover)</h5>
+                </div>
+                <p class="text-muted small mb-2"><strong>O que mede:</strong> Quantas vezes o estoque é totalmente
+                    renovado durante um determinado período.</p>
+                <div class="p-2 rounded bg-light text-dark fw-bold small mb-2">
+                    📐 Fórmula: Vendas Totais do Período / Estoque Médio
+                </div>
+                <p class="small mb-0"><strong>Por que é importante?</strong> Giro alto significa capital girando rápido.
+                    Giro baixo indica produtos encalhados gerando custo de armazenagem.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 🧠 DESAFIO PRÁTICO DO SETOR -->
+<div class="card border-0 shadow-sm p-4 mb-4"
+    style="background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%); border-radius: 14px;">
+    <div class="d-flex align-items-center mb-3">
+        <span class="fs-3 me-2">🧠</span>
+        <h4 class="mb-0 fw-bold text-primary">Desafio Prático de Estoque</h4>
+    </div>
+    <p class="fw-semibold mb-3">
+        <strong>Cenário:</strong> Durante um inventário rotativo, o conferente consulta o WMS que indica <strong>50
+            caixas</strong> do Produto X no endereço <code>Rua B - Apto 204</code>. Porém, ao contar fisicamente o
+        local, ele encontra apenas <strong>35 caixas</strong>.
+    </p>
+    <p class="fw-bold mb-2">Qual deve ser a primeira atitude do operador de estoque?</p>
+
+    <div class="accordion" id="accordionDesafioEst">
+        <div class="accordion-item border mb-2 rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#desafioEstOpt1">
+                    A) Alterar a quantidade no sistema imediatamente para 35 caixas sem investigar.
+                </button>
+            </h2>
+            <div id="desafioEstOpt1" class="accordion-collapse collapse" data-bs-parent="#accordionDesafioEst">
+                <div class="accordion-body text-danger bg-danger-subtle">
+                    ❌ <strong>Incorreto!</strong> Ajustar o saldo sem checar os endereços vizinhos pode mascarar um erro
+                    de endereçamento (ex: as 15 caixas faltantes podem ter sido colocadas por engano na prateleira ao
+                    lado).
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item border mb-2 rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#desafioEstOpt2">
+                    B) Verificar as posições vizinhas e o histórico recente de movimentação antes de solicitar o ajuste
+                    de divergência.
+                </button>
+            </h2>
+            <div id="desafioEstOpt2" class="accordion-collapse collapse" data-bs-parent="#accordionDesafioEst">
+                <div class="accordion-body text-success bg-success-subtle">
+                    ✅ <strong>Resposta Correta!</strong> Investigar se houve armazenamento incorreto nas posições
+                    adjacentes ou movimentação recente sem bipe no coletor é a melhor prática antes de dar baixa no
+                    inventário.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item border rounded overflow-hidden">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#desafioEstOpt3">
+                    C) Pegar 15 caixas de outro produto e colocar no local para completar a contagem.
+                </button>
+            </h2>
+            <div id="desafioEstOpt3" class="accordion-collapse collapse" data-bs-parent="#accordionDesafioEst">
+                <div class="accordion-body text-danger bg-danger-subtle">
+                    ❌ <strong>Incorreto!</strong> Misturar produtos diferentes gera dois erros gravíssimos: envia o
+                    produto errado para o cliente e estraga o estoque do segundo item.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sabia-box mb-3">
+    💡 <strong>Você sabia?</strong> Os produtos mais vendidos devem ficar sempre no lugar mais fácil de pegar.
+    Essa ideia se chama <strong>Curva ABC</strong>: os 20% de produtos que representam 80% das vendas ficam perto da
+    saída.
+</div>
+
+<!-- ══════════════════════════════
+     NAVEGAÇÃO E CTAS ESTRATÉGICOS DO SETOR
+     ══════════════════════════════ -->
+<div class="sector-nav-bar">
+    <div>
+        <h5 class="mb-1 text-dark fw-bold">🚀 Próximo Passo na Operação</h5>
+        <p class="text-muted small mb-0">Avance para a Separação (Picking), volte ao Recebimento ou teste no Quiz.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="/recebimento" class="btn btn-nav-prev">
+            ← Recebimento
+        </a>
+        <a href="/quiz/iniciar?modo=topico&topico=Estoque" class="btn btn-outline-primary">
+            🧠 Quiz de Estoque
+        </a>
+        <a href="/picking" class="btn btn-primary">
+            🛒 Ir para o Picking →
+        </a>
+    </div>
+</div>
+
+{% endblock %}
