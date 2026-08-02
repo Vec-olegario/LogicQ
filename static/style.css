@@ -5,6 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
+    color-scheme: light;
     /* Cores de Destaque - Modernas, Sérias e com Bom Humor */
     --primary-blue: #1e3a8a;
     /* Azul escuro (sério, confiança, corporativo) */
@@ -46,10 +47,15 @@
     box-sizing: border-box;
 }
 
+html {
+    color-scheme: light;
+    background-color: #f8fafc;
+}
+
 body {
     font-family: 'Inter', sans-serif;
-    background: var(--bg-body);
-    color: var(--text-dark);
+    background-color: #f8fafc;
+    color: #0f172a;
     font-size: 0.95rem;
     line-height: 1.65;
 }
@@ -1488,5 +1494,53 @@ html {
     .quote-card-custom,
     .sabia-box {
         padding: 1.75rem 2rem !important;
+    }
+}
+
+/* 5. PROTEÇÃO CONTRA MODO ESCURO FORÇADO (Navegadores de Celular) */
+@media (prefers-color-scheme: dark) {
+    html, body {
+        background-color: #f8fafc !important;
+        color: #0f172a !important;
+    }
+
+    .sabia-box {
+        background-color: #fff7ed !important;
+        border-color: #fde68a !important;
+        color: #78350f !important;
+    }
+
+    .sabia-box strong,
+    .sabia-box b {
+        color: #d97706 !important;
+    }
+
+    .hero-banner-custom {
+        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%) !important;
+        color: #ffffff !important;
+    }
+
+    .hero-title-main,
+    .hero-subtitle-main {
+        color: #ffffff !important;
+    }
+
+    .card,
+    .card-custom,
+    .quote-card-custom,
+    .sector-pipeline-card,
+    .step-card,
+    .flow-card {
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+    }
+
+    .text-secondary,
+    .text-muted {
+        color: #475569 !important;
+    }
+
+    .bg-gray-section {
+        background-color: #f8fafc !important;
     }
 }
