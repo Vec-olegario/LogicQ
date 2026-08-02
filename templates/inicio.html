@@ -3,37 +3,41 @@
 {% block content %}
 
 <!-- ══════════════════════════════════════════════════════
-     CABEÇALHO DA PÁGINA (Clean & Humano)
+     HERO BANNER (Clean, com toques de cor harmoniosos)
      ══════════════════════════════════════════════════════ -->
-<div class="mb-4">
-    <h1 class="fw-bold text-dark mb-2">Central de Treinamento Logístico</h1>
-    <p class="text-secondary lead fs-6 mb-0">
-        Simulação prática e didática das operações de um Centro de Distribuição (CD). Acompanhe a rotina dos setores e seus indicadores de desempenho.
+<div class="hero-banner-custom mb-4 text-center">
+    <div class="hero-badge mb-2">Plataforma Didática de Logística</div>
+    <h1 class="hero-title-main">LogiQ — Centro de Treinamento Logístico</h1>
+    <p class="hero-subtitle-main mx-auto">
+        Aprenda a operação de um Centro de Distribuição (CD) na prática: acompanhe a rotina do <span class="text-primary fw-semibold">Recebimento</span>, <span class="text-purple fw-semibold">Estoque</span>, <span class="text-warning fw-semibold">Picking</span> e <span class="text-success fw-semibold">Expedição</span>.
     </p>
 </div>
 
 <!-- ══════════════════════════════════════════════════════
-     SETORES OPERACIONAIS (CARDS LIMPOS SEM BADGES DE PASSO OU EMOJIS DE IA)
+     SETORES OPERACIONAIS (CARDS COLORIDOS & HARMONIOSOS)
      ══════════════════════════════════════════════════════ -->
 <div class="mb-5">
-    <div class="mb-3">
-        <h2 class="h5 fw-bold text-dark mb-1">Setores Operacionais</h2>
-        <p class="text-muted small mb-0">Escolha um setor para ver as rotinas, formulários e indicadores:</p>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <div>
+            <h2 class="h5 fw-bold text-dark mb-1">Setores Operacionais do Galpão</h2>
+            <p class="text-muted small mb-0">Clique em um setor para explorar sua rotina, formulários e indicadores:</p>
+        </div>
     </div>
 
     <div class="row g-4">
         <!-- Recebimento -->
         <div class="col-12 col-md-6 col-xl-3">
             <a href="/recebimento" class="sector-pipeline-card sector-blue h-100 d-flex flex-column text-decoration-none">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <h3 class="h5 fw-bold text-dark mb-0">Recebimento</h3>
-                    <span class="fs-4">📦</span>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="pipeline-badge badge-blue">Entrada & NF-e</span>
+                    <span class="pipeline-icon p-2 bg-blue-subtle rounded-3">📦</span>
                 </div>
+                <h3 class="h5 fw-bold text-dark mb-2">Recebimento</h3>
                 <p class="text-secondary small flex-grow-1 mb-3">
-                    Entrada de cargas, agendamento de docas, triagem de materiais e conferência física e fiscal da NF-e.
+                    Chegada de carretas, agendamento de doca e conferência física e fiscal das notas fiscais.
                 </p>
                 <div class="pipeline-footer text-primary fw-semibold small">
-                    Acessar setor →
+                    Explorar Recebimento →
                 </div>
             </a>
         </div>
@@ -41,15 +45,16 @@
         <!-- Estoque -->
         <div class="col-12 col-md-6 col-xl-3">
             <a href="/estoque" class="sector-pipeline-card sector-purple h-100 d-flex flex-column text-decoration-none">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <h3 class="h5 fw-bold text-dark mb-0">Estoque</h3>
-                    <span class="fs-4">🗄️</span>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="pipeline-badge badge-purple">Guarda & WMS</span>
+                    <span class="pipeline-icon p-2 bg-purple-subtle rounded-3">🗄️</span>
                 </div>
+                <h3 class="h5 fw-bold text-dark mb-2">Estoque</h3>
                 <p class="text-secondary small flex-grow-1 mb-3">
-                    Guarda de produtos, ocupação por rua (A a H), endereçamento WMS e estratégias FIFO/LIFO.
+                    Armazenamento organizado por ruas (A a H), endereçamento e controle de saldo FIFO/LIFO.
                 </p>
                 <div class="pipeline-footer text-purple fw-semibold small">
-                    Acessar setor →
+                    Explorar Estoque →
                 </div>
             </a>
         </div>
@@ -57,15 +62,16 @@
         <!-- Picking -->
         <div class="col-12 col-md-6 col-xl-3">
             <a href="/picking" class="sector-pipeline-card sector-orange h-100 d-flex flex-column text-decoration-none">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <h3 class="h5 fw-bold text-dark mb-0">Picking</h3>
-                    <span class="fs-4">🛒</span>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="pipeline-badge badge-orange">Separação</span>
+                    <span class="pipeline-icon p-2 bg-orange-subtle rounded-3">🛒</span>
                 </div>
+                <h3 class="h5 fw-bold text-dark mb-2">Picking</h3>
                 <p class="text-secondary small flex-grow-1 mb-3">
-                    Separação de itens por pedido, controle de acurácia, métodos de coleta e produtividade dos operadores.
+                    Coleta de produtos nas prateleiras conforme pedidos, com foco em acurácia e velocidade.
                 </p>
                 <div class="pipeline-footer text-warning fw-semibold small">
-                    Acessar setor →
+                    Explorar Picking →
                 </div>
             </a>
         </div>
@@ -73,15 +79,16 @@
         <!-- Expedição -->
         <div class="col-12 col-md-6 col-xl-3">
             <a href="/expedicao" class="sector-pipeline-card sector-green h-100 d-flex flex-column text-decoration-none">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <h3 class="h5 fw-bold text-dark mb-0">Expedição</h3>
-                    <span class="fs-4">🚛</span>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="pipeline-badge badge-green">Despacho & OTIF</span>
+                    <span class="pipeline-icon p-2 bg-green-subtle rounded-3">🚛</span>
                 </div>
+                <h3 class="h5 fw-bold text-dark mb-2">Expedição</h3>
                 <p class="text-secondary small flex-grow-1 mb-3">
-                    Conferência final, embalagem, romaneio de carga, monitoramento de docas e despacho aos veículos.
+                    Conferência final, embalagem, romaneio de carga e carregamento para entrega ao cliente.
                 </p>
                 <div class="pipeline-footer text-success fw-semibold small">
-                    Acessar setor →
+                    Explorar Expedição →
                 </div>
             </a>
         </div>
@@ -89,13 +96,18 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════════
-     RESUMO SOBRE A OPERAÇÃO
+     SOBRE O PROJETO (Card com destaque azul suave)
      ══════════════════════════════════════════════════════ -->
-<div class="card-custom mb-5">
-    <h3 class="h6 fw-bold text-dark mb-2">Como funciona o sistema</h3>
-    <p class="text-secondary small mb-0">
-        Cada página do sistema simula um aspecto real do galpão. Você pode navegar pelos setores no menu superior, simular o registro de rotinas no painel de <strong>Situação do Turno</strong> ou testar seus conhecimentos no <strong>Quiz Logístico</strong>.
-    </p>
+<div class="quote-card-custom mb-5">
+    <div class="d-flex align-items-start gap-3">
+        <span class="fs-3 text-primary">💡</span>
+        <div>
+            <h3 class="h6 fw-bold text-dark mb-1">Como o sistema funciona</h3>
+            <p class="text-secondary small mb-0">
+                O <strong>LogiQ</strong> foi feito para ajudar quem está começando na área de logística. Você pode explorar cada setor individualmente, registrar um turno operacional na aba <strong>Situação</strong> ou testar seus conhecimentos no <strong>Quiz Interativo</strong>.
+            </p>
+        </div>
+    </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════
@@ -104,9 +116,12 @@
 <div class="row justify-content-center mb-5">
     <div class="col-12 col-lg-9">
         <div class="card-custom p-4">
-            <div class="mb-3">
-                <h3 class="h6 fw-bold text-dark mb-1">Visão Geral de Armazenagem</h3>
-                <p class="text-muted small mb-0">Vídeo introdutório sobre o fluxo de mercadorias em galpões logísticos:</p>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div>
+                    <h3 class="h6 fw-bold text-dark mb-1">Visão Geral de Armazenagem</h3>
+                    <p class="text-muted small mb-0">Vídeo introdutório sobre o fluxo de mercadorias no galpão:</p>
+                </div>
+                <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2 rounded-pill">Vídeo Educativo</span>
             </div>
             <div class="ratio ratio-16x9 rounded-3 overflow-hidden border">
                 <iframe src="https://www.youtube.com/embed/NMqsdKAaaaw" title="Logística de Armazém" allowfullscreen></iframe>
@@ -116,19 +131,19 @@
 </div>
 
 <!-- ══════════════════════════════════════════════════════
-     BARRA DE NAVEGAÇÃO RÁPIDA
+     BARRA DE NAVEGAÇÃO RÁPIDA (Com cores nos botões)
      ══════════════════════════════════════════════════════ -->
 <div class="sector-nav-bar card-custom d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 p-4">
     <div>
-        <h4 class="h6 fw-bold text-dark mb-1">Navegação Rápida</h4>
-        <p class="text-muted small mb-0">Escolha uma das atividades abaixo para continuar:</p>
+        <h4 class="h6 fw-bold text-dark mb-1">Pronto para praticar?</h4>
+        <p class="text-muted small mb-0">Escolha uma das atividades abaixo para continuar aprendendo:</p>
     </div>
     <div class="d-flex flex-wrap gap-2">
-        <a href="/situacao" class="btn btn-outline-primary btn-sm fw-semibold px-3 py-2">
-            Simulação de Turno
+        <a href="/situacao" class="btn btn-outline-primary fw-semibold px-3 py-2">
+            📋 Simular Turno (4 Etapas)
         </a>
-        <a href="/quiz" class="btn btn-primary btn-sm fw-semibold px-3 py-2">
-            Quiz Interativo →
+        <a href="/quiz" class="btn btn-primary fw-semibold px-3 py-2">
+            📝 Ir para o Quiz →
         </a>
     </div>
 </div>

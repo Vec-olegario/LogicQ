@@ -1130,3 +1130,9 @@ html {
     border-radius: 12px;
     padding: 1.25rem 1.5rem;
 }
+
+/* FONDOS SUBTIS PARA ÍCONES DOS SETORES */
+.bg-blue-subtle { background-color: #eff6ff !important; }
+.bg-purple-subtle { background-color: #f3e8ff !important; }
+.bg-orange-subtle { background-color: #fff7ed !important; }
+.bg-green-subtle { background-color: #ecfdf5 !important; }
