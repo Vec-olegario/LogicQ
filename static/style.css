@@ -1175,3 +1175,216 @@ html {
     color: #d97706 !important; /* Amarelo/âmbar aquecido em tom mais escuro e vivo */
     font-weight: 700;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   OTIMIZAÇÕES RESPONSIVAS PARA CELULAR E TABLET (MOBILE-FIRST)
+   ══════════════════════════════════════════════════════════════ */
+
+/* 1. Menu de Navegação em Telas Menores (Até 991px - Collapse Bootstrap) */
+@media (max-width: 991px) {
+    #navbarContent {
+        background: #ffffff;
+        padding: 1rem 0.5rem;
+        border-top: 1px solid var(--border-color);
+        margin-top: 8px;
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+
+    .navbar-nav {
+        align-items: stretch !important;
+    }
+
+    .navbar-nav .nav-item {
+        width: 100%;
+    }
+
+    .nav-btn {
+        display: block !important;
+        width: 100% !important;
+        text-align: left !important;
+        padding: 10px 14px !important;
+        margin-bottom: 4px;
+        font-size: 0.96rem !important;
+    }
+}
+
+/* 2. Otimização Completa para Smartphones (Até 768px) */
+@media (max-width: 768px) {
+    /* Ajuste de tipografia base e espaçamentos do corpo */
+    body {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    main {
+        padding-top: 70px !important;
+        padding-bottom: 30px !important;
+    }
+
+    /* Redução do tamanho da Logo e Navbar mais compacta */
+    .navbar-logo {
+        height: 38px !important;
+        max-width: 160px !important;
+    }
+
+    #main-nav {
+        padding: 4px 0 !important;
+    }
+
+    /* Hero Banner da página inicial e cabeçalhos em tamanho confortável */
+    .hero-banner-custom {
+        padding: 1.5rem 1rem !important;
+        border-radius: 12px !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .hero-title-main {
+        font-size: 1.35rem !important;
+        line-height: 1.35 !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .hero-subtitle-main {
+        font-size: 0.92rem !important;
+        line-height: 1.5 !important;
+    }
+
+    /* Escala dos Títulos em todo o sistema */
+    h1 {
+        font-size: 1.45rem !important;
+    }
+
+    h2 {
+        font-size: 1.22rem !important;
+    }
+
+    h3 {
+        font-size: 1.1rem !important;
+    }
+
+    h4 {
+        font-size: 1.02rem !important;
+    }
+
+    h5 {
+        font-size: 0.96rem !important;
+    }
+
+    /* Cabeçalhos de seção mais enxutos */
+    .section-header {
+        padding: 1rem 1.1rem !important;
+        margin-bottom: 1.25rem !important;
+    }
+
+    .section-header h2 {
+        font-size: 1.15rem !important;
+    }
+
+    .section-header p {
+        font-size: 0.85rem !important;
+    }
+
+    /* Redução de preenchimento (padding) em Cards e Blocos de Citação */
+    .card-custom,
+    .quote-card-custom,
+    .sabia-box {
+        padding: 1.1rem 1rem !important;
+        border-radius: 12px !important;
+        font-size: 0.89rem !important;
+    }
+
+    /* Cards do Pipeline (4 Setores na Página Inicial) */
+    .sector-pipeline-card {
+        padding: 1.15rem 1rem !important;
+        border-radius: 12px !important;
+    }
+
+    .sector-pipeline-card h3 {
+        font-size: 1.08rem !important;
+    }
+
+    .sector-pipeline-card .fs-3 {
+        font-size: 1.4rem !important;
+    }
+
+    .sector-pipeline-card p {
+        font-size: 0.84rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    /* Barra de Navegação Rápida do Rodapé (CTAs / Botões de Situação e Quiz) */
+    .sector-nav-bar {
+        padding: 1.1rem 1rem !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.85rem !important;
+        margin-top: 1.75rem !important;
+    }
+
+    .sector-nav-bar > div:first-child {
+        text-align: center;
+    }
+
+    .sector-nav-bar .d-flex {
+        width: 100% !important;
+        flex-direction: column !important;
+        gap: 0.5rem !important;
+    }
+
+    .sector-nav-bar .btn,
+    .sector-nav-bar a.btn {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 10px 14px !important;
+        font-size: 0.92rem !important;
+    }
+
+    /* KPIs da Página Inicial ou Setores */
+    .kpi-card {
+        padding: 1rem !important;
+    }
+
+    .kpi-card h3 {
+        font-size: 1.35rem !important;
+    }
+
+    /* Formulários e Inputs no Celular (fácil toque, sem zoom acidental) */
+    input.form-control,
+    select.form-select,
+    textarea.form-control {
+        font-size: 16px !important; /* Evita zoom automático no navegador iOS/Android */
+        padding: 10px 12px !important;
+    }
+
+    /* Ajuste em Tabelas e Gráficos Plotly para evitar quebra horizontal da tela */
+    .table-responsive {
+        font-size: 0.82rem !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .js-plotly-plot,
+    .plotly-graph-div {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto;
+    }
+}
+
+/* 3. Ajuste extra para telas muito compactas (smartphones pequenos - até 480px) */
+@media (max-width: 480px) {
+    .hero-title-main {
+        font-size: 1.22rem !important;
+    }
+
+    .hero-subtitle-main {
+        font-size: 0.86rem !important;
+    }
+
+    .card-custom,
+    .quote-card-custom,
+    .sabia-box {
+        padding: 0.9rem 0.85rem !important;
+    }
+}
