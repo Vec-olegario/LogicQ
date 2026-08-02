@@ -1157,3 +1157,21 @@ html {
 .bg-purple-subtle { background-color: #f3e8ff !important; }
 .bg-orange-subtle { background-color: #fff7ed !important; }
 .bg-green-subtle { background-color: #ecfdf5 !important; }
+
+/* ── CAIXA VOCÊ SABIA? (DICA LOGÍSTICA COM AMARELO/ÂMBAR AQUECIDO) ── */
+.sabia-box {
+    background-color: var(--bg-orange-light, #fff7ed) !important;
+    border: 1px solid #fed7aa;
+    border-left: 4px solid var(--accent-orange, #f59e0b);
+    border-radius: 12px;
+    padding: 1.1rem 1.4rem;
+    color: #475569 !important;
+    font-size: 0.93rem;
+    line-height: 1.6;
+}
+
+.sabia-box strong,
+.sabia-box b {
+    color: #d97706 !important; /* Amarelo/âmbar aquecido em tom mais escuro e vivo */
+    font-weight: 700;
+}
