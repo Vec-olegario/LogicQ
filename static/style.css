@@ -1144,12 +1144,13 @@ html {
 }
 
 .quote-card-custom {
-    background: #f8fafc;
-    border: 1px solid var(--border-color);
+    background: var(--bg-blue-light) !important;
+    border: 1px solid rgba(37, 99, 235, 0.18);
     border-left: 4px solid var(--vibrant-blue);
     border-radius: 12px;
     padding: 1.25rem 1.5rem;
 }
+
 
 /* FONDOS SUBTIS PARA ÍCONES DOS SETORES */
 .bg-blue-subtle { background-color: #eff6ff !important; }
