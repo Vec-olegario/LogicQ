@@ -7,9 +7,10 @@
      ═══════════════════════════════════════════════════════════ -->
 <div class="section-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
     <div>
-        <h2 class="mb-1 fw-bold text-dark">📊 Dashboard</h2>
+        <h2 class="mb-1 fw-bold text-dark">Dashboard</h2>
         <p class="text-muted mb-0">
-            Acompanhe em tempo real a rastreabilidade das mercadorias, acurácia das bipagens e gere o Relatório Oficial do Turno.
+            Acompanhe em tempo real a rastreabilidade das mercadorias, acurácia das bipagens e gere o Relatório Oficial
+            do Turno.
         </p>
     </div>
 
@@ -49,7 +50,8 @@
      ═══════════════════════════════════════════════════════════ -->
 <div class="row g-4 mb-4">
     <div class="col-12 col-lg-4">
-        <div class="card border-0 shadow-sm p-4 h-100" style="border-radius: 16px; background: #ffffff; border-top: 4px solid #2563eb !important;">
+        <div class="card border-0 shadow-sm p-4 h-100"
+            style="border-radius: 16px; background: #ffffff; border-top: 4px solid #2563eb !important;">
             <div class="mb-3">
                 <h5 class="fw-bold text-dark mb-1">📉 Fluxo e Retenção por Etapa</h5>
                 <p class="text-muted small mb-0">Acompanhe a conversão dos itens (Funil Logístico)</p>
@@ -58,7 +60,8 @@
         </div>
     </div>
     <div class="col-12 col-lg-4">
-        <div class="card border-0 shadow-sm p-4 h-100" style="border-radius: 16px; background: #ffffff; border-top: 4px solid #10b981 !important;">
+        <div class="card border-0 shadow-sm p-4 h-100"
+            style="border-radius: 16px; background: #ffffff; border-top: 4px solid #10b981 !important;">
             <div class="mb-3">
                 <h5 class="fw-bold text-dark mb-1">🎯 Precisão na Separação</h5>
                 <p class="text-muted small mb-0">Acurácia e qualidade no Picking do turno</p>
@@ -67,7 +70,8 @@
         </div>
     </div>
     <div class="col-12 col-lg-4">
-        <div class="card border-0 shadow-sm p-4 h-100" style="border-radius: 16px; background: #ffffff; border-top: 4px solid #3b82f6 !important;">
+        <div class="card border-0 shadow-sm p-4 h-100"
+            style="border-radius: 16px; background: #ffffff; border-top: 4px solid #3b82f6 !important;">
             <div class="mb-3">
                 <h5 class="fw-bold text-dark mb-1">🗄️ Distribuição por Rua</h5>
                 <p class="text-muted small mb-0">Alocação física de caixas no porta-paletes</p>
@@ -91,8 +95,8 @@
         </div>
         <div class="p-2.5 rounded-3 border mt-2 mt-md-0 shadow-sm"
             style="background-color: #f8fafc; border-left: 4px solid var(--vibrant-blue) !important; max-width: 450px;">
-                💡 <strong>Dica:</strong> Ao final do turno, gere o Relatório Oficial para imprimir ou salvar em PDF
-                seus indicadores.
+            💡 <strong>Dica:</strong> Ao final do turno, gere o Relatório Oficial para salvar
+            seus indicadores.
             </p>
         </div>
     </div>
@@ -227,8 +231,8 @@
      ═══════════════════════════════════════════════════════════ -->
 <div class="sector-nav-bar mt-4">
     <div>
-        <h5 class="mb-1 text-dark fw-bold">📄 Finalizou a Operação do Turno?</h5>
-        <p class="text-muted mb-0">Gere o Relatório Oficial do Turno para imprimir, salvar em PDF ou arquivar os
+        <h5 class="mb-1 text-dark fw-bold">📄 Finalizou a Operação?</h5>
+        <p class="text-muted mb-0">Gere o Relatório Oficial do Turno para imprimir ou salvar em PDF os
             indicadores de desempenho e conferência das mercadorias.</p>
     </div>
     <div class="d-flex flex-wrap gap-2">
@@ -236,7 +240,7 @@
             📦 Continuar Simulação →
         </a>
         <a href="{{ url_for('relatorio_turno') }}" class="btn btn-primary fw-bold shadow-sm">
-            📄 Relatório do Turno (PDF / Print)
+            📄 Relatório Final
         </a>
     </div>
 </div>
@@ -251,23 +255,25 @@
             try {
                 const configPlotly = { responsive: true, displayModeBar: false };
 
-                const figFunil = {{ graf_funil | safe }};
-                Plotly.newPlot("grafFunilTurno", figFunil.data, figFunil.layout, configPlotly);
+                const figFunil = {{ graf_funil | safe
+            }};
+        Plotly.newPlot("grafFunilTurno", figFunil.data, figFunil.layout, configPlotly);
 
-                const figAcuracia = {{ graf_acuracia | safe }};
-                Plotly.newPlot("grafAcuraciaPicking", figAcuracia.data, figAcuracia.layout, configPlotly);
+        const figAcuracia = {{ graf_acuracia | safe
+    }};
+    Plotly.newPlot("grafAcuraciaPicking", figAcuracia.data, figAcuracia.layout, configPlotly);
 
-                const figOcupacao = {{ graf_ocupacao | safe }};
-                Plotly.newPlot("grafOcupacaoEstantes", figOcupacao.data, figOcupacao.layout, configPlotly);
+    const figOcupacao = {{ graf_ocupacao | safe }};
+    Plotly.newPlot("grafOcupacaoEstantes", figOcupacao.data, figOcupacao.layout, configPlotly);
 
-                window.addEventListener("resize", function () {
-                    Plotly.Plots.resize("grafFunilTurno");
-                    Plotly.Plots.resize("grafAcuraciaPicking");
-                    Plotly.Plots.resize("grafOcupacaoEstantes");
-                });
+    window.addEventListener("resize", function () {
+        Plotly.Plots.resize("grafFunilTurno");
+        Plotly.Plots.resize("grafAcuraciaPicking");
+        Plotly.Plots.resize("grafOcupacaoEstantes");
+    });
             } catch (err) {
-                console.error("Erro na renderização dos gráficos Plotly:", err);
-            }
+        console.error("Erro na renderização dos gráficos Plotly:", err);
+    }
         }
     });
 
