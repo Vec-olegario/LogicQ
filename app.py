@@ -558,5 +558,22 @@ def api_chat() -> Response:
 
 
 # ─────────────────────────────────────────────
+# TRATAMENTO DE ERROS E SEGURANÇA (HANDLERS GLOBAIS)
+# ─────────────────────────────────────────────
+@app.errorhandler(404)
+def erro_404(e: Any) -> Response:
+    """Trata erros 404 redirecionando para a página inicial com mensagem amigável."""
+    flash("⚠️ Página não encontrada. Você foi redirecionado para o Início.", "warning")
+    return redirect(url_for("inicio"))
+
+
+@app.errorhandler(500)
+def erro_500(e: Any) -> Response:
+    """Trata erros internos de servidor (500) sem exibir stack trace ao usuário."""
+    flash("⚠️ Ocorreu um erro interno na aplicação. Nossa equipe foi notificada.", "danger")
+    return redirect(url_for("inicio"))
+
+
+# ─────────────────────────────────────────────
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)

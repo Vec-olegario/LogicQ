@@ -7,8 +7,8 @@
 import os
 from typing import List, Dict
 
-# Chave secreta para criptografia de sessão no Flask
-SECRET_KEY: str = "galpao-logistico-2026-secreto"
+# Chave secreta para criptografia de sessão no Flask (permite override via env por segurança)
+SECRET_KEY: str = os.getenv("LOGIQ_SECRET_KEY", "galpao-logistico-2026-secreto")
 
 # Título global do projeto
 APP_TITLE: str = "LogiQ — Centro de Treinamento e Simulação Logística"
