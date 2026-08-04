@@ -72,7 +72,7 @@
                             Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-btn {% if request.path == '/quiz' %}active{% endif %}" href="/Quiz">📝
+                        <a class="nav-link nav-btn {% if request.path == '/quiz' %}active{% endif %}" href="/quiz">📝
                             Quiz</a>
                     </li>
                 </ul>
@@ -104,8 +104,173 @@
         </div>
     </main>
 
+    <!-- ══════════════════════════════════════════════════════
+         WIDGET FLUTUANTE DO TUTOR LOGIQ (CHATBOT OPERACIONAL)
+         ══════════════════════════════════════════════════════ -->
+    <button id="tutorFloatingBtn" class="tutor-floating-btn" aria-label="Abrir Atlas">
+        <span class="tutor-btn-icon">⚡</span>
+        <span class="tutor-btn-text d-none d-sm-inline">Atlas</span>
+    </button>
+
+
+
+    <div id="tutorChatWindow" class="tutor-chat-window d-none" role="dialog" aria-label="Chat com Atlas">
+        <!-- Cabeçalho -->
+        <div class="tutor-header d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-2">
+                <span class="fs-4 text-warning">⚡</span>
+                <div>
+                    <div class="d-flex align-items-center gap-2">
+                        <h5 class="mb-0 fw-bold fs-6 text-white">Atlas</h5>
+                        <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 px-2 py-0" style="font-size: 0.65rem;">IA Ativa</span>
+                    </div>
+                    <small class="text-white-50" style="font-size: 0.72rem;">Especialista de Operações & CD</small>
+                </div>
+            </div>
+            <button id="tutorCloseBtn" class="btn-close btn-close-white" aria-label="Fechar chat"></button>
+        </div>
+
+
+        <!-- Chips de Perguntas Rápidas -->
+        <div class="tutor-chips-bar">
+            <button class="tutor-chip" data-pergunta="O que é WMS?">📦 O que é WMS?</button>
+            <button class="tutor-chip" data-pergunta="Qual a diferença entre FIFO e FEFO?">🔄 FIFO vs FEFO</button>
+            <button class="tutor-chip" data-pergunta="O que é o 5S no galpão?">🧹 O que é 5S?</button>
+            <button class="tutor-chip" data-pergunta="O que é OTIF?">🎯 O que é OTIF?</button>
+        </div>
+
+        <!-- Lista de Mensagens -->
+        <div id="tutorMessages" class="tutor-messages">
+            <div class="tutor-bubble bot">
+                Olá! Sou o <strong>Atlas</strong> ⚡, seu especialista virtual em Centro de Distribuição.<br>
+                Estou aqui para tirar dúvidas sobre processos do armazém, WMS, 5S, indicadores ou termos de logística.<br>
+                <em>Escolha uma opção acima ou digite sua pergunta abaixo!</em>
+            </div>
+
+        </div>
+
+        <!-- Barra de Entrada -->
+        <form id="tutorForm" class="tutor-input-bar d-flex gap-2">
+            <input type="text" id="tutorInput" class="form-control form-control-sm"
+                placeholder="Digite sua dúvida sobre o armazém..." autocomplete="off">
+            <button type="submit" class="btn btn-primary btn-sm px-3 fw-semibold">Enviar</button>
+        </form>
+    </div>
+
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script de Interatividade do Atlas -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const btnOpen = document.getElementById("tutorFloatingBtn");
+            const btnClose = document.getElementById("tutorCloseBtn");
+            const chatWin = document.getElementById("tutorChatWindow");
+            const messagesDiv = document.getElementById("tutorMessages");
+            const form = document.getElementById("tutorForm");
+            const input = document.getElementById("tutorInput");
+            const chips = document.querySelectorAll(".tutor-chip");
+
+            function verificarEBloquearAtlasSeEmQuiz() {
+                const emQuizAtivo = document.getElementById("quizAtivoTag") || 
+                                    (window.location.pathname.includes("/quiz") && document.querySelector(".quiz-progress-bar"));
+                if (emQuizAtivo && btnOpen) {
+                    btnOpen.style.display = "none";
+                    if (chatWin) chatWin.classList.add("d-none");
+                } else if (btnOpen) {
+                    btnOpen.style.display = "";
+                }
+            }
+
+            verificarEBloquearAtlasSeEmQuiz();
+
+            function toggleChat() {
+                chatWin.classList.toggle("d-none");
+                if (!chatWin.classList.contains("d-none")) {
+                    input.focus();
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                }
+            }
+
+            if (btnOpen) btnOpen.addEventListener("click", toggleChat);
+            if (btnClose) btnClose.addEventListener("click", () => chatWin.classList.add("d-none"));
+
+            function appendMessage(sender, text) {
+                const div = document.createElement("div");
+                div.className = "tutor-bubble " + sender;
+                div.innerHTML = formatarMarkdownSimples(text);
+                messagesDiv.appendChild(div);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                return div;
+            }
+
+            function formatarMarkdownSimples(texto) {
+                if (!texto) return "";
+                let html = texto
+                    .replace(/### (💡.*)/g, '<div class="tutor-sec-title tutor-sec-dica">$1</div>')
+                    .replace(/### (.*?)(?:\n|$)/g, '<div class="tutor-sec-title">$1</div>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/---/g, '<hr class="my-2 opacity-25">');
+
+                const linhas = html.split('\n');
+                let res = [];
+                for (let l of linhas) {
+                    let trimL = l.trim();
+                    if (!trimL) continue;
+                    if (trimL.startsWith('* ') || trimL.startsWith('- ')) {
+                        res.push('<div class="d-flex gap-2 my-1"><span class="text-primary fw-bold">•</span><span>' + trimL.substring(2) + '</span></div>');
+                    } else if (trimL.startsWith('<div class="tutor-sec-title')) {
+                        res.push(trimL);
+                    } else {
+                        res.push('<p class="mb-2">' + trimL + '</p>');
+                    }
+                }
+                return res.join('');
+            }
+
+            async function enviarPergunta(textoPergunta) {
+                const pergunta = textoPergunta.trim();
+                if (!pergunta) return;
+
+                appendMessage("user", pergunta);
+                input.value = "";
+
+                const bubbleLoading = appendMessage("bot", '<div class="d-flex align-items-center gap-2"><span>⚡ Atlas está analisando...</span><div class="typing-dots"><span></span><span></span><span></span></div></div>');
+
+
+
+                try {
+                    const resposta = await fetch("/api/chat", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ pergunta: pergunta }),
+                    });
+                    const dados = await resposta.json();
+                    messagesDiv.removeChild(bubbleLoading);
+                    appendMessage("bot", dados.resposta || "Nenhuma resposta obtida.");
+                } catch (e) {
+                    messagesDiv.removeChild(bubbleLoading);
+                    appendMessage("bot", "<em>Não foi possível conectar ao tutor agora. Verifique sua conexão.</em>");
+                }
+            }
+
+            if (form) {
+                form.addEventListener("submit", function (ev) {
+                    ev.preventDefault();
+                    enviarPergunta(input.value);
+                });
+            }
+
+            chips.forEach((chip) => {
+                chip.addEventListener("click", function () {
+                    const p = this.getAttribute("data-pergunta");
+                    if (p) enviarPergunta(p);
+                });
+            });
+        });
+    </script>
+
     {% block scripts %}{% endblock %}
 </body>
 

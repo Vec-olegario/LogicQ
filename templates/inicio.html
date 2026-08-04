@@ -6,7 +6,7 @@
 <!-- ══════════════════════════════════════════════════════
      CABEÇALHO DA PÁGINA
      ══════════════════════════════════════════════════════ -->
-<div class="mb-4 text-center py-2">
+<div class="mb-4 text-center py-2 fade-in-section">
     <h1 class="hero-title-main">LogiQ — Centro de Treinamento Logístico</h1>
     <p class="hero-subtitle-main mx-auto">
         Aprenda a operação de um Centro de Distribuição (CD) na prática
@@ -17,7 +17,7 @@
 <!-- ══════════════════════════════════════════════════════
      SOBRE O PROJETO (Card Informativo)
      ══════════════════════════════════════════════════════ -->
-<div class="quote-card-custom mb-4">
+<div class="quote-card-custom mb-4 fade-in-section" style="animation-delay: 0.1s;">
     <div class="d-flex align-items-start gap-3">
         <span class="fs-3">💡</span>
         <div>
@@ -32,10 +32,12 @@
     </div>
 </div>
 
+
+
 <!-- ══════════════════════════════════════════════════════
      VÍDEO DE APOIO (Posicionado logo acima dos setores)
      ══════════════════════════════════════════════════════ -->
-<div class="row justify-content-center mb-5">
+<div class="row justify-content-center mb-5 fade-in-section" style="animation-delay: 0.2s;">
     <div class="col-12 col-lg-9">
         <div class="ratio ratio-16x9 rounded-3 overflow-hidden border shadow-sm">
             <iframe src="https://www.youtube.com/embed/NMqsdKAaaaw" title="Logística de Armazém"
@@ -47,7 +49,7 @@
 <!-- ══════════════════════════════════════════════════════
      SETORES OPERACIONAIS
      ══════════════════════════════════════════════════════ -->
-<div class="mb-5">
+<div class="mb-5 fade-in-section" style="animation-delay: 0.3s;">
     <div class="section-header">
         <h2 class="h5 fw-bold text-primary mb-1">Setores Operacionais do Galpão</h2>
         <p class="text-muted small mb-0">Clique em um setor para explorar sua rotina, formulários e indicadores:</p>
@@ -60,7 +62,7 @@
                 class="sector-pipeline-card sector-blue h-100 d-flex flex-column text-decoration-none">
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h3 class="h5 fw-bold text-dark mb-0">Recebimento</h3>
-                    <span class="fs-3">📦</span>
+                    <span class="fs-3 card-icon-hover">📦</span>
                 </div>
                 <p class="text-secondary small flex-grow-1 mb-3">
                     Chegada de carretas, agendamento de doca e conferência física e fiscal das notas fiscais.
@@ -76,7 +78,7 @@
             <a href="/estoque" class="sector-pipeline-card sector-purple h-100 d-flex flex-column text-decoration-none">
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h3 class="h5 fw-bold text-dark mb-0">Estoque</h3>
-                    <span class="fs-3">🗄️</span>
+                    <span class="fs-3 card-icon-hover">🗄️</span>
                 </div>
                 <p class="text-secondary small flex-grow-1 mb-3">
                     Armazenamento organizado por ruas, endereçamento e controle de saldo FIFO/LIFO.
@@ -92,7 +94,7 @@
             <a href="/picking" class="sector-pipeline-card sector-orange h-100 d-flex flex-column text-decoration-none">
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h3 class="h5 fw-bold text-dark mb-0">Picking</h3>
-                    <span class="fs-3">🛒</span>
+                    <span class="fs-3 card-icon-hover">🛒</span>
                 </div>
                 <p class="text-secondary small flex-grow-1 mb-3">
                     Coleta de produtos nas prateleiras conforme pedidos, com foco em acurácia e velocidade.
@@ -109,7 +111,7 @@
                 class="sector-pipeline-card sector-green h-100 d-flex flex-column text-decoration-none">
                 <div class="d-flex align-items-center justify-content-between mb-3">
                     <h3 class="h5 fw-bold text-dark mb-0">Expedição</h3>
-                    <span class="fs-3">🚛</span>
+                    <span class="fs-3 card-icon-hover">🚛</span>
                 </div>
                 <p class="text-secondary small flex-grow-1 mb-3">
                     Conferência final, embalagem, romaneio de carga e carregamento para entrega ao cliente.
@@ -125,22 +127,22 @@
 <!-- ══════════════════════════════════════════════════════
      DICA DIDÁTICA DE PERCURSO PARA O ALUNO
      ══════════════════════════════════════════════════════ -->
-<div class="sabia-box mb-4">
-    💡 <strong>Organização no Galpão (5S):</strong> Manter o ambiente limpo e padronizado garante a segurança da equipe
+<div class="sabia-box mb-4 fade-in-section" style="animation-delay: 0.4s;">
+    💡 <strong>Organização(5S):</strong> Manter o ambiente limpo e padronizado garante a segurança da equipe
     e a agilidade da operação: <em>um lugar para cada item, e cada item em seu lugar!</em>
 </div>
 
 <!-- ══════════════════════════════════════════════════════
      BARRA DE NAVEGAÇÃO RÁPIDA
      ══════════════════════════════════════════════════════ -->
-<div class="sector-nav-bar">
+<div class="sector-nav-bar fade-in-section" style="animation-delay: 0.5s;">
     <div>
         <h4 class="h6 fw-bold text-dark mb-1">Pronto para praticar?</h4>
         <p class="text-muted small mb-0">Escolha uma das atividades abaixo para continuar aprendendo:</p>
     </div>
     <div class="d-flex flex-wrap gap-2">
         <a href="/situacao" class="btn btn-outline-primary fw-semibold px-3 py-2">
-            📋 Simular Turno (4 Etapas)
+            <span aria-hidden="true">📦</span> Situação de Aprendizagem
         </a>
         <a href="/quiz" class="btn btn-primary fw-semibold px-3 py-2">
             📝 Ir para o Quiz →

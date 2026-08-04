@@ -21,6 +21,9 @@ O **LogiQ** é uma aplicação web desenvolvida em **Python (Flask)** com interf
   - **32 questões didáticas** divididas igualmente entre os 4 setores logísticos.
   - Modos de jogo selecionáveis: *Rápido (5 perguntas)*, *Padrão (15 perguntas)*, *Completo (32 perguntas)* ou *Por Setor (8 perguntas)*.
   - Sistema otimizado com embaralhamento aleatório de alternativas em tempo real e relatório analítico de acertos e tempo médio de resposta.
+- **⚡ Atlas — Especialista Didático Interativo**:
+  - Assistente virtual flutuante em todas as páginas para esclarecer dúvidas operacionais e conceitos do Centro de Distribuição em tempo real.
+  - Sistema híbrido com **Banco de Conhecimento Operacional** embutido (100% grátis e sem necessidade de conexão externa) e suporte à integração opcional com APIs generativas via variável de ambiente.
 
 ---
 
@@ -37,10 +40,13 @@ logiq/
 │   ├── __init__.py
 │   ├── perguntas.py         # Banco de 32 perguntas do Quiz e métodos tipados de busca
 │   ├── quiz_service.py      # Serviços de sessão do Quiz (embaralhamento leve e relatórios)
-│   └── simuladores.py       # Geradores de KPIs simulados, ranking de separadores e docas
+│   ├── simuladores.py       # Geradores de KPIs simulados, ranking de separadores e docas
+│   ├── tutor_chat.py        # Tutor didático com base de conhecimento operacional
+│   └── wms_didatico.py      # Sistema WMS Didático com bipagem e controle de turnos
 ├── ui/
 │   ├── __init__.py
-│   └── charts.py            # Construtores otimizados de gráficos Plotly (JSON serializado)
+│   ├── charts.py            # Construtores otimizados de gráficos Plotly (JSON serializado)
+│   └── wms_graphs.py        # Gráficos interativos do painel de controle do turno
 ├── utils/
 │   ├── __init__.py
 │   └── helpers.py           # Utilitários de relógio, datas e cálculos estatísticos de tempo
@@ -52,6 +58,8 @@ logiq/
 │   ├── picking.html         # Setor de Picking (com ranking de operadores)
 │   ├── expedicao.html       # Setor de Expedição (com status das docas)
 │   ├── situacao.html        # Painel integrador de situação operacional do turno
+│   ├── dashboard_turno.html # Painel de controle operacional WMS
+│   ├── relatorio_turno.html # Romaneio & Relatório Oficial de Auditoria do Turno
 │   └── quiz.html            # Interface de Quiz (Seleção, Rodada de Jogo e Placar Final)
 ├── static/
 │   └── style.css            # Folha de estilos completa com variáveis de tema e design cards
@@ -133,6 +141,19 @@ A estilização da interface está centralizada em **`static/style.css`**. O top
 
 ### 4. Modificar Configurações e Modos do Quiz
 Para alterar as quantidades de perguntas em cada modo de jogo (*Rápido, Padrão, Completo*), ou o título global da aplicação, edite o arquivo **`config/settings.py`**.
+
+---
+
+## 🌐 Deploy Gratuito em Produção (Render)
+
+O repositório está otimizado para ser publicado de graça no **Render (Web Service - Free Tier)**:
+
+1. **Servidor de Produção (`Procfile`)**:
+   O projeto já contém o arquivo `Procfile` configurado para iniciar com `gunicorn app:app`, consumindo pouca memória (dentro do limite de 512 MB gratuitos).
+2. **Variáveis de Ambiente (Opcional)**:
+   Se desejar conectar o Atlas a uma API externa de IA em tempo real, adicione no painel do Render a variável de ambiente secreta:
+   - **`API_KEY`**: Chave secreta da API escolhida.
+   *(Nota: Mesmo sem configurar essa chave, o Atlas funciona normalmente utilizando o banco de conhecimento didático local).*
 
 ---
 

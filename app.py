@@ -16,6 +16,7 @@ from flask import (
     session,
     url_for,
     Response,
+    jsonify,
 )
 
 from config import SECRET_KEY, TOPICOS
@@ -45,8 +46,9 @@ from logic import (
     validar_bipagem_picking,
     registrar_expedicao_item,
     editar_item_turno,
-    remover_item_turno,
     gerar_csv_turno,
+    atualizar_nome_operador,
+    responder_duvida_logistica,
 )
 
 app = Flask(__name__)
@@ -81,6 +83,7 @@ def erro_interno_servidor(e: Any) -> Response:
 # ROTAS — PÁGINAS EDUCATIVAS
 # ─────────────────────────────────────────────
 @app.route("/")
+@app.route("/inicio")
 def inicio() -> str:
     """Renderiza a página inicial do CD didático."""
     return render_template("inicio.html")
@@ -144,6 +147,16 @@ def situacao_reiniciar() -> Response:
     session.pop("turno_id", None)
     flash("🔄 Turno operacional reiniciado com sucesso! Todos os dados de bipagem foram zerados.", "info")
     return redirect(url_for("situacao"))
+
+
+@app.route("/situacao/salvar-nome", methods=["POST"])
+def situacao_salvar_nome() -> Response:
+    """Permite ao usuário definir ou atualizar o seu próprio nome no turno operacional."""
+    turno_id, turno = _garantir_turno_sessao()
+    nome = request.form.get("nome_operador", "").strip() or "Operador(a)"
+    atualizar_nome_operador(turno_id, nome)
+    flash(f"👤 Operador(a) identificado como: {nome}", "success")
+    return redirect(request.referrer or url_for("situacao"))
 
 
 def processar_registro_etapa(etapa: str, form_data: Dict[str, Any], turno_id: str) -> None:
@@ -304,9 +317,13 @@ def dashboard_turno_remover(item_id: str) -> Response:
 def dashboard_turno_exportar_planilha() -> Response:
     """
     Gera e baixa a planilha CSV/Excel do turno do aluno formatada em UTF-8 com BOM
-    e separador ponto-e-vírgula.
+    e separador ponto-e-vírgula. Requer que o usuário tenha identificado seu nome.
     """
-    turno_id = session.get("turno_id", "")
+    turno_id, turno = _garantir_turno_sessao()
+    if turno.get("aluno", "Operador(a)") == "Operador(a)":
+        flash("⚠️ Para baixar a planilha em CSV, você precisa primeiro informar o seu nome de Operador(a)!", "warning")
+        return redirect(url_for("situacao"))
+
     conteudo_csv = gerar_csv_turno(turno_id)
     csv_com_bom = "\ufeff" + conteudo_csv
     headers = {
@@ -314,6 +331,33 @@ def dashboard_turno_exportar_planilha() -> Response:
         "Content-Type": "text/csv; charset=utf-8",
     }
     return Response(csv_com_bom, mimetype="text/csv", headers=headers)
+
+
+@app.route("/relatorio-turno")
+def relatorio_turno() -> Response:
+    """
+    Renderiza o Relatório Oficial de Conferência e Performance Operacional do Turno.
+    Permite impressão direta ou salvamento como documento PDF estruturado. Requer identificação do nome.
+    """
+    turno_id, turno = _garantir_turno_sessao()
+    if turno.get("aluno", "Operador(a)") == "Operador(a)":
+        flash("⚠️ Para emitir o Romaneio & Relatório Oficial do Turno, por favor informe o seu nome de Operador(a)!", "warning")
+        return redirect(url_for("situacao"))
+
+    itens = turno.get("itens", [])
+    acertos = int(turno.get("acertos_picking", 0))
+    erros = int(turno.get("erros_picking", 0))
+    total_picking = acertos + erros
+    acuracia = round((acertos / total_picking) * 100, 1) if total_picking > 0 else 100.0
+
+    return render_template(
+        "relatorio_turno.html",
+        turno=turno,
+        itens=itens,
+        acuracia=acuracia,
+        hora=hora_atual(),
+        data=data_atual(),
+    )
 
 
 # ─────────────────────────────────────────────
@@ -494,6 +538,23 @@ def quiz_reiniciar() -> Response:
     """Encerra a sessão de quiz e retorna à tela inicial de SETUP."""
     session.pop("quiz", None)
     return redirect(url_for("quiz"))
+
+
+# ─────────────────────────────────────────────
+# TUTOR INTERATIVO DE LOGÍSTICA (API REST)
+# ─────────────────────────────────────────────
+@app.route("/api/chat", methods=["POST"])
+def api_chat() -> Response:
+    """
+    Endpoint da API REST para consulta ao Atlas.
+    Recebe um JSON com a pergunta do aluno e retorna a explicação em JSON.
+    Não utiliza cookies de sessão (stateless), respeitando o limite de 4 KB do Flask.
+    """
+    dados: Dict[str, Any] = request.get_json(silent=True) or {}
+    pergunta = str(dados.get("pergunta", "")).strip()
+
+    res = responder_duvida_logistica(pergunta)
+    return jsonify(res)
 
 
 # ─────────────────────────────────────────────

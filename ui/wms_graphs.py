@@ -18,13 +18,21 @@ def _base_layout() -> Dict[str, Any]:
     Layout base unificado para gráficos interativos do Dashboard de Turno.
 
     Returns:
-        Dict[str, Any]: Dicionário de propriedades do layout Plotly.
+        Dict[str, Any]: Dicionário de propriedades do layout Plotly com
+        estilização de tooltips, transparência e tipografia harmoniosa.
     """
     return dict(
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="#0f172a", family="Inter, sans-serif"),
-        margin=dict(l=40, r=20, t=30, b=40),
+        font=dict(color="#0f172a", family="Inter, -apple-system, sans-serif"),
+        margin=dict(l=30, r=20, t=35, b=30),
+        hoverlabel=dict(
+            bgcolor="#0f172a",
+            font_size=13,
+            font_family="Inter, sans-serif",
+            font_color="#f8fafc",
+            bordercolor="#334155",
+        ),
     )
 
 
@@ -43,16 +51,16 @@ def _fig_to_json(fig: go.Figure) -> str:
 
 def gerar_grafico_funil_turno(itens: List[Dict[str, Any]]) -> str:
     """
-    Gera um gráfico de barras comparando a contagem de caixinhas em cada
-    uma das 4 etapas do turno operacional (Recebimento, Estoque, Picking, Expedição).
+    Gera um gráfico de Funil Logístico (Plotly Funnel) demonstrando a passagem
+    e retenção de itens entre as 4 etapas operacionais do turno.
 
     Args:
         itens: Lista dos itens no turno do aluno.
 
     Returns:
-        str: JSON serializado do gráfico.
+        str: JSON serializado do gráfico interativo.
     """
-    contagem = {
+    contagem: Dict[str, int] = {
         "Recebimento": 0,
         "Estoque": 0,
         "Picking": 0,
@@ -72,22 +80,29 @@ def gerar_grafico_funil_turno(itens: List[Dict[str, Any]]) -> str:
 
     etapas = list(contagem.keys())
     quantidades = list(contagem.values())
-    cores = ["#2563eb", "#1e3a8a", "#f59e0b", "#10b981"]
+    cores = ["#2563eb", "#3b82f6", "#0d9488", "#10b981"]
 
     fig = go.Figure(
-        go.Bar(
-            x=etapas,
-            y=quantidades,
-            marker_color=cores,
-            text=[str(q) for q in quantidades],
-            textposition="auto",
+        go.Funnel(
+            y=etapas,
+            x=quantidades,
+            textposition="inside",
+            textinfo="value+percent initial",
+            marker=dict(
+                color=cores,
+                line=dict(width=1, color="rgba(255,255,255,0.8)"),
+            ),
+            connector=dict(
+                line=dict(color="rgba(148,163,184,0.45)", width=2, dash="dot")
+            ),
+            hovertemplate="<b>%{y}</b><br>Itens Bipados: <b>%{value} un</b><br>Fluxo Injetado: <b>%{percentInitial}</b><extra></extra>",
         )
     )
 
     layout = _base_layout().copy()
     layout.update(
-        title=dict(text="Itens por Etapa do Turno", font=dict(size=14)),
-        yaxis=dict(showgrid=True, gridcolor="#e2e8f0", rangemode="tozero"),
+        title=dict(text="Progresso do Fluxo no Galpão", font=dict(size=14, color="#1e293b", weight="bold")),
+        yaxis=dict(showgrid=False),
         xaxis=dict(showgrid=False),
         height=300,
     )
@@ -97,8 +112,8 @@ def gerar_grafico_funil_turno(itens: List[Dict[str, Any]]) -> str:
 
 def gerar_grafico_acuracia_picking(acertos: int, erros: int) -> str:
     """
-    Gera um gráfico de rosca (donut) mostrando a precisão das bipagens do aluno
-    na etapa de separação de pedidos.
+    Gera um gráfico de rosca interativo (Donut KPI) com indicador percentual
+    centralizado para exibir a precisão das bipagens em Picking.
 
     Args:
         acertos: Quantidade de bipagens corretas.
@@ -109,31 +124,46 @@ def gerar_grafico_acuracia_picking(acertos: int, erros: int) -> str:
     """
     total = acertos + erros
     if total == 0:
-        labels = ["Sem Bipagem Registrada"]
+        labels = ["Aguardando Bipagem"]
         values = [1]
-        cores = ["#cbd5e1"]
+        cores = ["#e2e8f0"]
+        texto_central = "<b>--</b><br><span style='font-size:11px;color:#64748b'>Sem Bipagem</span>"
     else:
-        labels = ["Bipagem Correta", "Erro / Troca"]
+        percentual = round((acertos / total) * 100)
+        labels = ["Bipagem Correta", "Erro / Troca de Código"]
         values = [acertos, max(0, erros)]
-        cores = ["#10b981", "#ef4444"]
+        cores = ["#10b981", "#f43f5e"]
+        texto_central = f"<b>{percentual}%</b><br><span style='font-size:11px;color:#64748b'>Acurácia</span>"
 
     fig = go.Figure(
         go.Pie(
             labels=labels,
             values=values,
-            hole=0.55,
-            marker=dict(colors=cores),
-            textinfo="label+percent",
-            hoverinfo="label+value",
+            hole=0.72,
+            marker=dict(
+                colors=cores,
+                line=dict(color="#ffffff", width=2),
+            ),
+            textinfo="none",
+            hovertemplate="<b>%{label}</b><br>Qtd: %{value} (%{percent})<extra></extra>",
         )
     )
 
     layout = _base_layout().copy()
     layout.update(
-        title=dict(text="Acurácia na Separação (Picking)", font=dict(size=14)),
+        title=dict(text="Índice de Qualidade na Separação", font=dict(size=14, color="#1e293b", weight="bold")),
         showlegend=True,
-        legend=dict(orientation="h", y=-0.1, x=0.1),
+        legend=dict(orientation="h", y=-0.12, x=0.08, font=dict(size=11)),
         height=300,
+        annotations=[
+            dict(
+                text=texto_central,
+                x=0.5,
+                y=0.5,
+                font=dict(size=22, color="#0f172a", family="Inter, sans-serif"),
+                showarrow=False,
+            )
+        ],
     )
     fig.update_layout(**layout)
     return _fig_to_json(fig)
@@ -141,8 +171,8 @@ def gerar_grafico_acuracia_picking(acertos: int, erros: int) -> str:
 
 def gerar_grafico_ocupacao_estantes(itens: List[Dict[str, Any]]) -> str:
     """
-    Gera um gráfico de colunas quantificando quantas caixinhas estão alocadas
-    em cada Rua de porta-paletes da sala.
+    Gera um gráfico horizontal de ocupação por Rua para facilitar a
+    leitura da distribuição física dos itens no porta-paletes do CD.
 
     Args:
         itens: Lista de itens presentes no turno.
@@ -150,36 +180,39 @@ def gerar_grafico_ocupacao_estantes(itens: List[Dict[str, Any]]) -> str:
     Returns:
         str: JSON do gráfico Plotly.
     """
-    contagem_ruas: Dict[str, int] = {}
+    contagem_ruas: Dict[str, int] = {"01": 0, "02": 0, "03": 0, "04": 0}
     for it in itens:
-        rua = str(it.get("rua", "---")).strip()
-        if rua != "---":
-            label = f"Rua {rua}"
-            contagem_ruas[label] = contagem_ruas.get(label, 0) + 1
+        rua_raw = str(it.get("rua", "---")).strip()
+        if rua_raw != "---":
+            rua_num = rua_raw.zfill(2) if rua_raw.isdigit() else rua_raw
+            contagem_ruas[rua_num] = contagem_ruas.get(rua_num, 0) + 1
 
-    if not contagem_ruas:
-        ruas = ["Rua 01", "Rua 02", "Rua 03", "Rua 04"]
-        quantidades = [0, 0, 0, 0]
-    else:
-        ruas = list(contagem_ruas.keys())
-        quantidades = list(contagem_ruas.values())
+    ruas_ordenadas = sorted(contagem_ruas.keys())
+    rotulos = [f"Rua {r}" for r in ruas_ordenadas]
+    quantidades = [contagem_ruas[r] for r in ruas_ordenadas]
 
     fig = go.Figure(
         go.Bar(
-            x=ruas,
-            y=quantidades,
-            marker_color="#1e3a8a",
-            text=[str(q) for q in quantidades],
+            y=rotulos,
+            x=quantidades,
+            orientation="h",
+            marker=dict(
+                color=["#3b82f6", "#2563eb", "#1d4ed8", "#1e40af"][: len(rotulos)],
+                line=dict(color="rgba(255,255,255,0.7)", width=1),
+            ),
+            text=[f"{q} un" if q > 0 else "" for q in quantidades],
             textposition="auto",
+            hovertemplate="<b>%{y}</b><br>Alocados: <b>%{x} item(ns)</b><extra></extra>",
         )
     )
 
     layout = _base_layout().copy()
     layout.update(
-        title=dict(text="Itens por Rua (Endereçamento)", font=dict(size=14)),
-        yaxis=dict(showgrid=True, gridcolor="#e2e8f0", rangemode="tozero"),
-        xaxis=dict(showgrid=False),
+        title=dict(text="Distribuição por Rua (Endereçamento)", font=dict(size=14, color="#1e293b", weight="bold")),
+        yaxis=dict(showgrid=False, autorange="reversed"),
+        xaxis=dict(showgrid=True, gridcolor="#f1f5f9", rangemode="tozero", title=dict(text="Caixas", font=dict(size=11))),
         height=300,
     )
     fig.update_layout(**layout)
     return _fig_to_json(fig)
+

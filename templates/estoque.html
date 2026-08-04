@@ -116,7 +116,7 @@
 
 <!-- 📊 INDICADORES DIDÁTICOS DE ESTOQUE -->
 <div class="mb-5">
-    <h3 class="mb-3">📊 Indicadores Chave de Gestão de Estoque (KPIs)</h3>
+    <h3 class="mb-3">Indicadores Chave de Gestão de Estoque (KPIs)</h3>
     <div class="row g-4">
         <div class="col-12 col-md-6">
             <div class="card h-100 border-0 shadow-sm p-4"
@@ -150,6 +150,15 @@
                     Giro baixo indica produtos encalhados gerando custo de armazenagem.</p>
             </div>
         </div>
+    </div>
+
+    <!-- GRÁFICO INTERATIVO DE OCUPAÇÃO DE ESTOQUE -->
+    <div class="card border-0 shadow-sm p-4 mt-4" style="border-radius: 16px; background: #ffffff; border-top: 4px solid var(--vibrant-blue) !important;">
+        <div class="mb-3">
+            <h5 class="fw-bold text-dark mb-1">🗄️ Taxa de Ocupação por Rua do Galpão</h5>
+            <p class="text-muted small mb-0">Monitoramento em tempo real de utilização da capacidade das estantes no CD</p>
+        </div>
+        <div id="graficoOcupacaoEstoque" style="min-height: 320px; width: 100%;"></div>
     </div>
 </div>
 
@@ -244,5 +253,21 @@
         </a>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (typeof Plotly !== "undefined" && {{ grafico_json | default('null') | safe }}) {
+            try {
+                const figOcupacao = {{ grafico_json | safe }};
+                Plotly.newPlot("graficoOcupacaoEstoque", figOcupacao.data, figOcupacao.layout, { responsive: true, displayModeBar: false });
+                window.addEventListener("resize", function () {
+                    Plotly.Plots.resize("graficoOcupacaoEstoque");
+                });
+            } catch (err) {
+                console.error("Erro ao renderizar gráfico de ocupação em estoque.html:", err);
+            }
+        }
+    });
+</script>
 
 {% endblock %}

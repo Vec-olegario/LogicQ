@@ -161,10 +161,9 @@ Assistente virtual que responde dúvidas sobre logística em tempo real.
   - Dá dicas de estudo personalizadas
 - **Memória de conversa** dentro da sessão
 
-**Opções de implementação:**
-- API OpenAI (GPT) com `openai` SDK
-- API Google Gemini com `google-generativeai`
-- Ollama local (sem custo de API)
+- API REST padrão de Modelos de Linguagem (LLM)
+- Motores locais de inferência de IA sem custo externo
+- Microserviços de IA conversacional para suporte técnico
 
 **Benefício:** Aprendizagem personalizada. O aluno tira dúvidas sem sair da plataforma.
 

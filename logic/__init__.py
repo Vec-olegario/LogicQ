@@ -33,7 +33,9 @@ from .wms_didatico import (
     editar_item_turno,
     remover_item_turno,
     gerar_csv_turno,
+    atualizar_nome_operador,
 )
+from .tutor_chat import responder_duvida_logistica
 
 __all__ = [
     "BANCO_PERGUNTAS",
@@ -58,4 +60,6 @@ __all__ = [
     "editar_item_turno",
     "remover_item_turno",
     "gerar_csv_turno",
+    "atualizar_nome_operador",
+    "responder_duvida_logistica",
 ]

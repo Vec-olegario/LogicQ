@@ -30,43 +30,11 @@ def obter_ou_criar_turno(turno_id: Optional[str] = None) -> Tuple[str, Dict[str,
         novo_id = str(uuid.uuid4())[:8]
         TURNOS_ATIVOS[novo_id] = {
             "id": novo_id,
-            "aluno": "Aluno(a) LogiQ",
+            "aluno": "Operador(a)",
             "inicio": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
             "acertos_picking": 0,
             "erros_picking": 0,
-            "itens": [
-                # Exemplo didático inicial para o aluno já visualizar no Dashboard
-                {
-                    "id": "item-101",
-                    "codigo": "78910001",
-                    "sku": "CX-PARAFUSOS-A",
-                    "descricao": "Caixa Parafusos Aço 50mm",
-                    "qtd": 20,
-                    "fornecedor": "Acme Metalúrgica",
-                    "condicao": "Aprovado - Lacrado",
-                    "etapa": "estoque",
-                    "rua": "01",
-                    "prateleira": "A",
-                    "nivel": "1",
-                    "timestamp": datetime.now().strftime("%H:%M"),
-                    "status": "Endereçado na Rua 01",
-                },
-                {
-                    "id": "item-102",
-                    "codigo": "78910002",
-                    "sku": "CX-ROLL-BEAR",
-                    "descricao": "Rolamento Industrial B2",
-                    "qtd": 10,
-                    "fornecedor": "Rolamentos Brasil",
-                    "condicao": "Aprovado - Lacrado",
-                    "etapa": "recebimento",
-                    "rua": "---",
-                    "prateleira": "---",
-                    "nivel": "---",
-                    "timestamp": datetime.now().strftime("%H:%M"),
-                    "status": "Aguardando Endereçamento",
-                },
-            ],
+            "itens": [],
         }
         return novo_id, TURNOS_ATIVOS[novo_id]
 
@@ -270,41 +238,87 @@ def gerar_csv_turno(turno_id: str) -> str:
     """
     _, turno = obter_ou_criar_turno(turno_id)
     saida = io.StringIO()
-    escritor = csv.writer(saida, delimiter=";")
+    escritor = csv.writer(saida, delimiter=";", quoting=csv.QUOTE_MINIMAL)
 
-    # Cabeçalho Didático de Avaliação
-    escritor.writerow(["=========================================================="])
-    escritor.writerow(["  RELATÓRIO PRÁTICO DO TURNO — LogiQ (WMS DIDÁTICO)"])
-    escritor.writerow(["=========================================================="])
-    escritor.writerow(["ID do Turno:", turno["id"]])
-    escritor.writerow(["Aluno / Turma:", turno["aluno"]])
-    escritor.writerow(["Início do Turno:", turno["inicio"]])
-    escritor.writerow(["Data do Relatório:", datetime.now().strftime("%d/%m/%Y %H:%M")])
-    escritor.writerow(["Acertos em Picking (Bipagem Correta):", turno["acertos_picking"]])
-    escritor.writerow(["Erros em Picking (Falha de Acurácia):", turno["erros_picking"]])
+    acertos = int(turno.get("acertos_picking", 0))
+    erros = int(turno.get("erros_picking", 0))
+    total_picking = acertos + erros
+    acuracia = round((acertos / total_picking) * 100, 1) if total_picking > 0 else 100.0
+
+    # 1. Cabeçalho de Indicadores do Turno (2 Colunas Alinhadas)
+    escritor.writerow(["INFORMAÇÃO DO TURNO", "DADO REGISTRADO"])
+    escritor.writerow(["Código WMS do Turno", f"LOGIQ-TRN-{turno['id'].upper()}"])
+    escritor.writerow(["Operador(a) Logístico(a)", turno["aluno"]])
+    escritor.writerow(["Início do Turno", turno["inicio"]])
+    escritor.writerow(["Emissão do Relatório", datetime.now().strftime("%d/%m/%Y às %H:%M")])
+    escritor.writerow(["Total de Lotes / Itens", str(len(turno.get("itens", [])))])
+    escritor.writerow(["Acurácia de Picking", f"{acuracia}% (Acertos: {acertos} / Erros: {erros})"])
     escritor.writerow([])
+    escritor.writerow([])
+
+    # 2. Cabeçalho da Tabela de Rastreabilidade
     escritor.writerow([
-        "CÓD. BARRAS",
-        "SKU",
+        "ITEM #",
+        "CÓD. BARRAS / GTIN",
+        "SKU DO PRODUTO",
         "DESCRIÇÃO DA MERCADORIA",
-        "QTD",
-        "ETAPA ATUAL",
-        "ENDEREÇO (RUA/PRAT/NIVEL)",
+        "FORNECEDOR",
+        "QUANTIDADE (UN/CX)",
+        "SETOR / ETAPA WMS",
+        "ENDEREÇO NO CD",
         "STATUS OPERACIONAL",
-        "HORA",
+        "HORÁRIO",
     ])
 
-    for item in turno["itens"]:
-        endereco = f"R{item['rua']} / P{item['prateleira']} / N{item['nivel']}"
+    itens = turno.get("itens", [])
+    if not itens:
         escritor.writerow([
-            item["codigo"],
-            item["sku"],
-            item["descricao"],
-            item["qtd"],
-            item["etapa"].upper(),
-            endereco,
-            item["status"],
-            item["timestamp"],
+            "0",
+            "---",
+            "---",
+            "Nenhuma mercadoria registrada neste turno operacional.",
+            "---",
+            "0",
+            "---",
+            "---",
+            "Sem registros",
+            "---",
         ])
+    else:
+        for index, item in enumerate(itens, start=1):
+            endereco = (
+                f"Rua {item['rua']} · Prat. {item['prateleira']} · Nível {item['nivel']}"
+                if item["rua"] != "---"
+                else "Trânsito / Doca"
+            )
+            escritor.writerow([
+                str(index),
+                f'="{item["codigo"]}"',  # Formatação Excel para não truncar código em notação científica
+                item["sku"],
+                item["descricao"],
+                item["fornecedor"],
+                str(item["qtd"]),
+                item["etapa"].upper(),
+                endereco,
+                item["status"],
+                item["timestamp"],
+            ])
 
     return saida.getvalue()
+
+
+def atualizar_nome_operador(turno_id: str, novo_nome: str) -> bool:
+    """
+    Atualiza o nome do aluno/operador vinculado ao turno operacional WMS ativo.
+
+    Args:
+        turno_id: Identificador único do turno.
+        novo_nome: Nome completo informado pelo usuário.
+
+    Returns:
+        True se atualizado com sucesso, False caso o turno não seja encontrado.
+    """
+    if turno_id in TURNOS_ATIVOS:
+        TURNOS_ATIVOS[turno_id]["aluno"] = novo_nome.strip() or "Operador(a)"
+        return True
+    return False

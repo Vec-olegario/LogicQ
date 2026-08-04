@@ -1722,3 +1722,399 @@ html {
     border-color: #1d4ed8 !important;
     box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2) !important;
 }
+
+/* ==========================================================================
+   6. MICRO-ANIMAÇÕES DINÂMICAS DA PÁGINA INICIAL (LogiQ)
+   ========================================================================== */
+
+/* --- 6.1 Transição de Entrada Suave (Fade-In) --- */
+.fade-in-section {
+    animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- 6.2 Elevação 3D e Ícones Vivos nos Cards de Setor --- */
+.sector-pipeline-card {
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.sector-pipeline-card:hover {
+    transform: translateY(-8px) scale(1.02) !important;
+}
+
+.sector-blue:hover {
+    box-shadow: 0 20px 35px -10px rgba(37, 99, 235, 0.22) !important;
+    border-color: #3b82f6 !important;
+}
+
+.sector-purple:hover {
+    box-shadow: 0 20px 35px -10px rgba(99, 102, 241, 0.22) !important;
+    border-color: #818cf8 !important;
+}
+
+.sector-orange:hover {
+    box-shadow: 0 20px 35px -10px rgba(245, 158, 11, 0.22) !important;
+    border-color: #fbbf24 !important;
+}
+
+.sector-green:hover {
+    box-shadow: 0 20px 35px -10px rgba(16, 185, 129, 0.22) !important;
+    border-color: #34d399 !important;
+}
+
+@keyframes icon-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+@keyframes icon-expand {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.22); }
+}
+
+@keyframes icon-cart {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(7px); }
+}
+
+@keyframes icon-truck {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(9px); }
+}
+
+.sector-blue:hover .card-icon-hover {
+    animation: icon-bounce 0.8s ease-in-out infinite;
+    display: inline-block;
+}
+
+.sector-purple:hover .card-icon-hover {
+    animation: icon-expand 0.8s ease-in-out infinite;
+    display: inline-block;
+}
+
+.sector-orange:hover .card-icon-hover {
+    animation: icon-cart 0.8s ease-in-out infinite;
+    display: inline-block;
+}
+
+.sector-green:hover .card-icon-hover {
+    animation: icon-truck 0.8s ease-in-out infinite;
+    display: inline-block;
+}
+
+/* ==========================================================================
+   7. TUTOR LOGIQ — CHATBOT INTERATIVO OPERACIONAL
+   ========================================================================== */
+.tutor-floating-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1050;
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    padding: 0.75rem 1.25rem;
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.45);
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tutor-floating-btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(37, 99, 235, 0.6);
+}
+
+.tutor-chat-window {
+    position: fixed;
+    bottom: 90px;
+    right: 24px;
+    width: 410px;
+    max-width: calc(100vw - 32px);
+    height: 530px;
+    max-height: calc(100vh - 110px);
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.25);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    z-index: 1050;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: tutor-slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes tutor-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.tutor-header {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    padding: 0.85rem 1.15rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tutor-chips-bar {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.6rem 0.85rem;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.tutor-chip {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 20px;
+    padding: 0.25rem 0.65rem;
+    font-size: 0.74rem;
+    color: #334155;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tutor-chip:hover {
+    background: #2563eb;
+    color: #ffffff;
+    border-color: #2563eb;
+}
+
+.tutor-messages {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: #fdfdfd;
+}
+
+.tutor-bubble {
+    max-width: 90%;
+    padding: 0.85rem 1rem;
+    border-radius: 16px;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    word-break: break-word;
+}
+
+.tutor-bubble.bot {
+    align-self: flex-start;
+    background: #ffffff;
+    color: #1e293b;
+    border-bottom-left-radius: 4px;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #2563eb;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+.tutor-bubble.user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff !important;
+    border-bottom-right-radius: 4px;
+    font-weight: 500;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+}
+
+.tutor-bubble.user *,
+.tutor-bubble.user p,
+.tutor-bubble.user span,
+.tutor-bubble.user strong,
+.tutor-bubble.user em {
+    color: #ffffff !important;
+}
+
+
+
+/* ── BADGES DIDÁTICOS E ANIMAÇÃO DE TYPING ──────────── */
+.tutor-sec-title {
+    background: #eff6ff;
+    color: #1e40af;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    margin-top: 10px;
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+.tutor-sec-dica {
+    background: #fffbeb !important;
+    color: #78350f !important;
+    border-left: 3px solid #f59e0b;
+}
+
+.typing-dots span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 2px;
+    background-color: #2563eb;
+    border-radius: 50%;
+    animation: typing-bounce 1.4s infinite ease-in-out both;
+}
+.typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+.typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typing-bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1.0); }
+}
+
+
+.tutor-input-bar {
+    padding: 0.75rem;
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+}
+
+@media (max-width: 576px) {
+    .tutor-chat-window {
+        bottom: 80px;
+        right: 16px;
+        width: calc(100vw - 32px);
+        max-width: 360px;
+    }
+    .tutor-floating-btn {
+        bottom: 16px;
+        right: 16px;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   HERO E ANIMAÇÃO OPERACIONAL INTERATIVA DE ENTRADA (LOGIQ LIVE HIGHWAY)
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.hero-shimmer-title {
+    background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 25%, #0284c7 50%, #2563eb 75%, #1e3a8a 100%);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: textShimmer 4s linear infinite;
+}
+
+@keyframes textShimmer {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   OTIMIZAÇÃO E RESPONSIVIDADE PROFISSIONAL (PC & CELULAR / MOBILE-FIRST)
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* 1. Otimização para Celulares e Telas Pequenas (menos de 768px) */
+@media (max-width: 767.98px) {
+    body {
+        font-size: 0.92rem;
+    }
+
+    .container, .container-fluid {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    /* Cards e Cabeçalhos em formato coluna nativo */
+    .card-body {
+        padding: 1rem !important;
+    }
+
+    .section-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+    }
+
+    /* Step progress (Barra de progresso das 4 etapas) adaptado para celular */
+    .step-progress {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+    .step-item {
+        flex: 1 1 40%;
+        min-width: 120px;
+        margin-bottom: 8px;
+    }
+    .step-connector {
+        display: none;
+    }
+
+    /* Tabelas e KPIs roláveis horizontalmente em telas pequenas */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+    }
+
+    .table th, .table td {
+        white-space: nowrap;
+        font-size: 0.82rem;
+        padding: 0.5rem 0.6rem;
+    }
+
+    /* Botões e formulários ocupando largura confortável */
+    .btn {
+        padding: 0.45rem 0.85rem;
+        font-size: 0.85rem;
+    }
+
+    .d-flex.gap-2.flex-wrap {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+/* 2. Otimização para Desktop e PC (mais de 1024px) */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1140px;
+    }
+
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08) !important;
+    }
+
+    /* Scrollbars suaves para tabelas em PC */
+    .table-responsive::-webkit-scrollbar {
+        height: 6px;
+    }
+    .table-responsive::-webkit-scrollbar-thumb {
+        background-color: #cbd5e1;
+        border-radius: 3px;
+    }
+}
