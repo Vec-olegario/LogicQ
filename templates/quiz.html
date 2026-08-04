@@ -157,19 +157,82 @@
         font-size: 2.2rem;
         margin-bottom: 12px;
     }
+
+    /* Estilos responsivos e modernos para mobile no Setup do Quiz */
+    .section-step-header {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-left: 5px solid #2563eb !important;
+        padding: 12px 16px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    @media (max-width: 767.98px) {
+        .quiz-hero-card {
+            padding: 1.25rem 1rem !important;
+            border-radius: 14px !important;
+            margin-bottom: 1rem !important;
+        }
+        .quiz-hero-card h1 {
+            font-size: 1.35rem !important;
+            margin-bottom: 0.35rem !important;
+        }
+        .quiz-hero-card p {
+            font-size: 0.85rem !important;
+            line-height: 1.35 !important;
+            margin-bottom: 0 !important;
+        }
+        .modo-card {
+            padding: 14px 10px !important;
+            min-height: 130px !important;
+            border-radius: 12px !important;
+        }
+        .modo-icon {
+            font-size: 1.7rem !important;
+            margin-bottom: 6px !important;
+        }
+        .modo-card h5 {
+            font-size: 0.95rem !important;
+            margin-bottom: 4px !important;
+        }
+        .modo-card p {
+            font-size: 0.76rem !important;
+            line-height: 1.25 !important;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .modo-card .badge {
+            font-size: 0.72rem !important;
+            padding: 4px 8px !important;
+            margin-top: 8px !important;
+        }
+        .setor-card {
+            padding: 12px 8px !important;
+        }
+        .setor-card .fs-2 {
+            font-size: 1.5rem !important;
+            margin-bottom: 4px !important;
+        }
+    }
 </style>
 
 <div class="row justify-content-center">
     <div class="col-12 col-xl-10">
 
-        <!-- Hero Card do Quiz -->
-        <div class="quiz-hero-card text-white p-3.5 p-md-4 mb-3.5">
+        <!-- Hero Card do Quiz (Compacto e Elegante) -->
+        <div class="quiz-hero-card text-white p-3 p-md-4 mb-3">
             <div class="decor-circle-1"></div>
             <div class="decor-circle-2"></div>
             <div class="position-relative z-1">
-                <h1 class="text-white mb-2" style="font-weight: 800; font-size: 1.75rem;">Quiz Logístico Interativo</h1>
-                <p class="mb-3" style="color: rgba(255,255,255,0.92); max-width: 650px; font-size: 0.95rem;">
-                    Teste seus conhecimentos teóricos e práticos em nosso Centro de Distribuição com questões didáticas baseadas na operação real.
+                <div class="d-inline-flex align-items-center gap-1.5 hero-pill-badge mb-2">
+                    🧠 Avaliação Operacional & Teórica
+                </div>
+                <h1 class="text-white mb-2" style="font-weight: 800; font-size: 1.6rem;">Quiz Logístico Interativo</h1>
+                <p class="mb-0" style="color: rgba(255,255,255,0.92); max-width: 680px; font-size: 0.92rem; line-height: 1.4;">
+                    Teste seus conhecimentos teóricos e práticos no Centro de Distribuição com questões didáticas baseadas na operação real.
                 </p>
             </div>
         </div>
@@ -179,93 +242,101 @@
             <input type="hidden" name="modo" id="inputModo" value="padrao">
             <input type="hidden" name="topico" id="inputTopico" value="Recebimento">
 
-            <!-- SELEÇÃO VISUAL DO MODO -->
-            <h4 class="mb-2.5 fw-bold text-dark">Selecione o Modo de Teste</h4>
-            <div class="row g-3 mb-4">
-                <div class="col-12 col-md-6 col-lg-3">
+            <!-- SELEÇÃO VISUAL DO MODO (Destaque limpo) -->
+            <div class="section-step-header d-flex align-items-center gap-2 mt-4 mb-3">
+                <span class="badge bg-primary fs-6 rounded-circle px-2.5 py-1">1</span>
+                <h4 class="fw-bold text-dark mb-0 fs-5">Selecione o Modo de Teste</h4>
+            </div>
+
+            <div class="row g-2.5 g-md-3 mb-4">
+                <div class="col-6 col-md-6 col-lg-3">
                     <div class="modo-card" onclick="selectModo('rapido', this)">
                         <div>
                             <div class="modo-icon">⚡</div>
-                            <h5 class="fw-bold mb-2">Quiz Rápido</h5>
+                            <h5 class="fw-bold mb-1">Quiz Rápido</h5>
                             <p class="text-muted small mb-0">5 perguntas aleatórias do banco para um teste ágil.</p>
                         </div>
-                        <span class="badge bg-light text-dark align-self-start mt-3">⚡ 5 Questões</span>
+                        <span class="badge bg-light text-dark align-self-start mt-2">⚡ 5 Questões</span>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-3">
+                <div class="col-6 col-md-6 col-lg-3">
                     <div class="modo-card selected" onclick="selectModo('padrao', this)">
                         <div>
                             <div class="modo-icon">🎯</div>
-                            <h5 class="fw-bold mb-2">Quiz Padrão</h5>
+                            <h5 class="fw-bold mb-1">Quiz Padrão</h5>
                             <p class="text-muted small mb-0">15 perguntas aleatórias misturando os 4 setores.</p>
                         </div>
-                        <span class="badge bg-primary align-self-start mt-3">🎯 15 Questões</span>
+                        <span class="badge bg-primary align-self-start mt-2">🎯 15 Questões</span>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-3">
+                <div class="col-6 col-md-6 col-lg-3">
                     <div class="modo-card" onclick="selectModo('completo', this)">
                         <div>
                             <div class="modo-icon">🏆</div>
-                            <h5 class="fw-bold mb-2">Quiz Completo</h5>
+                            <h5 class="fw-bold mb-1">Quiz Completo</h5>
                             <p class="text-muted small mb-0">Todas as 32 perguntas do banco para avaliação profunda.</p>
                         </div>
-                        <span class="badge bg-light text-dark align-self-start mt-3">🏆 32 Questões</span>
+                        <span class="badge bg-light text-dark align-self-start mt-2">🏆 32 Questões</span>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-3">
+                <div class="col-6 col-md-6 col-lg-3">
                     <div class="modo-card" onclick="selectModo('topico', this)">
                         <div>
                             <div class="modo-icon">📚</div>
-                            <h5 class="fw-bold mb-2">Por Setor</h5>
+                            <h5 class="fw-bold mb-1">Por Setor</h5>
                             <p class="text-muted small mb-0">Foco exclusivo no setor logístico de sua preferência.</p>
                         </div>
-                        <span class="badge bg-light text-dark align-self-start mt-3">📚 8 Questões</span>
+                        <span class="badge bg-light text-dark align-self-start mt-2">📚 8 Questões</span>
                     </div>
                 </div>
             </div>
 
             <!-- SELEÇÃO VISUAL DO SETOR (Oculta por padrão, aparece se clicar no modo 'topico') -->
-            <div id="divTopicoVisual" style="display: none;" class="mb-5">
-                <h4 class="mb-3 fw-bold text-dark">📌 2. Escolha o Setor para Avaliação</h4>
-                <div class="row g-3">
-                    <div class="col-12 col-sm-6 col-md-3">
+            <div id="divTopicoVisual" style="display: none;" class="mb-4">
+                <div class="section-step-header d-flex align-items-center gap-2 mt-3 mb-3" style="border-left-color: #8b5cf6 !important;">
+                    <span class="badge text-white fs-6 rounded-circle px-2.5 py-1" style="background-color: #8b5cf6;">2</span>
+                    <h4 class="fw-bold text-dark mb-0 fs-5">Escolha o Setor para Avaliação</h4>
+                </div>
+
+                <div class="row g-2.5 g-md-3">
+                    <div class="col-6 col-sm-6 col-md-3">
                         <div class="setor-card selected recebimento" onclick="selectTopico('Recebimento', this)">
-                            <div class="fs-2 mb-2">📦</div>
+                            <div class="fs-2 mb-1">📦</div>
                             <h6 class="fw-bold mb-1">Recebimento</h6>
-                            <small class="text-muted d-block">Doca e Conferência</small>
+                            <small class="text-muted d-block" style="font-size: 0.78rem;">Doca e Conferência</small>
                             <span class="badge bg-blue-light mt-2">8 Questões</span>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-3">
+                    <div class="col-6 col-sm-6 col-md-3">
                         <div class="setor-card estoque" onclick="selectTopico('Estoque', this)">
-                            <div class="fs-2 mb-2">🏢</div>
+                            <div class="fs-2 mb-1">🏢</div>
                             <h6 class="fw-bold mb-1">Estoque</h6>
-                            <small class="text-muted d-block">Armazenagem e Giro</small>
+                            <small class="text-muted d-block" style="font-size: 0.78rem;">Armazenagem e Giro</small>
                             <span class="badge bg-orange-light mt-2">8 Questões</span>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-3">
+                    <div class="col-6 col-sm-6 col-md-3">
                         <div class="setor-card picking" onclick="selectTopico('Picking', this)">
-                            <div class="fs-2 mb-2">🛒</div>
+                            <div class="fs-2 mb-1">🛒</div>
                             <h6 class="fw-bold mb-1">Picking</h6>
-                            <small class="text-muted d-block">Separação de Pedidos</small>
+                            <small class="text-muted d-block" style="font-size: 0.78rem;">Separação de Pedidos</small>
                             <span class="badge bg-purple-light mt-2">8 Questões</span>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-md-3">
+                    <div class="col-6 col-sm-6 col-md-3">
                         <div class="setor-card expedicao" onclick="selectTopico('Expedição', this)">
-                            <div class="fs-2 mb-2">🚛</div>
+                            <div class="fs-2 mb-1">🚛</div>
                             <h6 class="fw-bold mb-1">Expedição</h6>
-                            <small class="text-muted d-block">Despacho e Roteiros</small>
+                            <small class="text-muted d-block" style="font-size: 0.78rem;">Despacho e Roteiros</small>
                             <span class="badge bg-green-light mt-2">8 Questões</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Botão de Ação -->
+            <!-- Botão de Ação Destacado -->
             <div class="d-grid mt-4 mb-4">
-                <button type="submit" class="btn btn-primary py-3 fs-5 fw-bold rounded-3 shadow-sm">
+                <button type="submit" class="btn btn-primary py-3 fs-5 fw-bold rounded-3 shadow">
                     🚀 INICIAR QUIZ AGORA →
                 </button>
             </div>
